@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('certificate')->default(0);
             $table->boolean('frame')->default(0);
             $table->string('size');
+            $table->tinyInteger('status')->default(1);
             $table->text('description_uz');
             $table->text('description_ru');
             $table->text('description_en');
