@@ -12,6 +12,12 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name_uz',
+        'name_ru',
+        'name_en',
+    ];
+
     public function types()
     {
         return $this->hasMany(Type::class);
