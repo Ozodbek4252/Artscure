@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('description_uz');
             $table->text('description_ru');
             $table->text('description_en');
+            $table->integer('views')->default(0);
             $table->string('muzey_uz')->nullable();
             $table->string('muzey_ru')->nullable();
             $table->string('muzey_en')->nullable();

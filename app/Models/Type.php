@@ -13,6 +13,13 @@ class Type extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name_uz',
+        'name_ru',
+        'name_en',
+        'category_id',
+    ];
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');

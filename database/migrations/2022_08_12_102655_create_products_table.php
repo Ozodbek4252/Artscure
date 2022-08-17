@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('description_uz');
             $table->text('description_ru');
             $table->text('description_en');
+            $table->integer('views')->default(0);
             $table->string('year')->nullable();
             $table->string('city')->nullable();
             $table->boolean('unique')->default(0);

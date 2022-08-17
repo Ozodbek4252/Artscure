@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class CategoryController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($count=null)
+    public function index()
     {
-        if($count){
-            return Category::orderBy('updated_at')->take($count)->get();
-        }else{
-            return Category::all();
-        }
+        return Type::all();
     }
 
     /**
@@ -33,10 +30,20 @@ class CategoryController extends Controller
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
+            'category_id' => 'required|integer',
         ]);
 
-        $result = Category::create($request->all());
-        if($result){
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
+
+        $type = new Type();
+        $type->name_uz = $request->name_uz;
+        $type->name_ru = $request->name_ru;
+        $type->name_en = $request->name_en;
+        $type->slug = $slug;
+        $type->category_id = $request->category_id;
+        $type->save();
+        
+        if($type){
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -53,14 +60,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $category = Category::find($id);
-        if($category){
-            return $category;
+        $type = Type::where('slug', $slug)->first();
+        if($type){
+            return $type;
         }else{
             return response()->json([
-                'message' => 'Category Not Found With This Id'
+                'message' => 'Error'
             ], 500);
         }
     }
@@ -72,15 +79,25 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         $request->validate([
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
+            'category_id' => 'required|integer',
         ]);
-        $result = Category::find($id)->update($request->all());
-        if($result){
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
+        
+        $type = Type::where('slug', $slug)->first();
+        $type->name_uz = $request->name_uz;
+        $type->name_ru = $request->name_ru;
+        $type->name_en = $request->name_en;
+        $type->slug = $slug;
+        $type->category_id = $request->category_id;
+        $type->save();
+
+        if($type){
             return response()->json([
                 'message' => 'Updated Successfully'
             ], 200);
@@ -97,9 +114,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $result = Category::find($id)->delete();
+        $result = Type::where('slug', $slug)->delete();
         if($result){
             return response()->json([
                 'message' => 'Deleted Successfully'

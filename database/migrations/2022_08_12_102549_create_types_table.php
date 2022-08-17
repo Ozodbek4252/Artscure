@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name_uz');
             $table->string('name_ru');
             $table->string('name_en');
+            $table->integer('views')->default(0);
             $table->foreignId('category_id')->constrained("categories")->references("id")->onDelete("cascade");
             $table->timestamps();
         });
