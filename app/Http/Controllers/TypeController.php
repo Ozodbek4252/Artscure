@@ -17,7 +17,6 @@ class TypeController extends Controller
     {
         return Type::all();
     }
-
     /**
      * Store a newly created resource in storage.
      *
