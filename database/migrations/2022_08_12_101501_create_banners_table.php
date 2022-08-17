@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->tinyInteger('type')->comment('0 - top, 1 - bottom, 2 - others');
             $table->string('title_uz');
             $table->string('title_ru');
             $table->string('title_en');

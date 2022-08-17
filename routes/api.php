@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +38,18 @@ Route::get('/types/{slug}', [TypeController::class, 'show'])->name('type.show');
 Route::get('/artists', [ArtistController::class, 'index'])->name('artist.index');
 Route::get('/artists/{slug}', [ArtistController::class, 'show'])->name('artist.show');
 
+// Contact
+Route::post('/contact', [ContactController::class, 'store'])->name('contact');
 
+// Banner
+Route::get('/banners/main', [BannerController::class, 'main'])->name('banners');
+Route::get('/banners/bottom', [BannerController::class, 'bottom'])->name('banners');
+
+// Request
+Route::post('/requests',[RequestController::class, 'store'])->name('requests');
+
+
+// ------------- Protected Routes -------------
 Route::group([
     'middleware' => 'auth:sanctum',
     'isAdmin',
@@ -65,6 +79,27 @@ Route::group([
     Route::post('/tools', [ToolController::class, 'store'])->name('tool.store');
     Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tool.update');
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
+
+    // Artist
+    Route::post('/artist', [ArtistController::class, 'store'])->name('artist');
+    Route::put('/artist/{slug}', [ArtistController::class, 'update'])->name('artist');
+    Route::delete('/artist/{slug}', [ArtistController::class, 'destroy'])->name('artist');
+    
+    // Contact
+    Route::get('/contact',[ContactController::class, 'index'])->name('contact');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact');
+
+    // Banner
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners');
+    Route::get('/banners/{id}', [BannerController::class, 'show'])->name('banners');
+    Route::post('/banners', [BannerController::class, 'store'])->name('banners');
+    Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners');
+    Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners');
+
+    // Request
+    Route::get('/requests',[RequestController::class, 'index'])->name('requests');
+    Route::get('/requests/{id}',[RequestController::class, 'show'])->name('requests');
+    Route::delete('/requests/{id}',[RequestController::class, 'destroy'])->name('requests');
 
 });
 
