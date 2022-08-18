@@ -21,12 +21,15 @@ return new class extends Migration
             $table->string('name_en');
             $table->boolean('certificate')->default(0);
             $table->boolean('frame')->default(0);
-            $table->string('size');
+            $table->string('size')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->text('description_uz');
             $table->text('description_ru');
             $table->text('description_en');
             $table->integer('views')->default(0);
+            $table->integer('type_id')->nullable();
+            $table->integer('artist_id');
+            $table->boolean('status')->default(0);
             $table->string('year')->nullable();
             $table->string('city')->nullable();
             $table->boolean('unique')->default(0);
