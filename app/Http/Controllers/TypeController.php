@@ -62,6 +62,8 @@ class TypeController extends Controller
     public function show($slug)
     {
         $type = Type::where('slug', $slug)->first();
+        $type->views = $type->views + 1;
+        $type->save();
         if($type){
             return $type;
         }else{

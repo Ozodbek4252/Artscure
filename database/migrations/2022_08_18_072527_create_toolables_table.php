@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tools', function (Blueprint $table) {
+        Schema::create('toolables', function (Blueprint $table) {
             $table->id();
-            $table->string('tool_uz');
-            $table->string('tool_ru');
-            $table->string('tool_en');
+            $table->string('tool_id');
+            $table->string('toolable_id');
+            $table->string('toolable_type');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tools');
+        Schema::dropIfExists('toolables');
     }
 };

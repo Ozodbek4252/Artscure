@@ -43,7 +43,7 @@ class Artist extends Model
 
     public function tools()
     {
-        return $this->morphMany(Tool::class, 'toolable');
+        return $this->morphToMany(Tool::class, 'toolable');
     }
 
     public function category()
