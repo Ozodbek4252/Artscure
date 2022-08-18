@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('full_name');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('email')->nullable();
             $table->string('portfolio')->nullable();
             $table->text('cover_letter_uz');
