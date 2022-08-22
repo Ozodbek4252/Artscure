@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Product;
+use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -33,6 +35,9 @@ class ProductController extends Controller
             'description_uz' => 'required|string',
             'description_ru' => 'required|string',
             'description_en' => 'required|string',
+            'artist_id' => 'required|integer',
+            'type_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
@@ -56,9 +61,29 @@ class ProductController extends Controller
         $product->signiture = $request->signiture;
         $product->price = $request->price;
         $product->slug = $slug;
-        
-
         $result = $product->save();
+
+        
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/products'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $product->id;
+        $image->imageable_type = 'App\Models\Product';
+        $image->save();
+
+        if($request->tools){
+            foreach($request->tools as $tool){
+                $toolable = new Toolable();
+                $toolable->tool_id = $tool;
+                $toolable->toolable_id = $product->id;
+                $toolable->toolable_type = 'App\Models\Product';
+                $toolable->save();
+            }
+        }
+
+
         
         if($result){
             return response()->json([

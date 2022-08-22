@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -38,6 +39,7 @@ class NewsController extends Controller
             'body_ru' => 'required|string',
             'body_en' => 'required|string',
             'category_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $slug = str_replace(' ', '_', strtolower($request->title_uz)).'-'.Str::random(5);
@@ -52,6 +54,15 @@ class NewsController extends Controller
         $news->category_id = $request->category_id;
         $news->slug = $slug;
         $result = $news->save();
+
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/news'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $news->id;
+        $image->imageable_type = 'App\Models\News'; 
+        $image->save();
         
         if($result){
             return response()->json([

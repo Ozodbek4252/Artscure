@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,23 +31,27 @@ class TypeController extends Controller
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $type = new Type();
-        $type->name_uz = $request->name_uz;
-        $type->name_ru = $request->name_ru;
-        $type->name_en = $request->name_en;
-        $type->slug = $slug;
-        $type->category_id = $request->category_id;
-        $type->save();
-        
-        if($type){
+        $result = Type::create($request->all());
+
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/types'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $result->id;
+        $image->imageable_type = 'App\Models\Type';
+        $image->save();
+
+        if ($result) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -64,9 +69,9 @@ class TypeController extends Controller
         $type = Type::where('slug', $slug)->first();
         $type->views = $type->views + 1;
         $type->save();
-        if($type){
+        if ($type) {
             return $type;
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -88,8 +93,8 @@ class TypeController extends Controller
             'name_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
         ]);
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
-        
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+
         $type = Type::where('slug', $slug)->first();
         $type->name_uz = $request->name_uz;
         $type->name_ru = $request->name_ru;
@@ -98,11 +103,11 @@ class TypeController extends Controller
         $type->category_id = $request->category_id;
         $type->save();
 
-        if($type){
+        if ($type) {
             return response()->json([
                 'message' => 'Updated Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -118,11 +123,11 @@ class TypeController extends Controller
     public function destroy($slug)
     {
         $result = Type::where('slug', $slug)->delete();
-        if($result){
+        if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);

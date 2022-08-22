@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\Image;
+use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -63,6 +65,25 @@ class ArtistController extends Controller
         $artist->label = $request->label;
         $artist->slug = $slug;
         $result = $artist->save();
+                
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/artists'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $artist->id;
+        $image->imageable_type = 'App\Models\Artist';
+        $image->save();
+
+        if($request->tools){
+            foreach($request->tools as $tool){
+                $toolable = new Toolable();
+                $toolable->tool_id = $tool;
+                $toolable->toolable_id = $artist->id;
+                $toolable->toolable_type = 'App\Models\Artist';
+                $toolable->save();
+            }
+        }
 
         if($result){
             return response()->json([

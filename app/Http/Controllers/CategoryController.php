@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -33,9 +34,20 @@ class CategoryController extends Controller
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
-
+        
         $result = Category::create($request->all());
+        
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/categories'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $result->id;
+        $image->imageable_type = 'App\Models\Category';
+        $image->save();
+
         if($result){
             return response()->json([
                 'message' => 'Created Successfully'
@@ -74,12 +86,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
         $request->validate([
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
         ]);
+
+
         $result = Category::find($id)->update($request->all());
+
+        if($request->image){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/categories'), $imageName);
+            $image = Image::where('imageable_id', $id)->where('imageable_type', 'App\Models\Category')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
+
         if($result){
             return response()->json([
                 'message' => 'Updated Successfully'

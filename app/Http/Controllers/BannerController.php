@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -34,9 +35,19 @@ class BannerController extends Controller
             'body_uz' => 'required',
             'body_ru' => 'required',
             'body_en' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $result = Banner::create($request->all());
+
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/banners'), $imageName);
+
+        $image = new Image();
+        $image->image = $imageName;
+        $image->imageable_id = $result->id;
+        $image->imageable_type = 'App\Models\Banner';
+        $image->save();
 
         if($result){
             return response()->json([
