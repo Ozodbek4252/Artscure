@@ -15,22 +15,23 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name_uz', 
-        'name_ru', 
-        'name_en', 
-        'certificate', 
-        'frame', 
-        'size', 
-        'description_uz', 
-        'description_ru', 
-        'description_en', 
-        'year', 
-        'city', 
-        'unique', 
-        'signiture', 
+        'name_uz',
+        'name_ru',
+        'name_en',
+        'certificate',
+        'frame',
+        'size',
+        'description_uz',
+        'description_ru',
+        'description_en',
+        'year',
+        'city',
+        'unique',
+        'signiture',
         'price',
         'type_id',
         'artist_id',
+        'status',
     ];
 
     public function images()

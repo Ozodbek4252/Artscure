@@ -90,7 +90,8 @@ Route::group([
     Route::delete('/artists/{slug}', [ArtistController::class, 'destroy'])->name('artist.delete');
 
     // Tool
-    Route::get('/tools', [ToolController::class, 'index'])->name('tool.index');
+    Route::get('/tools', [ToolController::class, 'index'])->name('tool');
+    Route::get('/tools/{id}', [ToolController::class, 'show'])->name('tool.show');
     Route::post('/tools', [ToolController::class, 'store'])->name('tool.store');
     Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tool.update');
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
@@ -126,6 +127,14 @@ Route::group([
     Route::post('/products', [ProductController::class, 'store'])->name('product.store');
     Route::put('/products/{slug}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/products/{slug}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+    //Toolable
+    Route::get('/toolables', [ToolableController::class, 'index'])->name('toolable');
+    Route::get('/toolables/{id}', [ToolableController::class, 'show'])->name('toolable.show');
+    Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
+    Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
+    Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
+    
 });
 
 
