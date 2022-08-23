@@ -40,13 +40,13 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
         $product = new Product();
-        $product->name_uz	 = $request->name_uz;
+        $product->name_uz = $request->name_uz;
         $product->name_ru = $request->name_ru;
         $product->name_en = $request->name_en;
-        $product->certificate = $request->certificate; 
+        $product->certificate = $request->certificate;
         $product->frame = $request->frame;
         $product->size = $request->size;
         $product->status = $request->status;
@@ -63,8 +63,8 @@ class ProductController extends Controller
         $product->slug = $slug;
         $result = $product->save();
 
-        
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/products'), $imageName);
 
         $image = new Image();
@@ -73,8 +73,8 @@ class ProductController extends Controller
         $image->imageable_type = 'App\Models\Product';
         $image->save();
 
-        if($request->tools){
-            foreach($request->tools as $tool){
+        if ($request->tools) {
+            foreach ($request->tools as $tool) {
                 $toolable = new Toolable();
                 $toolable->tool_id = $tool;
                 $toolable->toolable_id = $product->id;
@@ -84,12 +84,12 @@ class ProductController extends Controller
         }
 
 
-        
-        if($result){
+
+        if ($result) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -105,9 +105,9 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->first();
-        if($product){
+        if ($product) {
             return $product;
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -132,16 +132,16 @@ class ProductController extends Controller
             'description_en' => 'required|string',
         ]);
 
-        $new_slug = str_replace(' ', '_', strtolower($request->name_uz)).'-'.Str::random(5);
+        $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
         $product = Product::where('slug', $slug)->first();
         $product->name_uz = $request->name_uz;
         $product->name_ru = $request->name_ru;
         $product->name_en = $request->name_en;
-        $product->certificate = $request->certificate; 
+        $product->certificate = $request->certificate;
         $product->frame = $request->frame;
         $product->size = $request->size;
-        
+
         $product->description_uz = $request->description_uz;
         $product->description_ru = $request->description_ru;
         $product->description_en = $request->description_en;
@@ -153,14 +153,22 @@ class ProductController extends Controller
         $product->signiture = $request->signiture;
         $product->price = $request->price;
         $product->slug = $new_slug;
-        
         $result = $product->save();
-        
-        if($result){
+
+
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/products'), $imageName);
+            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Product')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
+
+        if ($result) {
             return response()->json([
                 'message' => 'Update Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -176,15 +184,14 @@ class ProductController extends Controller
     public function destroy($slug)
     {
         $result = Product::where('slug', $slug)->delete();
-        if($result){
+        if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
         }
     }
-    
 }

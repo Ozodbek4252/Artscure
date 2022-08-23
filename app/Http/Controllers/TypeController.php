@@ -103,6 +103,14 @@ class TypeController extends Controller
         $type->category_id = $request->category_id;
         $type->save();
 
+        if($request->image){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/categories'), $imageName);
+            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Type')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
+
         if ($type) {
             return response()->json([
                 'message' => 'Updated Successfully'

@@ -164,6 +164,14 @@ class ArtistController extends Controller
         $artist->slug = $new_slug;
         $result = $artist->save();
 
+        if($request->image){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/artists'), $imageName);
+            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Artist')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
+
         if($result){
             return response()->json([
                 'message' => 'Updated Successfully'

@@ -40,7 +40,7 @@ class BannerController extends Controller
 
         $result = Banner::create($request->all());
 
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/banners'), $imageName);
 
         $image = new Image();
@@ -49,11 +49,11 @@ class BannerController extends Controller
         $image->imageable_type = 'App\Models\Banner';
         $image->save();
 
-        if($result){
+        if ($result) {
             return response()->json([
                 'banner' => 'Created Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -78,22 +78,24 @@ class BannerController extends Controller
         }
     }
 
-    public function main(){
+    public function main()
+    {
         $banners = Banner::where('type', 0)->get();
-        if($banners){
+        if ($banners) {
             return $banners;
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
         }
     }
 
-    public function bottom(){
+    public function bottom()
+    {
         $banners = Banner::where('type', 1)->get();
-        if($banners){
+        if ($banners) {
             return $banners;
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -118,14 +120,22 @@ class BannerController extends Controller
             'body_ru' => 'required',
             'body_en' => 'required',
         ]);
-
         $result = Banner::find($id)->update($request->all());
 
-        if($result){
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/banners'), $imageName);
+            $image = Image::where('imageable_id', $id)->where('imageable_type', 'App\Models\Banner')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
+
+        
+        if ($result) {
             return response()->json([
                 'banner' => 'Updated Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);

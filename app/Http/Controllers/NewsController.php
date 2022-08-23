@@ -125,6 +125,14 @@ class NewsController extends Controller
         $news->body_en = $request->body_en;
         $news->category_id = $request->category_id;
         $result = $news->save();
+
+        if($request->image){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/news'), $imageName);
+            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\News')->first();
+            $image->image = $imageName;
+            $image->save();
+        }
         
         if($result){
             return response()->json([
