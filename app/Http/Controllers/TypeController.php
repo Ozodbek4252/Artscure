@@ -18,6 +18,16 @@ class TypeController extends Controller
     {
         return Type::all();
     }
+
+    public function paginate($num = null)
+    {
+        if ($num) {
+            return Type::paginate($num);
+        } else {
+            return Type::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -103,8 +113,8 @@ class TypeController extends Controller
         $type->category_id = $request->category_id;
         $type->save();
 
-        if($request->image){
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/categories'), $imageName);
             $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Type')->first();
             $image->image = $imageName;

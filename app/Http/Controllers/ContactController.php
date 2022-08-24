@@ -17,6 +17,15 @@ class ContactController extends Controller
         return Contact::all();
     }
 
+    public function paginate($num=null)
+    {
+        if($num){
+            return Contact::paginate($num);
+        }else{
+            return Contact::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

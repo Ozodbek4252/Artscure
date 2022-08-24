@@ -17,6 +17,15 @@ class RequestController extends Controller
         return RequestModel::all();
     }
 
+    public function paginate($num=null)
+    {
+        if($num){
+            return RequestModel::paginate($num);
+        }else{
+            return RequestModel::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

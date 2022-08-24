@@ -18,6 +18,15 @@ class ToolController extends Controller
         return Tool::all();
     }
 
+    public function paginate($num = null)
+    {
+        if ($num) {
+            return Tool::paginate($num);
+        } else {
+            return Tool::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

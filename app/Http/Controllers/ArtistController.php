@@ -20,6 +20,15 @@ class ArtistController extends Controller
         return Artist::all();
     }
 
+    public function paginate($num=null)
+    {
+        if($num){
+            return Artist::paginate($num);
+        }else{
+            return Artist::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
