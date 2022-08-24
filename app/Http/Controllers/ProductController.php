@@ -20,6 +20,15 @@ class ProductController extends Controller
         return Product::all();
     }
 
+    public function paginate($num = null)
+    {
+        if ($num) {
+            return Product::paginate($num);
+        } else {
+            return Product::all();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

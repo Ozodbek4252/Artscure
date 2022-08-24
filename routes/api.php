@@ -31,27 +31,27 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-// Category
-Route::get('/categories/count/{count}', [CategoryController::class, 'index'])->name('category');
-
 // News Category
 Route::get('/newsCategories', [NewsCategoryController::class, 'index'])->name('newsCategory');
 
 // News
 Route::get('/news', [NewsController::class, 'index'])->name('news');
-Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/news/{num}', [NewsController::class, 'paginate'])->name('news.paginate');
+Route::get('/new/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('product');
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/products/{num}', [ProductController::class, 'paginate'])->name('product.paginate');
 
 // Type
 Route::get('/types', [TypeController::class, 'index'])->name('type.index');
-Route::get('/types/{slug}', [TypeController::class, 'show'])->name('type.show');
+Route::get('/type/{slug}', [TypeController::class, 'show'])->name('type.show');
 
 // Artist
 Route::get('/artists', [ArtistController::class, 'index'])->name('artist.index');
-Route::get('/artists/{slug}', [ArtistController::class, 'show'])->name('artist.show');
+Route::get('/artists/{num}', [ArtistController::class, 'paginate'])->name('artist.paginate');
+Route::get('/artist/{slug}', [ArtistController::class, 'show'])->name('artist.show');
 
 // Contact
 Route::post('/contacts', [ContactController::class, 'store'])->name('contact');
@@ -80,6 +80,7 @@ Route::group([
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
     
     // Type
+    Route::get('/types/{num}', [TypeController::class, 'paginate'])->name('type.paginate');
     Route::post('/types', [TypeController::class, 'store'])->name('type.store');
     Route::put('/types/{slug}', [TypeController::class, 'update'])->name('type.update');
     Route::delete('/types/{slug}', [TypeController::class, 'destroy'])->name('type.delete');
@@ -91,13 +92,15 @@ Route::group([
 
     // Tool
     Route::get('/tools', [ToolController::class, 'index'])->name('tool');
-    Route::get('/tools/{id}', [ToolController::class, 'show'])->name('tool.show');
+    Route::get('/tools/{num}', [ToolController::class, 'paginate'])->name('tool.paginate');
+    Route::get('/tool/{id}', [ToolController::class, 'show'])->name('tool.show');
     Route::post('/tools', [ToolController::class, 'store'])->name('tool.store');
     Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tool.update');
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
 
     // Contact
     Route::get('/contact',[ContactController::class, 'index'])->name('contact');
+    Route::get('/contacts/{num}',[ContactController::class, 'paginate'])->name('contact.paginate');
     Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact');
 
     // Banner
@@ -109,7 +112,8 @@ Route::group([
 
     // Request
     Route::get('/requests',[RequestController::class, 'index'])->name('requests');
-    Route::get('/requests/{id}',[RequestController::class, 'show'])->name('requests');
+    Route::get('/requests/{num}',[RequestController::class, 'paginate'])->name('requests.paginate');
+    Route::get('/request/{id}',[RequestController::class, 'show'])->name('requests');
     Route::delete('/requests/{id}',[RequestController::class, 'destroy'])->name('requests');
 
     // NewsCategory
