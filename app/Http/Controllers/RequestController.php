@@ -37,9 +37,7 @@ class RequestController extends Controller
         $request->validate([
             'full_name' => 'required',
             'phone' => 'required',
-            'cover_letter_uz' => 'required|min:30',
-            'cover_letter_ru' => 'required|min:30',
-            'cover_letter_en' => 'required|min:30',
+            'cover_letter' => 'required|min:30',
         ]);
         
         $result = RequestModel::create($request->all());
@@ -71,18 +69,6 @@ class RequestController extends Controller
                 'message' => 'Error'
             ], 500);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

@@ -29,22 +29,22 @@ class BannerController extends Controller
     {
         $request->validate([
             'type' => 'required',
-            'title_uz' => 'required|min:10|max:100',
-            'title_ru' => 'required|min:10|max:100',
-            'title_en' => 'required|min:10|max:100',
+            'title_uz' => 'required|min:5|max:100',
+            'title_ru' => 'required|min:5|max:100',
+            'title_en' => 'required|min:5|max:100',
             'body_uz' => 'required',
             'body_ru' => 'required',
             'body_en' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
         ]);
-
-        $result = Banner::create($request->all());
+        $banner = $request->except('image');
+        $result = Banner::create($banner);
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/banners'), $imageName);
 
         $image = new Image();
-        $image->image = $imageName;
+        $image->image = 'images/banners/'.$imageName;
         $image->imageable_id = $result->id;
         $image->imageable_type = 'App\Models\Banner';
         $image->save();
@@ -113,20 +113,24 @@ class BannerController extends Controller
     {
         $request->validate([
             'type' => 'required',
-            'title_uz' => 'required|min:10|max:100',
-            'title_ru' => 'required|min:10|max:100',
-            'title_en' => 'required|min:10|max:100',
+            'title_uz' => 'required|min:5|max:100',
+            'title_ru' => 'required|min:5|max:100',
+            'title_en' => 'required|min:5|max:100',
             'body_uz' => 'required',
             'body_ru' => 'required',
             'body_en' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
         ]);
-        $result = Banner::find($id)->update($request->all());
+        $banner = $request->except(['image', '_method']);
+        $result = Banner::find($id)->update($banner);
 
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/banners'), $imageName);
-            $image = Image::where('imageable_id', $id)->where('imageable_type', 'App\Models\Banner')->first();
-            $image->image = $imageName;
+            $image = new Image();
+            $image->image = 'images/banners/'.$imageName;
+            $image->imageable_id = $id;
+            $image->imageable_type = 'App\Models\Banner';
             $image->save();
         }
 

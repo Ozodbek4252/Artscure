@@ -14,8 +14,6 @@ class Request extends Model
             'phone',
             'email',
             'portfolio',
-            'cover_letter_uz',
-            'cover_letter_ru',
-            'cover_letter_en',
+            'cover_letter',
     ];
 }
