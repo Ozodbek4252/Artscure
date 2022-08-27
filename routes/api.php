@@ -61,7 +61,7 @@ Route::get('/banners/main', [BannerController::class, 'main'])->name('banners');
 Route::get('/banners/bottom', [BannerController::class, 'bottom'])->name('banners');
 
 // Request
-Route::post('/requests',[RequestController::class, 'store'])->name('requests');
+Route::post('/requests',[RequestController::class, 'store'])->name('requests.store');
 
 
 // ------------- Protected Routes -------------
@@ -99,22 +99,22 @@ Route::group([
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
 
     // Contact
-    Route::get('/contact',[ContactController::class, 'index'])->name('contact');
-    Route::get('/contacts/{num}',[ContactController::class, 'paginate'])->name('contact.paginate');
-    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact');
+    Route::get('/contacts',[ContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{num}',[ContactController::class, 'paginate'])->name('contacts.paginate');
+    Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
     // Banner
-    Route::get('/banners', [BannerController::class, 'index'])->name('banners');
-    Route::get('/banners/{id}', [BannerController::class, 'show'])->name('banners');
-    Route::post('/banners', [BannerController::class, 'store'])->name('banners');
-    Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners');
-    Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners');
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+    Route::get('/banners/{id}', [BannerController::class, 'show'])->name('banners.show');
+    Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
+    Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners.update');
+    Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners.destroy');
 
     // Request
-    Route::get('/requests',[RequestController::class, 'index'])->name('requests');
+    Route::get('/requests',[RequestController::class, 'index'])->name('requests.index');
     Route::get('/requests/{num}',[RequestController::class, 'paginate'])->name('requests.paginate');
-    Route::get('/request/{id}',[RequestController::class, 'show'])->name('requests');
-    Route::delete('/requests/{id}',[RequestController::class, 'destroy'])->name('requests');
+    Route::get('/request/{id}',[RequestController::class, 'show'])->name('requests.show');
+    Route::delete('/requests/{id}',[RequestController::class, 'destroy'])->name('requests.destroy');
 
     // NewsCategory
     Route::get('/newsCategory/{id}', [NewsCategoryController::class, 'show'])->name('newsCategory.show');

@@ -19,9 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('portfolio')->nullable();
-            $table->text('cover_letter_uz');
-            $table->text('cover_letter_ru');
-            $table->text('cover_letter_en');
+            $table->text('cover_letter');
             $table->timestamps();
         });
     }

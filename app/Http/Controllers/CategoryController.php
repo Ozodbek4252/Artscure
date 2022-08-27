@@ -43,7 +43,7 @@ class CategoryController extends Controller
         $request->image->move(public_path('images/categories'), $imageName);
 
         $image = new Image();
-        $image->image = $imageName;
+        $image->image = 'images/categories/'.$imageName;
         $image->imageable_id = $result->id;
         $image->imageable_type = 'App\Models\Category';
         $image->save();
