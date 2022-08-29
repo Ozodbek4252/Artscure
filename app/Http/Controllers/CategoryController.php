@@ -13,11 +13,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($count=null)
+    public function index($count = null)
     {
-        if($count){
+        if ($count) {
             return Category::orderBy('updated_at')->take($count)->get();
-        }else{
+        } else {
             return Category::all();
         }
     }
@@ -34,25 +34,26 @@ class CategoryController extends Controller
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
         ]);
-        
-        $result = Category::create($request->all());
-        
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+
+        $category = $request->except('image');
+        $result = Category::create($category);
+
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/categories'), $imageName);
 
         $image = new Image();
-        $image->image = 'images/categories/'.$imageName;
+        $image->image = 'images/categories/' . $imageName;
         $image->imageable_id = $result->id;
         $image->imageable_type = 'App\Models\Category';
         $image->save();
 
-        if($result){
+        if ($result) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -68,9 +69,9 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
-        if($category){
+        if ($category) {
             return $category;
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Category Not Found With This Id'
             ], 500);
@@ -86,29 +87,32 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
         $request->validate([
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
+        $category = $request->except(['image', '_method']);
+        $result = Category::find($id)->update($category);
 
-        $result = Category::find($id)->update($request->all());
-
-        if($request->image){
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/categories'), $imageName);
-            $image = Image::where('imageable_id', $id)->where('imageable_type', 'App\Models\Category')->first();
-            $image->image = $imageName;
+
+            $image = new Image();
+            $image->image = 'images/categories/'.$imageName;
+            $image->imageable_id = $id;
+            $image->imageable_type = 'App\Models\Category';
             $image->save();
         }
 
-        if($result){
+        if ($result) {
             return response()->json([
                 'message' => 'Updated Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -124,11 +128,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $result = Category::find($id)->delete();
-        if($result){
+        if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
