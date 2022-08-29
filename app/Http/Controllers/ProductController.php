@@ -72,17 +72,14 @@ class ProductController extends Controller
         $product->slug = $slug;
         $result = $product->save();
         
-        if ($request->image) {
-            foreach ($request->image as $photo) {
-                $imageName = time() . '.' . $photo->getClientOriginalExtension();
-                $photo->move(public_path('images/products'), $imageName);
-
-                $img = new Image();
-                $img->image = 'images/products/'.$imageName;
-                $img->imageable_id = $product->id;
-                $img->imageable_type = 'App\Models\Product';
-                $img->save();
-            }
+        foreach ($request->image as $photo) {
+            $imageName = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move(public_path('images/products'), $imageName);
+            $img = new Image();
+            $img->image = 'images/products/'.$imageName;
+            $img->imageable_id = $product->id;
+            $img->imageable_type = 'App\Models\Product';
+            $img->save();
         }
 
         if ($request->tools) {
@@ -142,23 +139,41 @@ class ProductController extends Controller
             'description_uz' => 'required|string',
             'description_ru' => 'required|string',
             'description_en' => 'required|string',
+            'image[]' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
+        
+        $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        
         $product = Product::where('slug', $slug)->first();
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-
-        $product = $request->except(['image', '_method']);
-        $result = Product::find($slug)->update($product); 
-
+        $product->name_uz = $request->name_uz;
+        $product->name_ru = $request->name_ru;
+        $product->name_en = $request->name_en;
+        $product->certificate = $request->certificate;
+        $product->frame = $request->frame;
+        $product->size = $request->size;
+        $product->status = $request->status;
+        $product->description_uz = $request->description_uz;
+        $product->description_ru = $request->description_ru;
+        $product->description_en = $request->description_en;
+        $product->type_id = $request->type_id;
+        $product->artist_id = $request->artist_id;
+        $product->year = $request->year;
+        $product->city = $request->city;
+        $product->unique = $request->unique;
+        $product->signiture = $request->signiture;
+        $product->price = $request->price;
+        $product->slug = $new_slug;
+        $result = $product->save();
 
         if ($request->image) {
             foreach ($request->image as $photo) {
-                $imageName = time() . '.' . $photo->getClientOriginalExtension();
+                $imageName = Str::random(5) . '.' . $photo->getClientOriginalExtension();
                 $photo->move(public_path('images/products'), $imageName);
 
                 $img = new Image();
                 $img->image = 'images/products/'.$imageName;
-                $img->imageable_id = $result->id;
+                $img->imageable_id = $product->id;
                 $img->imageable_type = 'App\Models\Product';
                 $img->save();
             }

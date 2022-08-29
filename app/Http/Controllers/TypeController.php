@@ -46,16 +46,20 @@ class TypeController extends Controller
 
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $type = $request->except('image');
-        $result = Type::create($type);
-
+        $type = new Type();
+        $type->name_uz = $request->name_uz;
+        $type->name_ru = $request->name_ru;
+        $type->name_en = $request->name_en;
+        $type->category_id = $request->category_id;
+        $type->slug = $slug;
+        $result = $type->save();
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/types'), $imageName);
 
         $image = new Image();
         $image->image = 'images/types/' . $imageName;
-        $image->imageable_id = $result->id;
+        $image->imageable_id = $type->id;
         $image->imageable_type = 'App\Models\Type';
         $image->save();
 
@@ -104,27 +108,32 @@ class TypeController extends Controller
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
         $type = Type::where('slug', $slug)->first();
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-
-        $type = $request->except(['image', '_method']);
-        $result = Type::find($slug)->update($type);
-
-
+        
+        $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        
+        $type->name_uz = $request->name_uz;
+        $type->name_ru = $request->name_ru;
+        $type->name_en = $request->name_en;
+        $type->category_id = $request->category_id;
+        $type->slug = $new_slug;
+        $result = $type->save();
+        
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/types'), $imageName);
 
             $image = new Image();
             $image->image = 'images/types/'.$imageName;
-            $image->imageable_id = $slug;
+            $image->imageable_id = $type->id;
             $image->imageable_type = 'App\Models\Type';
             $image->save();
         }
 
-        if ($type) {
+        if ($result) {
             return response()->json([
                 'message' => 'Updated Successfully'
             ], 200);
