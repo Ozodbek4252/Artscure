@@ -49,38 +49,20 @@ class ArtistController extends Controller
             'description_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
             'speciality' => 'required|string|max:30',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $slug = str_replace(' ', '_', strtolower($request->first_name_uz).'-'.strtolower($request->last_name_uz)).'-'.Str::random(5);
-        $artist = new Artist();
-        $artist->first_name_uz = $request->first_name_uz;
-        $artist->first_name_ru = $request->first_name_ru;
-        $artist->first_name_en = $request->first_name_en;
-        $artist->last_name_uz = $request->last_name_uz;
-        $artist->last_name_ru = $request->last_name_ru;
-        $artist->last_name_en = $request->last_name_en;
-        $artist->description_uz = $request->description_en;
-        $artist->description_ru = $request->description_ru;
-        $artist->description_en = $request->description_en;
-        $artist->category_id = $request->category_id;
-        $artist->speciality = $request->speciality;
-        $artist->rate = $request->rate;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->muzey_ru = $request->muzey_ru;
-        $artist->muzey_en = $request->muzey_en;
-        $artist->medal_uz = $request->medal_uz;
-        $artist->medal_ru = $request->medal_ru;
-        $artist->medal_en = $request->medal_en;
-        $artist->label = $request->label;
-        $artist->slug = $slug;
-        $result = $artist->save();
-                
+        
+        $artist = $request->except('image');
+        $result = Artist::create($artist);
+        
         $imageName = time().'.'.$request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/artists'), $imageName);
 
         $image = new Image();
-        $image->image = $imageName;
-        $image->imageable_id = $artist->id;
+        $image->image = 'images/artists/' . $imageName;
+        $image->imageable_id = $request->id;
         $image->imageable_type = 'App\Models\Artist';
         $image->save();
 
@@ -88,7 +70,7 @@ class ArtistController extends Controller
             foreach($request->tools as $tool){
                 $toolable = new Toolable();
                 $toolable->tool_id = $tool;
-                $toolable->toolable_id = $artist->id;
+                $toolable->toolable_id = $result->id;
                 $toolable->toolable_type = 'App\Models\Artist';
                 $toolable->save();
             }
@@ -151,33 +133,18 @@ class ArtistController extends Controller
 
         $artist = Artist::where('slug', $slug)->first();
         $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz).'-'.strtolower($request->last_name_uz)).'-'.Str::random(5);
-        $artist->first_name_uz = $request->first_name_uz;
-        $artist->first_name_ru = $request->first_name_ru;
-        $artist->first_name_en = $request->first_name_en;
-        $artist->last_name_uz = $request->last_name_uz;
-        $artist->last_name_ru = $request->last_name_ru;
-        $artist->last_name_en = $request->last_name_en;
-        $artist->description_uz = $request->description_en;
-        $artist->description_ru = $request->description_ru;
-        $artist->description_en = $request->description_en;
-        $artist->category_id = $request->category_id;
-        $artist->speciality = $request->speciality;
-        $artist->rate = $request->rate;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->muzey_ru = $request->muzey_ru;
-        $artist->muzey_en = $request->muzey_en;
-        $artist->medal_uz = $request->medal_uz;
-        $artist->medal_ru = $request->medal_ru;
-        $artist->medal_en = $request->medal_en;
-        $artist->label = $request->label;
-        $artist->slug = $new_slug;
-        $result = $artist->save();
+        
+        $artist = $request->except(['image', '_method']);
+        $result = Artist::find($slug)->update($artist);
 
-        if($request->image){
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/artists'), $imageName);
-            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Artist')->first();
-            $image->image = $imageName;
+
+            $image = new Image();
+            $image->image = 'images/artists/'.$imageName;
+            $image->imageable_id = $slug;
+            $image->imageable_type = 'App\Models\Artist';
             $image->save();
         }
 

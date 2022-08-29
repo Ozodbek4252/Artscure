@@ -46,13 +46,15 @@ class TypeController extends Controller
 
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $result = Type::create($request->all());
+        $type = $request->except('image');
+        $result = Type::create($type);
+
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/types'), $imageName);
 
         $image = new Image();
-        $image->image = $imageName;
+        $image->image = 'images/types/' . $imageName;
         $image->imageable_id = $result->id;
         $image->imageable_type = 'App\Models\Type';
         $image->save();
@@ -103,21 +105,22 @@ class TypeController extends Controller
             'name_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
         ]);
+        
+        $type = Type::where('slug', $slug)->first();
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $type = Type::where('slug', $slug)->first();
-        $type->name_uz = $request->name_uz;
-        $type->name_ru = $request->name_ru;
-        $type->name_en = $request->name_en;
-        $type->slug = $slug;
-        $type->category_id = $request->category_id;
-        $type->save();
+        $type = $request->except(['image', '_method']);
+        $result = Type::find($slug)->update($type);
+
 
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images/categories'), $imageName);
-            $image = Image::where('imageable_id', $slug)->where('imageable_type', 'App\Models\Type')->first();
-            $image->image = $imageName;
+            $request->image->move(public_path('images/types'), $imageName);
+
+            $image = new Image();
+            $image->image = 'images/types/'.$imageName;
+            $image->imageable_id = $slug;
+            $image->imageable_type = 'App\Models\Type';
             $image->save();
         }
 
