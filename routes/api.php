@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ToolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 // Auth
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// Search
+// Route::get("search",[SearchController::class, 'search']);
 
 // News Category
 Route::get('/newsCategories', [NewsCategoryController::class, 'index'])->name('newsCategory');
@@ -61,7 +65,7 @@ Route::get('/banners/main', [BannerController::class, 'main'])->name('banners');
 Route::get('/banners/bottom', [BannerController::class, 'bottom'])->name('banners');
 
 // Request
-Route::post('/requests',[RequestController::class, 'store'])->name('requests.store');
+Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
 
 // ------------- Protected Routes -------------
@@ -78,7 +82,7 @@ Route::group([
     Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
-    
+
     // Type
     Route::get('/types/{num}', [TypeController::class, 'paginate'])->name('type.paginate');
     Route::post('/types', [TypeController::class, 'store'])->name('type.store');
@@ -99,8 +103,8 @@ Route::group([
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
 
     // Contact
-    Route::get('/contacts',[ContactController::class, 'index'])->name('contacts.index');
-    Route::get('/contacts/{num}',[ContactController::class, 'paginate'])->name('contacts.paginate');
+    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{num}', [ContactController::class, 'paginate'])->name('contacts.paginate');
     Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
     // Banner
@@ -111,10 +115,10 @@ Route::group([
     Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners.destroy');
 
     // Request
-    Route::get('/requests',[RequestController::class, 'index'])->name('requests.index');
-    Route::get('/requests/{num}',[RequestController::class, 'paginate'])->name('requests.paginate');
-    Route::get('/request/{id}',[RequestController::class, 'show'])->name('requests.show');
-    Route::delete('/requests/{id}',[RequestController::class, 'destroy'])->name('requests.destroy');
+    Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
+    Route::get('/requests/{num}', [RequestController::class, 'paginate'])->name('requests.paginate');
+    Route::get('/request/{id}', [RequestController::class, 'show'])->name('requests.show');
+    Route::delete('/requests/{id}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
     // NewsCategory
     Route::get('/newsCategory/{id}', [NewsCategoryController::class, 'show'])->name('newsCategory.show');
@@ -126,7 +130,7 @@ Route::group([
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
     Route::put('/news/{slug}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{slug}', [NewsController::class, 'destroy'])->name('news.destroy');
-    
+
     // Product
     Route::post('/products', [ProductController::class, 'store'])->name('product.store');
     Route::put('/products/{slug}', [ProductController::class, 'update'])->name('product.update');
@@ -138,7 +142,7 @@ Route::group([
     Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
     Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
     Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
-    
+
+    // Search
 });
-
-
+Route::post("search", [SearchController::class, 'search']);
