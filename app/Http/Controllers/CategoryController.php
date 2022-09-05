@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -28,15 +29,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $category = $request->except('image');
         $result = Category::create($category);
 
