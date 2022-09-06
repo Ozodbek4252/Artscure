@@ -145,7 +145,4 @@ Route::group([
     Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
     Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
     Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
-
-    // Search
 });
-Route::post("search", [SearchController::class, 'search']);
