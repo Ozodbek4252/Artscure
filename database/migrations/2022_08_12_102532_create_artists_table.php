@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('last_name_uz');
             $table->string('last_name_ru');
             $table->string('last_name_en');
-            $table->string('speciality');
+            $table->string('speciality')->nullable();
             $table->string('rate', 0, 5)->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->references('id')->onDelete('set null');
             $table->text('description_uz');

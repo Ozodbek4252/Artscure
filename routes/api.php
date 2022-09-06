@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ToolController;
@@ -67,6 +68,8 @@ Route::get('/banners/bottom', [BannerController::class, 'bottom'])->name('banner
 // Request
 Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
 
+Route::post('/search', [SearchController::class, 'search'])->name('search');
+Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
 
 // ------------- Protected Routes -------------
 Route::group([
@@ -142,7 +145,4 @@ Route::group([
     Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
     Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
     Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
-
-    // Search
 });
-Route::post("search", [SearchController::class, 'search']);
