@@ -37,6 +37,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
@@ -46,31 +47,34 @@ class ProductController extends Controller
             'description_en' => 'required|string',
             'artist_id' => 'required|integer',
             'type_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
         ]);
-
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-
+        
         $product = new Product();
         $product->name_uz = $request->name_uz;
         $product->name_ru = $request->name_ru;
         $product->name_en = $request->name_en;
-        $product->certificate = $request->certificate;
-        $product->frame = $request->frame;
+        $product->certificate = $request->certificate ?? 0;
+        $product->frame = $request->frame ?? 0;
         $product->size = $request->size;
-        $product->status = $request->status;
+        $product->status = $request->status ?? 0;
         $product->description_uz = $request->description_uz;
         $product->description_ru = $request->description_ru;
         $product->description_en = $request->description_en;
-        $product->type_id = $request->type_id;
         $product->artist_id = $request->artist_id;
+        $product->type_id = $request->type_id;
         $product->year = $request->year;
         $product->city = $request->city;
-        $product->unique = $request->unique;
-        $product->signiture = $request->signiture;
+        $product->unique = $request->unique ?? 0;
+        $product->signiture = $request->signiture ?? 0;
         $product->price = $request->price;
         $product->slug = $slug;
         $result = $product->save();
+        
+
+
         
         foreach ($request->image as $photo) {
             $imageName = time() . '.' . $photo->getClientOriginalExtension();
@@ -139,7 +143,10 @@ class ProductController extends Controller
             'description_uz' => 'required|string',
             'description_ru' => 'required|string',
             'description_en' => 'required|string',
-            'image[]' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'artist_id' => 'required|integer',
+            'type_id' => 'required|integer',
+            'image' => 'nullable',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         
