@@ -35,7 +35,6 @@ class ToolController extends Controller
      */
     public function store(Request $request)
     {
-        return  $request->all();
         $request->validate([
             'tool_uz' => 'required|string',
             'tool_ru' => 'required|string',

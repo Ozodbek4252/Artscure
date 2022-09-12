@@ -205,7 +205,24 @@ class ProductController extends Controller
      */
     public function destroy($slug)
     {
-        $result = Product::where('slug', $slug)->delete();
+        $product = Product::where('slug', $slug)->first();
+        if(count($product->images)>0){
+            foreach($product->images as $image){
+                if(file_exists($image->image)){
+                    unlink($image->image);
+                }
+                Image::find($image->id)->delete();
+            }
+        }
+
+        if(count($product->tools)>0){
+            foreach($product->tools as $tools){
+                $tool = Toolable::where('toolable_id', $tools->pivot->toolable_id)->where('tool_id', $tools->pivot->tool_id)->where('toolable_type', 'App\Models\Product')->first();
+                $tool->delete();
+            }
+        }
+
+        $result = $product->delete();
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

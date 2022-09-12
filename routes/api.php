@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ToolController;
@@ -145,4 +146,7 @@ Route::group([
     Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
     Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
     Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
+    
+    // Delete Image
+    Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('image.destroy');
 });

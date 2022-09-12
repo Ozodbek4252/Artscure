@@ -34,6 +34,7 @@ class Artist extends Model
         'medal_ru',
         'medal_en',
         'label',
+        'slug'
     ];
 
     public function images()
