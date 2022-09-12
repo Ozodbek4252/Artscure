@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Artist;
+use App\Models\Type;
 
 class CategoryController extends Controller
 {
@@ -121,7 +123,30 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $result = Category::find($id)->delete();
+        $category = Category::find($id);
+        
+        if(count($category->images)>0){
+            foreach($category->images as $image){
+                if(file_exists($image->image)){
+                    unlink($image->image);
+                }
+                Image::find($image->id)->delete();
+            }
+        }
+        
+        if (count($category->types)>0){
+            foreach($category->types as $type){
+                Type::find($type->id)->delete();
+            }
+        }
+        
+        if (count($category->artists)>0){
+            foreach($category->artists as $artist){
+                Artist::find($artist->id)->delete();
+            }
+        }
+
+        $result = $category->delete();
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

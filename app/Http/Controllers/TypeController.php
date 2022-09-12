@@ -152,7 +152,26 @@ class TypeController extends Controller
      */
     public function destroy($slug)
     {
-        $result = Type::where('slug', $slug)->delete();
+        $type = Type::where('slug', $slug)->first();
+
+        if(count($type->images)>0){
+            foreach($type->images as $image){
+                if(file_exists($image->image)){
+                    unlink($image->image);
+                }
+                Image::find($image->id)->delete();
+            }
+        }
+
+        if (count($type->products)>0){
+            foreach($type->products as $product){
+                $product->type_id = null;
+                $product->save();
+            }
+        }
+
+        $result =  $type->delete();
+        
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

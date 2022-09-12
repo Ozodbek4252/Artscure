@@ -27,6 +27,7 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
+        // type: 0 - top, 1 - bottom
         $request->validate([
             'type' => 'required',
             'title_uz' => 'required|min:5|max:100',
@@ -154,7 +155,18 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        $result = Banner::find($id)->delete();
+        $banner = Banner::find($id);
+
+        if(count($banner->images)>0){
+            foreach($banner->images as $image){
+                if(file_exists($image->image)){
+                    unlink($image->image);
+                }
+                Image::find($image->id)->delete();
+            }
+        }
+
+        $result = $banner->delete();
         if ($result) {
             return response()->json([
                 'banner' => 'Delete Successfully'

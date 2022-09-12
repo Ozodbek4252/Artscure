@@ -8,9 +8,11 @@ use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use stdClass;
+use App\Traits\UtilityTrait;
 
 class ArtistController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
@@ -55,29 +57,12 @@ class ArtistController extends Controller
 
         $slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
         
-        $artist = new Artist();
-        $artist->first_name_uz = $request->first_name_uz;
-        $artist->first_name_ru = $request->first_name_ru;
-        $artist->first_name_en = $request->first_name_en;
-        $artist->last_name_uz = $request->last_name_uz;
-        $artist->last_name_ru = $request->last_name_ru;
-        $artist->last_name_en = $request->last_name_en;
-        $artist->speciality = $request->speciality;
-        $artist->rate = $request->rate;
-        $artist->category_id = $request->category_id;
-        $artist->description_uz = $request->description_uz;
-        $artist->description_ru = $request->description_ru;
-        $artist->description_en = $request->description_en;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->muzey_ru = $request->muzey_ru;
-        $artist->muzey_en = $request->muzey_en;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->medal_uz = $request->medal_uz;
-        $artist->medal_ru = $request->medal_ru;
-        $artist->medal_en = $request->medal_en;
-        $artist->label = $request->label;
-        $artist->slug = $slug;
-        $result = $artist->save();
+        $artist = $request->except(['image']);
+
+        // add slug
+        $artist['slug'] = $slug;
+
+        $artist = Artist::create($artist);
         
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/artists'), $imageName);
@@ -98,7 +83,7 @@ class ArtistController extends Controller
             }
         }
 
-        if ($result) {
+        if ($artist) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -152,34 +137,17 @@ class ArtistController extends Controller
             'category_id' => 'required|integer',
             'speciality' => 'required|string|max:30',
         ]);
+        
 
         $artist = Artist::where('slug', $slug)->first();
 
-        $slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
+        $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
 
-        // $artist = $request->except(['image', '_method']);
-        $artist->first_name_uz = $request->first_name_uz;
-        $artist->first_name_ru = $request->first_name_ru;
-        $artist->first_name_en = $request->first_name_en;
-        $artist->last_name_uz = $request->last_name_uz;
-        $artist->last_name_ru = $request->last_name_ru;
-        $artist->last_name_en = $request->last_name_en;
-        $artist->speciality = $request->speciality;
-        $artist->rate = $request->rate;
-        $artist->category_id = $request->category_id;
-        $artist->description_uz = $request->description_uz;
-        $artist->description_ru = $request->description_ru;
-        $artist->description_en = $request->description_en;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->muzey_ru = $request->muzey_ru;
-        $artist->muzey_en = $request->muzey_en;
-        $artist->muzey_uz = $request->muzey_uz;
-        $artist->medal_uz = $request->medal_uz;
-        $artist->medal_ru = $request->medal_ru;
-        $artist->medal_en = $request->medal_en;
-        $artist->label = $request->label;
-        $artist->slug = $slug;
-        $result = $artist->save();
+        $artist = $request->except(['image', '_method']);
+
+        $artist['slug'] = $new_slug;
+
+        $artist = Artist::create($artist);
 
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
@@ -192,9 +160,9 @@ class ArtistController extends Controller
             $image->save();
         }
 
-        if ($result) {
+        if ($artist) {
             return response()->json([
-                'message' => 'Updated Successfully'
+                'message' => 'Artist updated Successfully'
             ], 200);
         } else {
             return response()->json([
@@ -211,11 +179,25 @@ class ArtistController extends Controller
      */
     public function destroy($slug)
     {
-        $result = Artist::where('slug', $slug)->delete();
+        $artist = Artist::where('slug', $slug)->first();
+
+        // using Trait
+        $this->deleteImages($artist->images);
+
+        $this->deleteTools($artist->tools, 'App\Models\Artist');
+
+        $this->setNullToArtistId($artist->products);
+        
+        $result = $artist->delete();
+
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'
             ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Error'
+            ], 500);
         }
     }
 }

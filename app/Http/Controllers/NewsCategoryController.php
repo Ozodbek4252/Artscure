@@ -97,7 +97,14 @@ class NewsCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $result = NewsCategory::find($id)->delete();
+        $result = NewsCategory::find($id);
+        if (count($result->news)>0){
+            foreach($result->news as $news){
+                return $news;
+            }
+        };
+        
+        return $result->news;
         if($result){
             return response()->json([
                 'message' => 'Deleted Successfully'

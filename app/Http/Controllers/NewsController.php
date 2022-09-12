@@ -53,12 +53,14 @@ class NewsController extends Controller
 
         $slug = str_replace(' ', '_', strtolower($request->title_uz)) . '-' . Str::random(5);
 
+
         $news = new News();
         $news->title_uz     = $request->title_uz;
         $news->title_ru = $request->title_ru;
         $news->title_en = $request->title_en;
         $news->body_uz = $request->body_uz;
         $news->body_ru = $request->body_ru;
+        
         $news->body_en = $request->body_en;
         $news->category_id = $request->category_id;
         $news->slug = $slug;
@@ -68,7 +70,7 @@ class NewsController extends Controller
         $request->image->move(public_path('images/news'), $imageName);
 
         $image = new Image();
-        $image->image = $imageName;
+        $image->image = 'images/news/'.$imageName;
         $image->imageable_id = $news->id;
         $image->imageable_type = 'App\Models\News';
         $image->save();
