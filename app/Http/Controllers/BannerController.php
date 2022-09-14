@@ -6,6 +6,7 @@ use App\Models\Banner;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Traits\UtilityTrait;
+use App\Http\Requests\BannerRequest;
 
 class BannerController extends Controller
 {
@@ -26,19 +27,8 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BannerRequest $request)
     {
-        // type: 0 - top, 1 - bottom
-        $request->validate([
-            'type' => 'required',
-            'title_uz' => 'required|min:5|max:100',
-            'title_ru' => 'required|min:5|max:100',
-            'title_en' => 'required|min:5|max:100',
-            'body_uz' => 'required',
-            'body_ru' => 'required',
-            'body_en' => 'required',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
-        ]);
         $banner = $request->except('image');
         $result = Banner::create($banner);
 

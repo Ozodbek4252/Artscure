@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -32,13 +33,8 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:3',
-            'phone' => 'required',
-        ]);
-        
         $result = Contact::create($request->all());
         
         if($result){
@@ -61,7 +57,7 @@ class ContactController extends Controller
     public function destroy($id)
     {
         $result = Contact::find($id)->delete();
-        
+
         if($result){
             return response()->json([
                 'message' => 'Deleted Successfully'

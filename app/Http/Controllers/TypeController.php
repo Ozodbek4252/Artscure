@@ -7,6 +7,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
+use App\Http\Requests\TypeRequest;
 
 class TypeController extends Controller
 {
@@ -36,16 +37,8 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
         $type = $request->except(['image']);
@@ -107,7 +100,7 @@ class TypeController extends Controller
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
             'category_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
