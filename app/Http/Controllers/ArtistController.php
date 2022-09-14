@@ -7,7 +7,6 @@ use App\Models\Image;
 use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use stdClass;
 use App\Traits\UtilityTrait;
 
 class ArtistController extends Controller
@@ -138,16 +137,13 @@ class ArtistController extends Controller
             'speciality' => 'required|string|max:30',
         ]);
         
-
-        $artist = Artist::where('slug', $slug)->first();
-
         $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
 
         $artist = $request->except(['image', '_method']);
 
         $artist['slug'] = $new_slug;
 
-        $artist = Artist::create($artist);
+        $artist = Artist::updateOrCreate(['slug'=>$slug], $artist);
 
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();

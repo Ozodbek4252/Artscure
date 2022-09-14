@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Artist;
 use App\Models\Type;
+use App\Traits\UtilityTrait;
 
 class CategoryController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
@@ -93,6 +95,8 @@ class CategoryController extends Controller
         $category = $request->except(['image', '_method']);
         $result = Category::find($id)->update($category);
 
+        
+
         if ($request->image) {
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/categories'), $imageName);
@@ -124,27 +128,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+
+        $this->deleteImages($category->images);
         
-        if(count($category->images)>0){
-            foreach($category->images as $image){
-                if(file_exists($image->image)){
-                    unlink($image->image);
-                }
-                Image::find($image->id)->delete();
-            }
-        }
+        $this->deleteTypes($category->types);
         
-        if (count($category->types)>0){
-            foreach($category->types as $type){
-                Type::find($type->id)->delete();
-            }
-        }
-        
-        if (count($category->artists)>0){
-            foreach($category->artists as $artist){
-                Artist::find($artist->id)->delete();
-            }
-        }
+        $this->deleteArtists($category->artists);
 
         $result = $category->delete();
         if ($result) {

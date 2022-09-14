@@ -80,6 +80,7 @@ class RequestController extends Controller
     public function destroy($id)
     {
         $result = RequestModel::find($id)->delete();
+        
         if ($result) {
             return response()->json([
                 'request' => 'Delete Succesfully'
