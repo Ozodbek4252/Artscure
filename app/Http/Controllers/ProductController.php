@@ -8,6 +8,7 @@ use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -37,21 +38,8 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string',
-            'description_ru' => 'required|string',
-            'description_en' => 'required|string',
-            'artist_id' => 'required|integer',
-            'type_id' => 'required|integer',
-            'image' => 'required',
-            'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
         
         $product = $request->except(['image']);

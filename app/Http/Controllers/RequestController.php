@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Request as RequestModel;
+use App\Http\Requests\RequestRequest;
 
 class RequestController extends Controller
 {
@@ -32,14 +33,8 @@ class RequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestRequest $request)
     {
-        $request->validate([
-            'full_name' => 'required',
-            'phone' => 'required',
-            'cover_letter' => 'required|min:30',
-        ]);
-        
         $result = RequestModel::create($request->all());
 
         if ($result) {
@@ -80,7 +75,7 @@ class RequestController extends Controller
     public function destroy($id)
     {
         $result = RequestModel::find($id)->delete();
-        
+
         if ($result) {
             return response()->json([
                 'request' => 'Delete Succesfully'

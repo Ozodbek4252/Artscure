@@ -8,6 +8,7 @@ use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
+use App\Http\Requests\ArtistRequest;
 
 class ArtistController extends Controller
 {
@@ -37,23 +38,8 @@ class ArtistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArtistRequest $request)
     {
-        $request->validate([
-            'first_name_uz' => 'required|string|max:30',
-            'first_name_ru' => 'required|string|max:30',
-            'first_name_en' => 'required|string|max:30',
-            'last_name_uz' => 'required|string|max:30',
-            'last_name_ru' => 'required|string|max:30',
-            'last_name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string|max:30',
-            'description_ru' => 'required|string|max:30',
-            'description_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
-            'speciality' => 'required|string|max:30',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
         
         $artist = $request->except(['image']);
