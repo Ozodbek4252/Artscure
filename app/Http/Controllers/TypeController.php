@@ -6,9 +6,11 @@ use App\Models\Type;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Traits\UtilityTrait;
 
 class TypeController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
@@ -46,13 +48,10 @@ class TypeController extends Controller
 
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $type = new Type();
-        $type->name_uz = $request->name_uz;
-        $type->name_ru = $request->name_ru;
-        $type->name_en = $request->name_en;
-        $type->category_id = $request->category_id;
-        $type->slug = $slug;
-        $result = $type->save();
+        $type = $request->except(['image']);
+        $type['slug'] = $slug;
+
+        $type = Type::create($type);
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/types'), $imageName);
@@ -63,7 +62,7 @@ class TypeController extends Controller
         $image->imageable_type = 'App\Models\Type';
         $image->save();
 
-        if ($result) {
+        if ($type) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -111,9 +110,9 @@ class TypeController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
-        $type = Type::where('slug', $slug)->first();
-        
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        
+        $type = Type::where('slug', $slug)->first();
         
         $type->name_uz = $request->name_uz;
         $type->name_ru = $request->name_ru;
@@ -154,21 +153,9 @@ class TypeController extends Controller
     {
         $type = Type::where('slug', $slug)->first();
 
-        if(count($type->images)>0){
-            foreach($type->images as $image){
-                if(file_exists($image->image)){
-                    unlink($image->image);
-                }
-                Image::find($image->id)->delete();
-            }
-        }
-
-        if (count($type->products)>0){
-            foreach($type->products as $product){
-                $product->type_id = null;
-                $product->save();
-            }
-        }
+        $this->deleteImages($type->images);
+        
+        $this->setNullToArtistId($type->products);
 
         $result =  $type->delete();
         

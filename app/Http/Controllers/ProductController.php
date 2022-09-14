@@ -7,9 +7,11 @@ use App\Models\Product;
 use App\Models\Toolable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Traits\UtilityTrait;
 
 class ProductController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +39,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
@@ -50,31 +51,12 @@ class ProductController extends Controller
             'image' => 'required',
             'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
         ]);
+
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
         
-        $product = new Product();
-        $product->name_uz = $request->name_uz;
-        $product->name_ru = $request->name_ru;
-        $product->name_en = $request->name_en;
-        $product->certificate = $request->certificate ?? 0;
-        $product->frame = $request->frame ?? 0;
-        $product->size = $request->size;
-        $product->status = $request->status ?? 0;
-        $product->description_uz = $request->description_uz;
-        $product->description_ru = $request->description_ru;
-        $product->description_en = $request->description_en;
-        $product->artist_id = $request->artist_id;
-        $product->type_id = $request->type_id;
-        $product->year = $request->year;
-        $product->city = $request->city;
-        $product->unique = $request->unique ?? 0;
-        $product->signiture = $request->signiture ?? 0;
-        $product->price = $request->price;
-        $product->slug = $slug;
-        $result = $product->save();
-        
-
-
+        $product = $request->except(['image']);
+        $product['slug'] = $slug;
+        $product = Product::create($product);
         
         foreach ($request->image as $photo) {
             $imageName = time() . '.' . $photo->getClientOriginalExtension();
@@ -96,9 +78,7 @@ class ProductController extends Controller
             }
         }
 
-
-
-        if ($result) {
+        if ($product) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -148,30 +128,13 @@ class ProductController extends Controller
             'image' => 'nullable',
             'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
         ]);
-
         
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
         
-        $product = Product::where('slug', $slug)->first();
-        $product->name_uz = $request->name_uz;
-        $product->name_ru = $request->name_ru;
-        $product->name_en = $request->name_en;
-        $product->certificate = $request->certificate;
-        $product->frame = $request->frame;
-        $product->size = $request->size;
-        $product->status = $request->status;
-        $product->description_uz = $request->description_uz;
-        $product->description_ru = $request->description_ru;
-        $product->description_en = $request->description_en;
-        $product->type_id = $request->type_id;
-        $product->artist_id = $request->artist_id;
-        $product->year = $request->year;
-        $product->city = $request->city;
-        $product->unique = $request->unique;
-        $product->signiture = $request->signiture;
-        $product->price = $request->price;
-        $product->slug = $new_slug;
-        $result = $product->save();
+        $product = $request->except(['image', '_method']);
+        $product['slug'] = $new_slug;
+
+        $product = Product::updateOrCreate(['slug'=>$slug], $product);
 
         if ($request->image) {
             foreach ($request->image as $photo) {
@@ -186,7 +149,7 @@ class ProductController extends Controller
             }
         }
 
-        if ($result) {
+        if ($product) {
             return response()->json([
                 'message' => 'Update Successfully'
             ], 200);
@@ -206,23 +169,13 @@ class ProductController extends Controller
     public function destroy($slug)
     {
         $product = Product::where('slug', $slug)->first();
-        if(count($product->images)>0){
-            foreach($product->images as $image){
-                if(file_exists($image->image)){
-                    unlink($image->image);
-                }
-                Image::find($image->id)->delete();
-            }
-        }
 
-        if(count($product->tools)>0){
-            foreach($product->tools as $tools){
-                $tool = Toolable::where('toolable_id', $tools->pivot->toolable_id)->where('tool_id', $tools->pivot->tool_id)->where('toolable_type', 'App\Models\Product')->first();
-                $tool->delete();
-            }
-        }
-
+        $this->deleteImages($product->images);
+        
+        $this->deleteTools($product->tools, 'App\Models\Product');
+        
         $result = $product->delete();
+        
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

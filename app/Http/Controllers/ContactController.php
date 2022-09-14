@@ -61,6 +61,7 @@ class ContactController extends Controller
     public function destroy($id)
     {
         $result = Contact::find($id)->delete();
+        
         if($result){
             return response()->json([
                 'message' => 'Deleted Successfully'

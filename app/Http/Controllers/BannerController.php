@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Image;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Traits\UtilityTrait;
 
 class BannerController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
@@ -157,14 +158,7 @@ class BannerController extends Controller
     {
         $banner = Banner::find($id);
 
-        if(count($banner->images)>0){
-            foreach($banner->images as $image){
-                if(file_exists($image->image)){
-                    unlink($image->image);
-                }
-                Image::find($image->id)->delete();
-            }
-        }
+        $this->deleteImages($banner->images);
 
         $result = $banner->delete();
         if ($result) {

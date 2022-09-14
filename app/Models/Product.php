@@ -32,6 +32,7 @@ class Product extends Model
         'type_id',
         'artist_id',
         'status',
+        'slug'
     ];
 
     public function images()
