@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('unique')->default('0');
             $table->integer('signiture')->default('0');
             $table->integer('price')->nullable();
+            $table->boolean('is_sold')->default(false);
             $table->timestamps();
         });
     }

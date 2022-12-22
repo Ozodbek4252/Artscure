@@ -17,6 +17,7 @@ class Type extends Model
         'name_uz',
         'name_ru',
         'name_en',
+        'slug',
         'category_id',
     ];
 

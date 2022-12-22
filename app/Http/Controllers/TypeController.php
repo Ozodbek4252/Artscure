@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use App\Models\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
 use App\Http\Requests\TypeRequest;
@@ -45,7 +44,6 @@ class TypeController extends Controller
         $type['slug'] = $slug;
 
         $type = Type::create($type);
-
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/types'), $imageName);
 
@@ -93,28 +91,21 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(TypeRequest $request, $slug)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-        
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-        
+
         $type = Type::where('slug', $slug)->first();
-        
+
         $type->name_uz = $request->name_uz;
         $type->name_ru = $request->name_ru;
         $type->name_en = $request->name_en;
         $type->category_id = $request->category_id;
         $type->slug = $new_slug;
         $result = $type->save();
-        
+
         if ($request->image) {
+            $this->deleteImages($type->images);
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/types'), $imageName);
 
@@ -147,11 +138,11 @@ class TypeController extends Controller
         $type = Type::where('slug', $slug)->first();
 
         $this->deleteImages($type->images);
-        
+
         $this->setNullToArtistId($type->products);
 
         $result =  $type->delete();
-        
+
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

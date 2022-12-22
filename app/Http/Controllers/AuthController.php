@@ -30,7 +30,7 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        return response($response, 201); 
+        return response($response, 201);
     }
 
     function login(Request $request)
@@ -49,7 +49,7 @@ class AuthController extends Controller
                 'message' => 'Invalid credentials'
             ], 401);
         }
-        
+
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
@@ -59,10 +59,10 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
-    
+
     function logout(Request $request){
         auth()->user()->tokens()->delete();
-        
+
         return response()->json([
             'message' => 'Logged out'
         ]);
@@ -71,5 +71,5 @@ class AuthController extends Controller
     function show(){
         return User::where('role', 1)->first();
     }
-    
+
 }

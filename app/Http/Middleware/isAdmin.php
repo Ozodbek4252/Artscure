@@ -19,7 +19,7 @@ class isAdmin
         if (!auth()->check() || !(auth()->user()->role == 1)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-        
+
         return $next($request);
     }
 }

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->text('body_en');
             $table->foreignId('category_id')->constrained('news_categories')->references('id')->onDelete('cascade');
             $table->timestamps();
+
+            // hashtag
         });
     }
 

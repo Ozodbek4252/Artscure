@@ -13,7 +13,7 @@ class TypeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,12 +23,22 @@ class TypeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        ];
+        if($this->_method == null) {
+            return [
+                'name_uz' => 'required|string|max:30',
+                'name_ru' => 'required|string|max:30',
+                'name_en' => 'required|string|max:30',
+                'category_id' => 'required|integer',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ];
+        }else{
+            return [
+                'name_uz' => 'required|string|max:30',
+                'name_ru' => 'required|string|max:30',
+                'name_en' => 'required|string|max:30',
+                'category_id' => 'required|integer',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            ];
+        }
     }
 }

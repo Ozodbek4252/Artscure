@@ -27,7 +27,7 @@ trait UtilityTrait {
       }
     }
   }
-  
+
   public function setNullToArtistId($items){
     if (count($items)>0){
       foreach($items as $product){
@@ -36,7 +36,7 @@ trait UtilityTrait {
       }
     }
   }
-  
+
   public function setNullToTypeId($items){
     if (count($items)>0){
       foreach($items as $product){
@@ -45,7 +45,7 @@ trait UtilityTrait {
       }
     }
   }
-  
+
   public function deleteTypes($types){
     if (count($types)>0){
       foreach($types as $type){
@@ -53,7 +53,7 @@ trait UtilityTrait {
       }
     }
   }
-  
+
   public function deleteArtists($artists){
     if (count($artists)>0){
       foreach($artists as $artist){
