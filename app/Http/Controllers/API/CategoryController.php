@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Type;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Image;
-use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
+use App\Models\Artist;
+use App\Models\Type;
 use App\Traits\UtilityTrait;
-use App\Http\Requests\TypeRequest;
 
-class TypeController extends Controller
+class CategoryController extends Controller
 {
     use UtilityTrait;
     /**
@@ -16,17 +19,12 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($count = null)
     {
-        return Type::all();
-    }
-
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return Type::paginate($num);
+        if ($count) {
+            return Category::orderBy('updated_at')->take($count)->get();
         } else {
-            return Type::all();
+            return Category::all();
         }
     }
 
@@ -36,24 +34,21 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TypeRequest $request)
+    public function store(CategoryRequest $request)
     {
-        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        $category = $request->except('image');
+        $result = Category::create($category);
 
-        $type = $request->except(['image']);
-        $type['slug'] = $slug;
-
-        $type = Type::create($type);
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images/types'), $imageName);
+        $request->image->move(public_path('images/categories'), $imageName);
 
         $image = new Image();
-        $image->image = 'images/types/' . $imageName;
-        $image->imageable_id = $type->id;
-        $image->imageable_type = 'App\Models\Type';
+        $image->image = 'images/categories/' . $imageName;
+        $image->imageable_id = $result->id;
+        $image->imageable_type = 'App\Models\Category';
         $image->save();
 
-        if ($type) {
+        if ($result) {
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -70,16 +65,14 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $type = Type::where('slug', $slug)->first();
-        $type->views = $type->views + 1;
-        $type->save();
-        if ($type) {
-            return $type;
+        $category = Category::find($id);
+        if ($category) {
+            return $category;
         } else {
             return response()->json([
-                'message' => 'Error'
+                'message' => 'Category Not Found With This Id'
             ], 500);
         }
     }
@@ -91,28 +84,28 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TypeRequest $request, $slug)
+    public function update(Request $request, $id)
     {
-        $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        $request->validate([
+            'name_uz' => 'required|string|max:30',
+            'name_ru' => 'required|string|max:30',
+            'name_en' => 'required|string|max:30',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+        ]);
 
-        $type = Type::where('slug', $slug)->first();
+        $category = $request->except(['image', '_method']);
+        $result = Category::find($id)->update($category);
 
-        $type->name_uz = $request->name_uz;
-        $type->name_ru = $request->name_ru;
-        $type->name_en = $request->name_en;
-        $type->category_id = $request->category_id;
-        $type->slug = $new_slug;
-        $result = $type->save();
+
 
         if ($request->image) {
-            $this->deleteImages($type->images);
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images/types'), $imageName);
+            $request->image->move(public_path('images/categories'), $imageName);
 
             $image = new Image();
-            $image->image = 'images/types/'.$imageName;
-            $image->imageable_id = $type->id;
-            $image->imageable_type = 'App\Models\Type';
+            $image->image = 'images/categories/'.$imageName;
+            $image->imageable_id = $id;
+            $image->imageable_type = 'App\Models\Category';
             $image->save();
         }
 
@@ -133,16 +126,17 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $type = Type::where('slug', $slug)->first();
+        $category = Category::find($id);
 
-        $this->deleteImages($type->images);
+        $this->deleteImages($category->images);
 
-        $this->setNullToArtistId($type->products);
+        $this->deleteTypes($category->types);
 
-        $result =  $type->delete();
+        $this->deleteArtists($category->artists);
 
+        $result = $category->delete();
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

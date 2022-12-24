@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class NewsController extends Controller
         $news->title_en = $request->title_en;
         $news->body_uz = $request->body_uz;
         $news->body_ru = $request->body_ru;
-        
+
         $news->body_en = $request->body_en;
         $news->category_id = $request->category_id;
         $news->slug = $slug;

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Artist;
 use App\Models\Image;
@@ -41,14 +43,14 @@ class ArtistController extends Controller
     public function store(ArtistRequest $request)
     {
         $slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
-        
+
         $artist = $request->except(['image']);
 
         // add slug
         $artist['slug'] = $slug;
 
         $artist = Artist::create($artist);
-        
+
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/artists'), $imageName);
 
@@ -122,7 +124,7 @@ class ArtistController extends Controller
             'category_id' => 'required|integer',
             'speciality' => 'required|string|max:30',
         ]);
-        
+
         $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
 
         $artist = $request->except(['image', '_method']);
@@ -169,7 +171,7 @@ class ArtistController extends Controller
         $this->deleteTools($artist->tools, 'App\Models\Artist');
 
         $this->setNullToArtistId($artist->products);
-        
+
         $result = $artist->delete();
 
         if ($result) {

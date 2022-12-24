@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class FilterController extends Controller
 {
     public function filter(Request $request){
         $product_query = Product::with(['images', 'tools', 'type', 'artist']);
-        
+
         // check price and get
         $product_query->when(isset($request->price), function ($query) use ($request) {
             return $query->where('price', '>=', $request->price);
@@ -24,7 +25,7 @@ class FilterController extends Controller
         $product_query->when(isset($request->size), function ($query) use ($request){
             return $query->where('size', 'LIKE', '%'.$request->size.'%');
         });
-        
+
 
         // $product_query->when(isset($request->tools), function ($query) use ($request) {
         //     return $query->where();
@@ -34,12 +35,12 @@ class FilterController extends Controller
         //                 array_push($arr, $query->id);
         //             }
         //         }
-        //     }   
+        //     }
         // });
 
-        
+
         $result = $product_query;
-        
+
         return $result->get();
         if ($product_query) {
             return response()->json([

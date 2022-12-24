@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\NewsCategory;
+use App\Http\Controllers\Controller;
+use App\Models\Tool;
 use Illuminate\Http\Request;
 
-
-class NewsCategoryController extends Controller
+class ToolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,16 @@ class NewsCategoryController extends Controller
      */
     public function index()
     {
-        return NewsCategory::all();
+        return Tool::all();
+    }
+
+    public function paginate($num = null)
+    {
+        if ($num) {
+            return Tool::paginate($num);
+        } else {
+            return Tool::all();
+        }
     }
 
     /**
@@ -27,14 +36,17 @@ class NewsCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
+            'tool_uz' => 'required|string',
+            'tool_ru' => 'required|string',
+            'tool_en' => 'required|string',
         ]);
+        $tool = new Tool();
+        $tool->tool_uz = $request->tool_uz;
+        $tool->tool_ru = $request->tool_ru;
+        $tool->tool_en = $request->tool_en;
+        $result = $tool->save();
 
-        $categorynews = NewsCategory::create($request->all());
-        
-        if($categorynews){
+        if($result){
             return response()->json([
                 'message' => 'Created Successfully'
             ], 200);
@@ -53,14 +65,15 @@ class NewsCategoryController extends Controller
      */
     public function show($id)
     {
-        $categorynews = NewsCategory::find($id);
-        if($categorynews){
-            return $categorynews;
-        }else{
+        $tool = Tool::where('id', $id)->first();
+        if ($tool) {
+            return $tool;
+        } else {
             return response()->json([
-                'message' => 'Category Not Found With This Id'
+                'message' => 'Error'
             ], 500);
         }
+
     }
 
     /**
@@ -73,11 +86,13 @@ class NewsCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
+            'tool_uz' => 'required|string|max:30',
+            'tool_ru' => 'required|string|max:30',
+            'tool_en' => 'required|string|max:30',
         ]);
-        $result = NewsCategory::find($id)->update($request->all());
+
+        $result = Tool::find($id)->update($request->all());
+
         if($result){
             return response()->json([
                 'message' => 'Updated Successfully'
@@ -97,19 +112,12 @@ class NewsCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $result = NewsCategory::find($id);
-        if (count($result->news)>0){
-            foreach($result->news as $news){
-                return $news;
-            }
-        };
-        
-        return $result->news;
-        if($result){
+        $result = Tool::find($id)->delete();
+        if ($result) {
             return response()->json([
-                'message' => 'Deleted Successfully'
+                'message' => 'Delete Successfully'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error'
             ], 500);
@@ -117,4 +125,3 @@ class NewsCategoryController extends Controller
     }
 
 }
-

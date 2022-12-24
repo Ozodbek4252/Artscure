@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Toolable;
@@ -41,11 +42,11 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-        
+
         $product = $request->except(['image']);
         $product['slug'] = $slug;
         $product = Product::create($product);
-        
+
         foreach ($request->image as $photo) {
             $imageName = time() . '.' . $photo->getClientOriginalExtension();
             $photo->move(public_path('images/products'), $imageName);
@@ -116,9 +117,9 @@ class ProductController extends Controller
             'image' => 'nullable',
             'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
         ]);
-        
+
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
-        
+
         $product = $request->except(['image', '_method']);
         $product['slug'] = $new_slug;
 
@@ -159,11 +160,11 @@ class ProductController extends Controller
         $product = Product::where('slug', $slug)->first();
 
         $this->deleteImages($product->images);
-        
+
         $this->deleteTools($product->tools, 'App\Models\Product');
-        
+
         $result = $product->delete();
-        
+
         if ($result) {
             return response()->json([
                 'message' => 'Deleted Successfully'

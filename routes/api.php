@@ -1,20 +1,20 @@
 <?php
 
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\NewsCategoryController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\FilterController;
-use App\Http\Controllers\HelpController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\RequestController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\ToolController;
+use App\Http\Controllers\API\ArtistController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\NewsCategoryController;
+use App\Http\Controllers\API\NewsController;
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\TypeController;
+use App\Http\Controllers\API\ContactController;
+use App\Http\Controllers\API\FilterController;
+use App\Http\Controllers\API\HelpController;
+use App\Http\Controllers\API\ImageController;
+use App\Http\Controllers\API\RequestController;
+use App\Http\Controllers\API\SearchController;
+use App\Http\Controllers\API\ToolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
