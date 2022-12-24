@@ -4,6 +4,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/artscure-database
+artscure-database
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

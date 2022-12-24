@@ -11,15 +11,17 @@ class Banner extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'type',
-        'title_uz',
-        'title_ru',
-        'title_en',
-        'body_uz',
-        'body_ru',
-        'body_en',
-    ]; 
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'type' => 'string',
+        'title_uz' => 'string',
+        'title_ru' => 'string',
+        'title_en' => 'string',
+        'body_uz' => 'string',
+        'body_ru' => 'string',
+        'body_en' => 'string',
+    ];
 
     public function images()
     {

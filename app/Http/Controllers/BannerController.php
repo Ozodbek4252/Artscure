@@ -7,6 +7,8 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Traits\UtilityTrait;
 use App\Http\Requests\BannerRequest;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\BannerResource;
 
 class BannerController extends Controller
 {
@@ -19,6 +21,7 @@ class BannerController extends Controller
     public function index()
     {
         return Banner::all();
+
     }
 
     /**
@@ -29,27 +32,25 @@ class BannerController extends Controller
      */
     public function store(BannerRequest $request)
     {
-        $banner = $request->except('image');
-        $result = Banner::create($banner);
+        try {
 
-        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images/banners'), $imageName);
+            $banner = $request->except('image');
+            $result = Banner::create($banner);
 
-        $image = new Image();
-        $image->image = 'images/banners/'.$imageName;
-        $image->imageable_id = $result->id;
-        $image->imageable_type = 'App\Models\Banner';
-        $image->save();
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/banners'), $imageName);
 
-        if ($result) {
-            return response()->json([
-                'banner' => 'Created Successfully'
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Error'
-            ], 500);
+            $image = new Image();
+            $image->image = 'images/banners/'.$imageName;
+            $image->imageable_id = $result->id;
+            $image->imageable_type = 'App\Models\Banner';
+            $image->save();
+
+        } catch (\Exception $exception) {
+            return (new ErrorResource("Banner Store {$exception->getMessage()}", 'Try again later'))->response()->setStatusCode(403);
         }
+
+        return New BannerResource($result);
     }
 
     /**
@@ -126,7 +127,7 @@ class BannerController extends Controller
             $image->save();
         }
 
-        
+
         if ($result) {
             return response()->json([
                 'banner' => 'Updated Successfully'

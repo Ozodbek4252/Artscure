@@ -25,7 +25,7 @@ class BannerRequest extends FormRequest
     {
         // type: 0 - top, 1 - bottom
         return [
-            'type' => 'required',
+            'type' => 'required|in:top,bottom,other',
             'title_uz' => 'required|min:5|max:100',
             'title_ru' => 'required|min:5|max:100',
             'title_en' => 'required|min:5|max:100',
