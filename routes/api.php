@@ -31,9 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 // ------------- Public Routes -------------
 
-// Auth
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 
 // Search
 // Route::get("search",[SearchController::class, 'search']);

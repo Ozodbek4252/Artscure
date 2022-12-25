@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Dashboard\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'You are in web.php page.';
+// Auth
+// Route::get('/login-page', [AuthController::class, 'index']);
+// Route::post('/register', [AuthController::class, 'register'])->name('register');
+// Route::post('/login', [AuthController::class, 'login'])->name('login_post');
+
+Route::get('/', function(){
+    return 'Home page';
+});
+
+
+Route::middleware([
+    'auth:sanctum',
+    'isAdmin',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    })->name('dashboard');
 });
