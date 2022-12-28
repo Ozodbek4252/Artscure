@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
 use App\Http\Requests\ArtistRequest;
+use App\Http\Resources\ArtistResource;
+use App\Http\Resources\ToolResource;
+use App\Models\Tool;
 
 class ArtistController extends Controller
 {
@@ -20,9 +23,10 @@ class ArtistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Artist::all();
+        $categoris = Artist::paginate($this->getLimit($request->limit));
+        return ArtistResource::collection($categoris);
     }
 
     public function paginate($num = null)
@@ -71,9 +75,7 @@ class ArtistController extends Controller
         }
 
         if ($artist) {
-            return response()->json([
-                'message' => 'Created Successfully'
-            ], 200);
+            return new ArtistResource($artist);
         } else {
             return response()->json([
                 'message' => 'Error'
@@ -89,51 +91,40 @@ class ArtistController extends Controller
      */
     public function show($slug)
     {
-        $artist = Artist::where('slug', $slug)->first();
-        $artist->views = $artist->views + 1;
-        $artist->save();
-
-        if ($artist) {
-            return $artist;
-        } else {
+        try {
+            $artist = Artist::where('slug', $slug)->first();
+            $artist->views = $artist->views + 1;
+            $artist->save();
+        } catch (\Exception $exception) {
             return response()->json([
-                'message' => 'Error'
-            ], 500);
+                'message' => 'Not Found'
+            ], 400);
         }
+
+        return new ArtistResource($artist);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(ArtistRequest $request, $slug)
     {
-        $request->validate([
-            'first_name_uz' => 'required|string|max:30',
-            'first_name_ru' => 'required|string|max:30',
-            'first_name_en' => 'required|string|max:30',
-            'last_name_uz' => 'required|string|max:30',
-            'last_name_ru' => 'required|string|max:30',
-            'last_name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string|max:30',
-            'description_ru' => 'required|string|max:30',
-            'description_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
-            'speciality' => 'required|string|max:30',
-        ]);
-
         $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
 
-        $artist = $request->except(['image', '_method']);
+        $attributes = $request->except(['image', '_method', 'tools']);
 
-        $artist['slug'] = $new_slug;
+        // $attributes['slug'] = $new_slug;
 
-        $artist = Artist::updateOrCreate(['slug'=>$slug], $artist);
+
+        $artist = Artist::where('slug', $slug)->first();
+        $result =  $artist->update($attributes);
+        $artist->refresh();
 
         if ($request->image) {
+            $this->deleteImages($artist->images);
+
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/artists'), $imageName);
 
@@ -144,14 +135,27 @@ class ArtistController extends Controller
             $image->save();
         }
 
-        if ($artist) {
-            return response()->json([
-                'message' => 'Artist updated Successfully'
-            ], 200);
+        if ($request->tools) {
+            foreach($artist->tools as $tool){
+                $toolable = Toolable::where('tool_id', $tool->id)
+                        ->where('toolable_type', 'App\Models\Artist')->first();
+                $toolable->delete();
+            }
+            foreach ($request->tools as $tool) {
+                $toolable = new Toolable();
+                $toolable->tool_id = (int)$tool;
+                $toolable->toolable_id = $artist->id;
+                $toolable->toolable_type = 'App\Models\Artist';
+                $toolable->save();
+            }
+        }
+
+        if ($result) {
+            return response()->json(new ArtistResource($artist->refresh()), 200);
         } else {
             return response()->json([
                 'message' => 'Error'
-            ], 500);
+            ], 400);
         }
     }
 

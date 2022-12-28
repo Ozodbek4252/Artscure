@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             TypeSeeder::class,
+            ToolSeeder::class,
+            ArtistSeeder::class,
+            ProductSeeder::class,
+
+            RequestSeeder::class,
         ]);
     }
 }

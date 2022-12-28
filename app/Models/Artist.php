@@ -14,27 +14,30 @@ class Artist extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'first_name_uz',
-        'first_name_ru',
-        'first_name_en',
-        'last_name_uz',
-        'last_name_ru',
-        'last_name_en',
-        'speciality',
-        'rate',
-        'category_id',
-        'description_uz',
-        'description_ru',
-        'description_en',
-        'muzey_uz',
-        'muzey_ru',
-        'muzey_en',
-        'medal_ru',
-        'medal_ru',
-        'medal_en',
-        'label',
-        'slug'
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'first_name_uz' => 'string',
+        'first_name_ru' => 'string',
+        'first_name_en' => 'string',
+        'last_name_uz' => 'string',
+        'last_name_ru' => 'string',
+        'last_name_en' => 'string',
+        'description_uz' => 'string',
+        'description_ru' => 'string',
+        'description_en' => 'string',
+
+        'speciality' => 'string',
+        'rate' => 'float',
+        'category_id' => 'integer',
+        'views' => 'integer',
+        'muzey_uz' => 'string',
+        'muzey_ru' => 'string',
+        'muzey_en' => 'string',
+        'medal_uz' => 'string',
+        'medal_ru' => 'string',
+        'medal_en' => 'string',
+        'label' => 'string',
     ];
 
     public function images()
@@ -56,4 +59,5 @@ class Artist extends Model
     {
         return $this->hasMany(Product::class);
     }
+
 }

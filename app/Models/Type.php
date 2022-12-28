@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Image;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tool;
 
 class Type extends Model
 {
@@ -34,6 +35,11 @@ class Type extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function tools()
+    {
+        return $this->hasMany(Tool::class);
     }
 
 }

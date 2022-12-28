@@ -62,11 +62,9 @@ Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
 Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
 Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
 
-
 // Artist
 Route::get('/artists', [ArtistController::class, 'index'])->name('artist.index');
-Route::get('/artists/{num}', [ArtistController::class, 'paginate'])->name('artist.paginate');
-Route::get('/artist/{slug}', [ArtistController::class, 'show'])->name('artist.show');
+Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 
 // Contact
 Route::post('/contacts', [ContactController::class, 'store'])->name('contact');

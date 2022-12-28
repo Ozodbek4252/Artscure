@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Artist;
+use App\Models\Image;
+use App\Models\Product;
+use App\Models\Type;
 
 class Tool extends Model
 {
@@ -13,6 +17,7 @@ class Tool extends Model
         'name_uz',
         'name_ru',
         'name_en',
+        'type_id'
     ];
 
     public function images()
@@ -29,5 +34,11 @@ class Tool extends Model
     {
         return $this->morphedByMany(Artist::class, 'toolable');
     }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
 }
 

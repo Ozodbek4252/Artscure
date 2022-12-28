@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Image;
 
 use App\Traits\UtilityTrait;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -21,9 +22,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categoris = Category::all();
+        $categoris = Category::paginate($this->getLimit($request->limit));
         return CategoryResource::collection($categoris);
     }
 

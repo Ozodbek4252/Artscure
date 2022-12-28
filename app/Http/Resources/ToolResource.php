@@ -19,6 +19,7 @@ class ToolResource extends JsonResource
         } else {
             $image = null;
         }
+
         return [
             'id' => $this->id,
             'name_uz' => $this->name_uz,

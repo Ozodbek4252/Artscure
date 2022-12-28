@@ -14,25 +14,28 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name_uz',
-        'name_ru',
-        'name_en',
-        'certificate',
-        'frame',
-        'size',
-        'description_uz',
-        'description_ru',
-        'description_en',
-        'year',
-        'city',
-        'unique',
-        'signiture',
-        'price',
-        'type_id',
-        'artist_id',
-        'status',
-        'slug'
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'id' => 'string',
+        'slug' => 'string',
+        'name_uz' => 'string',
+        'name_ru' => 'string',
+        'name_en' => 'string',
+        'certificate'  => 'boolean',
+        'frame' => 'boolean',
+        'size' => 'string',
+        'description' => 'string',
+        'description' => 'string',
+        'description' => 'string',
+        'year' => 'string',
+        'city' => 'string',
+        'unique' => 'boolean',
+        'signiture' => 'boolean',
+        'price' => 'integer',
+        'type_id' => 'integer',
+        'artist_id' => 'integer',
+        'status' => 'string',
     ];
 
     public function images()

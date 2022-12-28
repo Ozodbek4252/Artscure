@@ -18,16 +18,8 @@ class RequestController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->paginate($this->getLimit($request->limit));
-    }
-
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return RequestModel::paginate($num);
-        } else {
-            return RequestModel::all();
-        }
+        $requests = RequestModel::paginate($this->getLimit($request->limit));
+        return RequestResource::collection($requests);
     }
 
     /**

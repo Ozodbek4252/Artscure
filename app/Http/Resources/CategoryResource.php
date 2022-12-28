@@ -14,12 +14,17 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (count($this->images)>0) {
+            $image = new ImageResource($this->images[0]);
+        } else {
+            $image = null;
+        }
         return [
             'id' => $this->id,
             'name_uz' => $this->name_uz,
             'name_ru' => $this->name_ru,
             'name_en' => $this->name_en,
-            'image' => new ImageResource($this->images[0])
+            'image' => $image
         ];
     }
 }

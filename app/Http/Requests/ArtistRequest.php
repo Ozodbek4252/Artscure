@@ -13,7 +13,7 @@ class ArtistRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,19 +23,36 @@ class ArtistRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->_method == null) {
+            $image = 'required|mimes:jpeg,png,jpg,gif,svg';
+        } else {
+            $image = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+        }
+
         return [
-            'first_name_uz' => 'required|string|max:30',
-            'first_name_ru' => 'required|string|max:30',
-            'first_name_en' => 'required|string|max:30',
-            'last_name_uz' => 'required|string|max:30',
-            'last_name_ru' => 'required|string|max:30',
-            'last_name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string|max:30',
-            'description_ru' => 'required|string|max:30',
-            'description_en' => 'required|string|max:30',
-            'category_id' => 'required|integer',
+            'first_name_uz' => 'required|string',
+            'first_name_ru' => 'required|string',
+            'first_name_en' => 'nullable|string',
+            'last_name_uz' => 'nullable|string',
+            'last_name_ru' => 'nullable|string',
+            'last_name_en' => 'nullable|string',
+            'description_uz' => 'nullable|string',
+            'description_ru' => 'nullable|string',
+            'description_en' => 'nullable|string',
+
             'speciality' => 'required|string|max:30',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
+            'rate' => 'nullable|numeric|between:0,5',
+            'category_id' => 'required|integer',
+            'image' => $image,
+            'muzey_uz' => 'nullable|string',
+            'muzey_ru' => 'nullable|string',
+            'muzey_en' => 'nullable|string',
+            'medal_uz' => 'nullable|string',
+            'medal_ru' => 'nullable|string',
+            'medal_en' => 'nullable|string',
+            'label' => 'nullable|string',
+            'tools' => 'required|array',
+            'tools.*' => 'required|numeric'
         ];
     }
 }
