@@ -4,6 +4,7 @@
 /public/storage
 /public/files
 /public/images
+
 /storage/*.key
 /vendor
 /artscure-database
