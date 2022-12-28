@@ -23,7 +23,11 @@ class BannerRequest extends FormRequest
      */
     public function rules()
     {
-        // type: 0 - top, 1 - bottom
+        if($this->_method == 'PUT') {
+            $image = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+        } else {
+            $image = 'required|mimes:jpeg,png,jpg,gif,svg';
+        };
         return [
             'type' => 'required|in:top,bottom,other',
             'title_uz' => 'required|min:5|max:100',
@@ -32,7 +36,7 @@ class BannerRequest extends FormRequest
             'body_uz' => 'required',
             'body_ru' => 'required',
             'body_en' => 'required',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
+            'image' => $image,
         ];
     }
 }

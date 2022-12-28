@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Request as RequestModel;
 use App\Http\Requests\RequestRequest;
+use App\Http\Resources\RequestResource;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequestController extends Controller
 {
@@ -14,16 +16,16 @@ class RequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return RequestModel::all();
+        return $this->paginate($this->getLimit($request->limit));
     }
 
-    public function paginate($num=null)
+    public function paginate($num = null)
     {
-        if($num){
+        if ($num) {
             return RequestModel::paginate($num);
-        }else{
+        } else {
             return RequestModel::all();
         }
     }
@@ -36,17 +38,32 @@ class RequestController extends Controller
      */
     public function store(RequestRequest $request)
     {
-        $result = RequestModel::create($request->all());
+        DB::beginTransaction();
+        try {
+            $requestModel = new RequestModel();
+            $requestModel->full_name = $request->full_name;
+            $requestModel->email = $request->email;
+            $requestModel->phone = $request->phone;
+            $requestModel->cover_letter = $request->cover_letter;
 
-        if ($result) {
-            return response()->json([
-                'request' => 'Created Succesfully'
-            ], 200);
-        } else {
-            return response()->json([
-                'request' => 'Error'
-            ], 500);
+            if (!empty($request->portfolio)) {
+                $fileName = time() . '_' . $request->portfolio->getClientOriginalName();
+                $request->portfolio->move(public_path('files/requests'), $fileName);
+                $request['portfolio'] = 'files/requests/' . $fileName;
+                $requestModel->portfolio = 'files/requests/' . $fileName;
+            } else {
+                $requestModel->portfolio = null;
+            }
+
+            $requestModel->save();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->error("Address failed to store {$exception->getMessage()}", 400);
         }
+
+        DB::commit();
+
+        return new RequestResource($requestModel);
     }
 
     /**
@@ -58,13 +75,7 @@ class RequestController extends Controller
     public function show($id)
     {
         $result = RequestModel::find($id);
-        if($result){
-            return $result;
-        }else{
-            return response()->json([
-                'message' => 'Error'
-            ], 500);
-        }
+        return new RequestResource($result);
     }
 
     /**
@@ -75,7 +86,13 @@ class RequestController extends Controller
      */
     public function destroy($id)
     {
-        $result = RequestModel::find($id)->delete();
+        $result = RequestModel::find($id);
+
+        if ($result && file_exists($result->portfolio)) {
+            unlink($result->portfolio);
+        }
+
+        $result->delete();
 
         if ($result) {
             return response()->json([

@@ -30,6 +30,7 @@ use App\Http\Controllers\API\AuthController;
 
 // ------------- Public Routes -------------
 
+// Auth
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
@@ -54,8 +55,8 @@ Route::get('/products/{num}', [ProductController::class, 'paginate'])->name('pro
 Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
 
 // Types
-// Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
-// Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
+Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
+Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
 
 
 // Artist
@@ -67,11 +68,10 @@ Route::get('/artist/{slug}', [ArtistController::class, 'show'])->name('artist.sh
 Route::post('/contacts', [ContactController::class, 'store'])->name('contact');
 
 // Banner
-Route::get('/banners/main', [BannerController::class, 'main'])->name('banners');
-Route::get('/banners/bottom', [BannerController::class, 'bottom'])->name('banners');
+Route::get('/banners', [BannerController::class, 'index']);
 
 // Request
-Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+Route::post('/requests', [RequestController::class, 'store']);
 
 Route::post('/search', [SearchController::class, 'search'])->name('search');
 Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
@@ -83,8 +83,8 @@ Route::group([
     'isAdmin',
 ], function () {
 
+    // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
-
 
     // Helps
     Route::delete('/helps/{id}', [HelpController::class, 'destroy'])->name('helps.destroy');
@@ -122,7 +122,6 @@ Route::group([
     Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
     // Banner
-    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
     Route::get('/banners/{id}', [BannerController::class, 'show'])->name('banners.show');
     Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
     Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners.update');
@@ -130,8 +129,7 @@ Route::group([
 
     // Request
     Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
-    Route::get('/requests/{num}', [RequestController::class, 'paginate'])->name('requests.paginate');
-    Route::get('/request/{id}', [RequestController::class, 'show'])->name('requests.show');
+    Route::get('/requests/{id}', [RequestController::class, 'show'])->name('requests.show');
     Route::delete('/requests/{id}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
     // NewsCategory

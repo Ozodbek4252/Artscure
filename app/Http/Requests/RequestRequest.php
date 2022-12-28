@@ -13,7 +13,7 @@ class RequestRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,6 +26,8 @@ class RequestRequest extends FormRequest
         return [
             'full_name' => 'required',
             'phone' => 'required',
+            'email' => 'nullable|email',
+            'portfolio' => 'nullable|max:10000|mimes:doc,docx,pdf',
             'cover_letter' => 'required|min:30',
         ];
     }

@@ -10,6 +10,7 @@ use App\Traits\UtilityTrait;
 use App\Http\Requests\BannerRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\BannerResource;
+use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
 {
@@ -19,9 +20,15 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Banner::all();
+        $type = $request->get('type');
+        if ($type == null) {
+            $banners = Banner::all();
+        } else {
+            $banners = Banner::where('type', $type)->get();
+        };
+        return BannerResource::collection($banners)->all();
 
     }
 
@@ -34,7 +41,6 @@ class BannerController extends Controller
     public function store(BannerRequest $request)
     {
         try {
-
             $banner = $request->except('image');
             $result = Banner::create($banner);
 
@@ -62,36 +68,12 @@ class BannerController extends Controller
      */
     public function show($id)
     {
-        $banners = Banner::where('id', $id)->first();
-        if ($banners) {
-            return $banners;
+        $banner = Banner::where('id', $id)->first();
+        if ($banner) {
+            return new BannerResource($banner);
         } else {
             return response()->json([
                 'banner' => 'Error'
-            ], 500);
-        }
-    }
-
-    public function main()
-    {
-        $banners = Banner::where('type', 0)->get();
-        if ($banners) {
-            return $banners;
-        } else {
-            return response()->json([
-                'message' => 'Error'
-            ], 500);
-        }
-    }
-
-    public function bottom()
-    {
-        $banners = Banner::where('type', 1)->get();
-        if ($banners) {
-            return $banners;
-        } else {
-            return response()->json([
-                'message' => 'Error'
             ], 500);
         }
     }
@@ -103,41 +85,36 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BannerRequest $request, $id)
     {
-        $request->validate([
-            'type' => 'required',
-            'title_uz' => 'required|min:5|max:100',
-            'title_ru' => 'required|min:5|max:100',
-            'title_en' => 'required|min:5|max:100',
-            'body_uz' => 'required',
-            'body_ru' => 'required',
-            'body_en' => 'required',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-        $banner = $request->except(['image', '_method']);
-        $result = Banner::find($id)->update($banner);
+        DB::beginTransaction();
+        try {
+            $banner = Banner::find($id);
 
-        if ($request->image) {
-            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('images/banners'), $imageName);
-            $image = new Image();
-            $image->image = 'images/banners/'.$imageName;
-            $image->imageable_id = $id;
-            $image->imageable_type = 'App\Models\Banner';
-            $image->save();
+            if ($request->image) {
+                $this->deleteImages($banner->images);
+
+                $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+                $request->image->move(public_path('images/banners'), $imageName);
+                $image = new Image();
+                $image->image = 'images/banners/'.$imageName;
+                $image->imageable_id = $id;
+                $image->imageable_type = 'App\Models\Banner';
+                $image->save();
+            }
+
+            $attributes = $request->except(['image', '_method']);
+            $banner->update($attributes);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->error("Banner failed to update {$exception->getMessage()}", 400);
         }
 
+        DB::commit();
 
-        if ($result) {
-            return response()->json([
-                'banner' => 'Updated Successfully'
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Error'
-            ], 500);
-        }
+        return new BannerResource($banner);
+
     }
 
     /**

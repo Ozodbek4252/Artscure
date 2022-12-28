@@ -23,7 +23,7 @@ class BannerResource extends JsonResource
             'body_uz' => $this->body_uz,
             'body_ru' => $this->body_ru,
             'body_en' => $this->body_en,
-            'image' => $this->image
+            'image' => ImageResource::collection($this->images)->all()
         ];
     }
 }
