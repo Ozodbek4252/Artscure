@@ -441,11 +441,21 @@
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+                        {{--  <li>
+                            <a class="dropdown-item" href="{{Route('logout')}}" >
+                                @csrf
+                                @method('POST')
                                 <i class="bx bx-power-off me-2"></i>
                                 <span class="align-middle">Log Out</span>
                             </a>
+                        </li>  --}}
+                        <li>
+                            <form class="dropdown-item" action="{{Route('logout')}}" method="POST">
+                                @csrf
+                                <i class="bx bx-power-off me-2"></i>
+
+                                <span type="submit" class="align-middle" onclick="event.preventDefault(); this.closest('form').submit();">Log Out</span>
+                            </form>
                         </li>
                     </ul>
                 </li>

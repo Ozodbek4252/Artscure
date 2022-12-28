@@ -17,7 +17,7 @@ class isAdmin
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check() || !(auth()->user()->role == 1)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return redirect()->route('login.index');
         }
 
         return $next($request);

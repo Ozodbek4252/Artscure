@@ -21,12 +21,19 @@ use App\Http\Controllers\Dashboard\AuthController;
 // Route::post('/login', [AuthController::class, 'login'])->name('login_post');
 
 Route::get('/', function(){
-    return 'Home page';
+    return view('dashboard');
 });
 
 
+Route::get('/login', [AuthController::class, 'index'])->name('login.index');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
 Route::middleware([
-    'auth:sanctum',
+    'auth',
+    'revalidate',
     'isAdmin',
 ])->group(function () {
     Route::get('/dashboard', function () {

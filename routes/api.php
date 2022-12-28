@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\ArtistController;
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\NewsCategoryController;
@@ -15,9 +14,9 @@ use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\RequestController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\ToolController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 // ------------- Public Routes -------------
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 
 // Search
@@ -53,8 +54,8 @@ Route::get('/products/{num}', [ProductController::class, 'paginate'])->name('pro
 Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
 
 // Types
-Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
-Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
+// Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
+// Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
 
 
 // Artist
@@ -78,10 +79,12 @@ Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
 // ------------- Protected Routes -------------
 Route::group([
     'middleware' => 'auth:sanctum',
+    'revalidate',
     'isAdmin',
 ], function () {
-    Route::post('/admin', [AuthController::class, 'show'])->name('admin.show');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+
 
     // Helps
     Route::delete('/helps/{id}', [HelpController::class, 'destroy'])->name('helps.destroy');

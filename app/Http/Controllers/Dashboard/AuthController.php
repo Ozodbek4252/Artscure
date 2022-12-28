@@ -7,9 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -18,12 +16,17 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function registerPage()
+    {
+        return view('auth.register');
+    }
+
     function register(Request $request)
     {
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|min:6'
         ]);
 
         $user = User::create([
@@ -32,45 +35,30 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password'])
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $credentials = $user->only('email', 'password');
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+        return redirect()->route('login.index');
     }
 
     function login(LoginRequest $request)
     {
-        // Check email
-        $user = User::where('email', $request['email'])->first();
+        $credentials = $request->only('email', 'password');
 
-        // Check password
-        if(!$user || !Hash::check($request['password'], $user->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials'
-            ], 401);
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('dashboard');
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+        return back();
     }
 
-    function logout(){
-        auth()->user()->tokens()->delete();
+    public function logout()
+    {
+        Auth::logout();
 
-        return response()->json([
-            'message' => 'Logged out'
-        ]);
+        return redirect()->route('login');
     }
+
 
     function show(){
         return User::where('role', 1)->first();
