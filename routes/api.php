@@ -46,12 +46,16 @@ Route::get('/news', [NewsController::class, 'index'])->name('news');
 Route::get('/news/{num}', [NewsController::class, 'paginate'])->name('news.paginate');
 Route::get('/new/{slug}', [NewsController::class, 'show'])->name('news.show');
 
+// Category
+Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('category.show');
+
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('product');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/{num}', [ProductController::class, 'paginate'])->name('product.paginate');
 
-// Helps
+// Help
 Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
 
 // Types
@@ -73,8 +77,12 @@ Route::get('/banners', [BannerController::class, 'index']);
 // Request
 Route::post('/requests', [RequestController::class, 'store']);
 
+// Tool
+Route::get('/tools', [ToolController::class, 'index'])->name('tool');
+
 Route::post('/search', [SearchController::class, 'search'])->name('search');
 Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
+
 
 // ------------- Protected Routes -------------
 Route::group([
@@ -86,18 +94,16 @@ Route::group([
     // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Helps
+    // Help
     Route::delete('/helps/{id}', [HelpController::class, 'destroy'])->name('helps.destroy');
     Route::get('/helps', [HelpController::class, 'index'])->name('helps.index');
 
     // Category
-    Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('category.show');
     Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
 
-    // Types
+    // Type
     Route::get('/types/{num}', [TypeController::class, 'paginate'])->name('types.paginate'); //------------------------------
     Route::post('/types', [TypeController::class, 'store'])->name('types.store'); //------------------------------
     Route::put('/types/{slug}', [TypeController::class, 'update'])->name('types.update'); //------------------------------
@@ -109,9 +115,7 @@ Route::group([
     Route::delete('/artists/{slug}', [ArtistController::class, 'destroy'])->name('artist.delete');
 
     // Tool
-    Route::get('/tools', [ToolController::class, 'index'])->name('tool');
-    Route::get('/tools/{num}', [ToolController::class, 'paginate'])->name('tool.paginate');
-    Route::get('/tool/{id}', [ToolController::class, 'show'])->name('tool.show');
+    Route::get('/tools/{id}', [ToolController::class, 'show'])->name('tool.show');
     Route::post('/tools', [ToolController::class, 'store'])->name('tool.store');
     Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tool.update');
     Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');

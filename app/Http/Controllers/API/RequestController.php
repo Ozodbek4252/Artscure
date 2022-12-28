@@ -47,7 +47,7 @@ class RequestController extends Controller
             $requestModel->cover_letter = $request->cover_letter;
 
             if (!empty($request->portfolio)) {
-                $fileName = time() . '_' . $request->portfolio->getClientOriginalName();
+                $fileName = time() . '.' . $request->portfolio->getClientOriginalName();
                 $request->portfolio->move(public_path('files/requests'), $fileName);
                 $request['portfolio'] = 'files/requests/' . $fileName;
                 $requestModel->portfolio = 'files/requests/' . $fileName;

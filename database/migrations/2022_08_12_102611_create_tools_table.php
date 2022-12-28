@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('tools', function (Blueprint $table) {
             $table->id();
-            $table->string('tool_uz');
-            $table->string('tool_ru');
-            $table->string('tool_en');
+            $table->string('name_uz');
+            $table->string('name_ru');
+            $table->string('name_en');
             $table->timestamps();
         });
     }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\CategoryRequest;
+
+use App\Http\Resources\CategoryResource;
+
 use App\Models\Category;
 use App\Models\Image;
-use Illuminate\Http\Request;
-use App\Http\Requests\CategoryRequest;
-use App\Models\Artist;
-use App\Models\Type;
+
 use App\Traits\UtilityTrait;
 
 class CategoryController extends Controller
@@ -19,13 +21,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($count = null)
+    public function index()
     {
-        if ($count) {
-            return Category::orderBy('updated_at')->take($count)->get();
-        } else {
-            return Category::all();
-        }
+        $categoris = Category::all();
+        return CategoryResource::collection($categoris);
     }
 
     /**
@@ -49,9 +48,7 @@ class CategoryController extends Controller
         $image->save();
 
         if ($result) {
-            return response()->json([
-                'message' => 'Created Successfully'
-            ], 200);
+            return response()->json(new CategoryResource($result), 200);
         } else {
             return response()->json([
                 'message' => 'Error'
@@ -67,14 +64,15 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::find($id);
-        if ($category) {
-            return $category;
-        } else {
+        try {
+            $category = Category::query()->findOrFail($id);
+        } catch (\Exception $exception) {
             return response()->json([
-                'message' => 'Category Not Found With This Id'
-            ], 500);
+                'message' => 'Not Found'
+            ], 400);
         }
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -84,21 +82,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $category = $request->except(['image', '_method']);
-        $result = Category::find($id)->update($category);
-
-
+        $result = Category::find($id);
 
         if ($request->image) {
+            $this->deleteImages($result->images);
+
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/categories'), $imageName);
 
@@ -109,10 +100,10 @@ class CategoryController extends Controller
             $image->save();
         }
 
+        $result->update($category);
+
         if ($result) {
-            return response()->json([
-                'message' => 'Updated Successfully'
-            ], 200);
+            return response()->json(new CategoryResource($result), 200);
         } else {
             return response()->json([
                 'message' => 'Error'

@@ -13,7 +13,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,16 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->_method == null) {
+            $image = 'required|mimes:jpeg,png,jpg,gif,svg';
+        } else {
+            $image = 'nullable|mimes:jpeg,png,jpg,gif,svg';
+        }
         return [
             'name_uz' => 'required|string|max:30',
             'name_ru' => 'required|string|max:30',
             'name_en' => 'required|string|max:30',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
+            'image' => $image,
         ];
     }
 }

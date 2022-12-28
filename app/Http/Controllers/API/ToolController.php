@@ -3,28 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ToolRequest;
+use App\Http\Resources\ToolResource;
+use App\Models\Image;
 use App\Models\Tool;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Traits\UtilityTrait;
 
 class ToolController extends Controller
 {
+    use UtilityTrait;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Tool::all();
-    }
-
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return Tool::paginate($num);
-        } else {
-            return Tool::all();
-        }
+        return Tool::paginate($this->getLimit($request->limit));
     }
 
     /**
@@ -33,23 +31,27 @@ class ToolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ToolRequest $request)
     {
-        $request->validate([
-            'tool_uz' => 'required|string',
-            'tool_ru' => 'required|string',
-            'tool_en' => 'required|string',
-        ]);
         $tool = new Tool();
-        $tool->tool_uz = $request->tool_uz;
-        $tool->tool_ru = $request->tool_ru;
-        $tool->tool_en = $request->tool_en;
+        $tool->name_uz = $request->name_uz;
+        $tool->name_ru = $request->name_ru;
+        $tool->name_en = $request->name_en;
         $result = $tool->save();
 
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('images/tools'), $imageName);
+
+            $image = new Image();
+            $image->image = 'images/tools/' . $imageName;
+            $image->imageable_id = $tool->id;
+            $image->imageable_type = 'App\Models\Tool';
+            $image->save();
+        }
+
         if($result){
-            return response()->json([
-                'message' => 'Created Successfully'
-            ], 200);
+            return response()->json(new ToolResource($tool), 201);
         }else{
             return response()->json([
                 'message' => 'Error'
@@ -65,13 +67,14 @@ class ToolController extends Controller
      */
     public function show($id)
     {
-        $tool = Tool::where('id', $id)->first();
+        $tool = Tool::find($id);
+
         if ($tool) {
-            return $tool;
+            return new ToolResource($tool);
         } else {
             return response()->json([
-                'message' => 'Error'
-            ], 500);
+                'message' => 'Not Found'
+            ], 404);
         }
 
     }
@@ -83,25 +86,35 @@ class ToolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ToolRequest $request, $id)
     {
-        $request->validate([
-            'tool_uz' => 'required|string|max:30',
-            'tool_ru' => 'required|string|max:30',
-            'tool_en' => 'required|string|max:30',
-        ]);
+        DB::beginTransaction();
+        try {
+            $tool = Tool::find($id);
+            $attributes = $request->only('name_uz', 'name_ru', 'name_en');
+            $tool->update($attributes);
+            if (!empty($request->image)) {
+                $this->deleteImages($tool->images);
 
-        $result = Tool::find($id)->update($request->all());
+                $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+                $request->image->move(public_path('images/tools'), $imageName);
 
-        if($result){
+                $image = new Image();
+                $image->image = 'images/tools/' . $imageName;
+                $image->imageable_id = $tool->id;
+                $image->imageable_type = 'App\Models\Tool';
+                $image->save();
+            }
+        } catch (\Exception $exception) {
+            DB::rollBack();
             return response()->json([
-                'message' => 'Updated Successfully'
-            ], 200);
-        }else{
-            return response()->json([
-                'message' => 'Error'
-            ], 500);
+                'message' => 'Error occured'
+            ], 400);
         }
+
+        DB::commit();
+
+        return new ToolResource($tool->refresh());
     }
 
     /**
@@ -112,7 +125,9 @@ class ToolController extends Controller
      */
     public function destroy($id)
     {
-        $result = Tool::find($id)->delete();
+        $tool = Tool::find($id);
+        $this->deleteImages($tool->images);
+        $result = $tool->delete();
         if ($result) {
             return response()->json([
                 'message' => 'Delete Successfully'

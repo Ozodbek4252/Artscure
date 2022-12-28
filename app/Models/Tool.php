@@ -10,14 +10,14 @@ class Tool extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tool_uz', 
-        'tool_ru', 
-        'tool_en',
+        'name_uz',
+        'name_ru',
+        'name_en',
     ];
 
-    public function imageable()
+    public function images()
     {
-        return $this->morphTo();
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function products()
