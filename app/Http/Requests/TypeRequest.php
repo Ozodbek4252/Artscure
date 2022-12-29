@@ -24,21 +24,17 @@ class TypeRequest extends FormRequest
     public function rules()
     {
         if($this->_method == null) {
-            return [
-                'name_uz' => 'required|string|max:30',
-                'name_ru' => 'required|string|max:30',
-                'name_en' => 'required|string|max:30',
-                'category_id' => 'required|integer',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            ];
+            $image = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }else{
-            return [
-                'name_uz' => 'required|string|max:30',
-                'name_ru' => 'required|string|max:30',
-                'name_en' => 'required|string|max:30',
-                'category_id' => 'required|integer',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            ];
+            $image = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         }
+
+        return [
+            'name_uz' => 'required|string',
+            'name_ru' => 'required|string',
+            'name_en' => 'required|string',
+            'category_id' => 'required|integer',
+            'image' => $image
+        ];
     }
 }

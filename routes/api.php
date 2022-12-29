@@ -60,10 +60,10 @@ Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
 
 // Types
 Route::get('/types', [TypeController::class, 'index'])->name('types.index'); //------------------------------
-Route::get('/type/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
+Route::get('/types/{slug}', [TypeController::class, 'show'])->name('types.show'); //------------------------------
 
 // Artist
-Route::get('/artists', [ArtistController::class, 'index'])->name('artist.index');
+Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
 Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 
 // Contact
@@ -97,26 +97,25 @@ Route::group([
     Route::get('/helps', [HelpController::class, 'index'])->name('helps.index');
 
     // Category
-    Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
 
     // Type
-    Route::get('/types/{num}', [TypeController::class, 'paginate'])->name('types.paginate'); //------------------------------
     Route::post('/types', [TypeController::class, 'store'])->name('types.store'); //------------------------------
     Route::put('/types/{slug}', [TypeController::class, 'update'])->name('types.update'); //------------------------------
     Route::delete('/types/{slug}', [TypeController::class, 'destroy'])->name('types.delete'); //------------------------------
 
     // Artist
-    Route::post('/artists', [ArtistController::class, 'store'])->name('artist.store');
-    Route::put('/artists/{slug}', [ArtistController::class, 'update'])->name('artist.update');
-    Route::delete('/artists/{slug}', [ArtistController::class, 'destroy'])->name('artist.delete');
+    Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
+    Route::put('/artists/{slug}', [ArtistController::class, 'update'])->name('artists.update');
+    Route::delete('/artists/{slug}', [ArtistController::class, 'destroy'])->name('artists.delete');
 
     // Tool
-    Route::get('/tools/{id}', [ToolController::class, 'show'])->name('tool.show');
-    Route::post('/tools', [ToolController::class, 'store'])->name('tool.store');
-    Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tool.update');
-    Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tool.delete');
+    Route::get('/tools/{id}', [ToolController::class, 'show'])->name('tools.show');
+    Route::post('/tools', [ToolController::class, 'store'])->name('tools.store');
+    Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tools.update');
+    Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tools.delete');
 
     // Contact
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
@@ -135,10 +134,10 @@ Route::group([
     Route::delete('/requests/{id}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
     // NewsCategory
-    Route::get('/newsCategory/{id}', [NewsCategoryController::class, 'show'])->name('newsCategory.show');
-    Route::post('/newsCategory', [NewsCategoryController::class, 'store'])->name('newsCategory.store');
-    Route::put('/newsCategory/{id}', [NewsCategoryController::class, 'update'])->name('newsCategory.update');
-    Route::delete('/newsCategory/{id}', [NewsCategoryController::class, 'destroy'])->name('newsCategory.destroy');
+    Route::get('/newsCategory/{id}', [NewsCategoryController::class, 'show'])->name('newsCategories.show');
+    Route::post('/newsCategory', [NewsCategoryController::class, 'store'])->name('newsCategories.store');
+    Route::put('/newsCategory/{id}', [NewsCategoryController::class, 'update'])->name('newsCategories.update');
+    Route::delete('/newsCategory/{id}', [NewsCategoryController::class, 'destroy'])->name('newsCategories.destroy');
 
     // News
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
@@ -146,17 +145,17 @@ Route::group([
     Route::delete('/news/{slug}', [NewsController::class, 'destroy'])->name('news.destroy');
 
     // Product
-    Route::post('/products', [ProductController::class, 'store'])->name('product.store');
-    Route::put('/products/{slug}', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/products/{slug}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::post('/products', [ProductController::class, 's tore'])->name('products.store');
+    Route::put('/products/{slug}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{slug}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     //Toolable
-    Route::get('/toolables', [ToolableController::class, 'index'])->name('toolable');
-    Route::get('/toolables/{id}', [ToolableController::class, 'show'])->name('toolable.show');
-    Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
-    Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
-    Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
+    // Route::get('/toolables', [ToolableController::class, 'index'])->name('toolable');
+    // Route::get('/toolables/{id}', [ToolableController::class, 'show'])->name('toolable.show');
+    // Route::post('/toolables', [ToolableController::class, 'store'])->name('toolable.store');
+    // Route::put('/toolables/{id}', [ToolableController::class, 'update'])->name('toolable.update');
+    // Route::delete('/toolables/{id}', [ToolableController::class, 'destroy'])->name('toolable.destroy');
 
     // Delete Image
-    Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('image.destroy');
+    Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
 });

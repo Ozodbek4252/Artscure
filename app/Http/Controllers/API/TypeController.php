@@ -7,6 +7,8 @@ use App\Models\Image;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
 use App\Http\Requests\TypeRequest;
+use App\Http\Resources\TypeResource;
+use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
@@ -16,18 +18,10 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Type::all();
-    }
-
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return Type::paginate($num);
-        } else {
-            return Type::all();
-        }
+        $types = Type::paginate($this->getLimit($request->limit));
+        return TypeResource::collection($types);
     }
 
     /**
@@ -54,9 +48,7 @@ class TypeController extends Controller
         $image->save();
 
         if ($type) {
-            return response()->json([
-                'message' => 'Created Successfully'
-            ], 200);
+            return new TypeResource($type);
         } else {
             return response()->json([
                 'message' => 'Error'
@@ -72,16 +64,17 @@ class TypeController extends Controller
      */
     public function show($slug)
     {
-        $type = Type::where('slug', $slug)->first();
-        $type->views = $type->views + 1;
-        $type->save();
-        if ($type) {
-            return $type;
-        } else {
+        try {
+            $type = Type::where('slug', $slug)->first();
+            $type->views = $type->views + 1;
+            $type->save();
+        } catch (\Exception $exception) {
             return response()->json([
-                'message' => 'Error'
-            ], 500);
+                'message' => 'Not Found'
+            ], 400);
         }
+
+        return new TypeResource($type);
     }
 
     /**
@@ -117,9 +110,7 @@ class TypeController extends Controller
         }
 
         if ($result) {
-            return response()->json([
-                'message' => 'Updated Successfully'
-            ], 200);
+            return response()->json(new TypeResource($type->refresh()), 200);
         } else {
             return response()->json([
                 'message' => 'Error'

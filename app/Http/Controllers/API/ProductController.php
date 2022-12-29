@@ -43,9 +43,9 @@ class ProductController extends Controller
     {
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $product = $request->except(['image']);
-        $product['slug'] = $slug;
-        $product = Product::create($product);
+        $attributes = $request->except(['image', 'tools']);
+        $attributes['slug'] = $slug;
+        $product = Product::create($attributes);
 
         foreach ($request->image as $photo) {
             $imageName = time() . '.' . $photo->getClientOriginalExtension();
@@ -68,9 +68,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return response()->json([
-                'message' => 'Created Successfully'
-            ], 200);
+            return new ProductResource($product);
         } else {
             return response()->json([
                 'message' => 'Error'

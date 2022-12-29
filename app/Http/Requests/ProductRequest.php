@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,16 +24,26 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string',
-            'description_ru' => 'required|string',
-            'description_en' => 'required|string',
+            'name_uz' => 'required|string',
+            'name_ru' => 'required|string',
+            'name_en' => 'required|string',
+            'description_uz' => 'nullable|string',
+            'description_ru' => 'nullable|string',
+            'description_en' => 'nullable|string',
+            'certificate' => 'boolean',
             'artist_id' => 'required|integer',
             'type_id' => 'required|integer',
+            'frame' => 'boolean',
+            'size' => 'nullable|string',
+            'year' => 'nullable|string',
+            'unique' => 'boolean',
+            'city' => 'nullable|string',
+            'price' => 'nullable|numeric',
+            'status' => 'nullable',
             'image' => 'required',
             'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
+            'tools' => 'required',
+            'tools.*' => 'required|integer'
         ];
     }
 }

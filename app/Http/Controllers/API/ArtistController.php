@@ -4,16 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+use App\Http\Requests\ArtistRequest;
+use App\Http\Resources\ArtistResource;
+
 use App\Models\Artist;
 use App\Models\Image;
 use App\Models\Toolable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 use App\Traits\UtilityTrait;
-use App\Http\Requests\ArtistRequest;
-use App\Http\Resources\ArtistResource;
-use App\Http\Resources\ToolResource;
-use App\Models\Tool;
 
 class ArtistController extends Controller
 {
