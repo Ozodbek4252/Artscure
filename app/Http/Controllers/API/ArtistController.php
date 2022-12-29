@@ -116,7 +116,7 @@ class ArtistController extends Controller
 
         $attributes = $request->except(['image', '_method', 'tools']);
 
-        // $attributes['slug'] = $new_slug;
+        $attributes['slug'] = $new_slug;
 
 
         $artist = Artist::where('slug', $slug)->first();
@@ -126,7 +126,7 @@ class ArtistController extends Controller
         if ($request->image) {
             $this->deleteImages($artist->images);
 
-            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $imageName = Str::random(5).'_'.time().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/artists'), $imageName);
 
             $image = new Image();

@@ -52,8 +52,7 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categ
 
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('product');
-Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/products/{num}', [ProductController::class, 'paginate'])->name('product.paginate');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('product.show');
 
 // Help
 Route::post('/helps', [HelpController::class, 'store'])->name('helps.store');
@@ -145,7 +144,7 @@ Route::group([
     Route::delete('/news/{slug}', [NewsController::class, 'destroy'])->name('news.destroy');
 
     // Product
-    Route::post('/products', [ProductController::class, 's tore'])->name('products.store');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{slug}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{slug}', [ProductController::class, 'destroy'])->name('products.destroy');
 

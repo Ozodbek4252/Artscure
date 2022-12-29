@@ -23,6 +23,12 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->_method == null) {
+            $image = 'required';
+        } else {
+            $image = 'nullable';
+        }
+
         return [
             'name_uz' => 'required|string',
             'name_ru' => 'required|string',
@@ -40,8 +46,8 @@ class ProductRequest extends FormRequest
             'city' => 'nullable|string',
             'price' => 'nullable|numeric',
             'status' => 'nullable',
-            'image' => 'required',
-            'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
+            'images' => $image,
+            'images.*' => 'mimes:jpeg,png,jpg,gif,svg',
             'tools' => 'required',
             'tools.*' => 'required|integer'
         ];

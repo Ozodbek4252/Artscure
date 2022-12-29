@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\UtilityTrait;
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -19,18 +20,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::all();
-    }
-
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return Product::paginate($num);
-        } else {
-            return Product::all();
-        }
+        $products = Product::paginate($this->getLimit($request->limit));
+        return ProductResource::collection($products);
     }
 
     /**
@@ -48,7 +41,7 @@ class ProductController extends Controller
         $product = Product::create($attributes);
 
         foreach ($request->image as $photo) {
-            $imageName = time() . '.' . $photo->getClientOriginalExtension();
+            $imageName = Str::random(5).'-'.time().'.'.$photo->getClientOriginalExtension();
             $photo->move(public_path('images/products'), $imageName);
             $img = new Image();
             $img->image = 'images/products/'.$imageName;
@@ -84,14 +77,17 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->first();
-        if ($product) {
-            return $product;
-        } else {
+        try {
+            $product = Product::where('slug', $slug)->first();
+            $product->views = $product->views + 1;
+            $product->save();
+        } catch (\Exception $exception) {
             return response()->json([
-                'message' => 'Error'
-            ], 500);
+                'message' => 'Not Found'
+            ], 400);
         }
+
+        return new ProductResource($product);
     }
 
     /**
@@ -101,31 +97,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(ProductRequest $request, $slug)
     {
-        $request->validate([
-            'name_uz' => 'required|string|max:30',
-            'name_ru' => 'required|string|max:30',
-            'name_en' => 'required|string|max:30',
-            'description_uz' => 'required|string',
-            'description_ru' => 'required|string',
-            'description_en' => 'required|string',
-            'artist_id' => 'required|integer',
-            'type_id' => 'required|integer',
-            'image' => 'nullable',
-            'image.*' => 'mimes:jpeg,png,jpg,gif,svg',
-        ]);
-
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
 
-        $product = $request->except(['image', '_method']);
-        $product['slug'] = $new_slug;
+        $attributes = $request->except(['images', '_method']);
+        $attributes['slug'] = $new_slug;
 
-        $product = Product::updateOrCreate(['slug'=>$slug], $product);
+        $product = Product::where('slug', $slug)->first();
+        $result = $product->update($attributes);
 
-        if ($request->image) {
-            foreach ($request->image as $photo) {
-                $imageName = Str::random(5) . '.' . $photo->getClientOriginalExtension();
+        if ($request->images) {
+            $this->deleteImages($product->images);
+
+            foreach ($request->images as $photo) {
+                $imageName = Str::random(5).'_'.time().'.'.$photo->getClientOriginalExtension();
                 $photo->move(public_path('images/products'), $imageName);
 
                 $img = new Image();
@@ -136,10 +122,23 @@ class ProductController extends Controller
             }
         }
 
-        if ($product) {
-            return response()->json([
-                'message' => 'Update Successfully'
-            ], 200);
+        if ($request->tools) {
+            foreach($product->tools as $tool){
+                $toolable = Toolable::where('tool_id', $tool->id)
+                ->where('toolable_type', 'App\Models\Product')->first();
+                $toolable->delete();
+            }
+            foreach ($request->tools as $tool) {
+                $toolable = new Toolable();
+                $toolable->tool_id = (int)$tool;
+                $toolable->toolable_id = $product->id;
+                $toolable->toolable_type = 'App\Models\Product';
+                $toolable->save();
+            }
+        }
+
+        if ($result) {
+            return response()->json(new ProductResource($product->refresh()), 200);
         } else {
             return response()->json([
                 'message' => 'Error'

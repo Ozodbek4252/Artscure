@@ -35,9 +35,9 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'status' => $this->status,
             'views' => $this->views,
-            'type' => new TypeRes $this->
+            'type' => new TypeResource($this->type),
 
-            'category' => new CategoryResource($this->category),
+            'category' => new CategoryResource($this->type->category),
 
             'image' => ImageResource::collection($this->images)->all(),
             'tools' => ToolResource::collection($this->tools)->all(),
