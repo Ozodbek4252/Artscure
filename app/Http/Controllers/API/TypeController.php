@@ -38,6 +38,7 @@ class TypeController extends Controller
         $type['slug'] = $slug;
 
         $type = Type::create($type);
+
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('images/types'), $imageName);
 

@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\HelpRequest;
 
+use App\Http\Resources\HelpResource;
 use App\Http\Resources\ErrorResource;
 
 use App\Models\Help;
+use App\Services\HelpService;
 
 class HelpController extends Controller
 {
@@ -21,7 +23,7 @@ class HelpController extends Controller
     public function index(Request $request)
     {
         try {
-            $helps = Help::paginate($request->get('num'));
+            $helps = Help::paginate($request->get('limit'));
         } catch (\Exception $exception) {
             return (new ErrorResource("Client Store {$exception->getMessage()}", 'Try again later'))->response()->setStatusCode(403);
         }
@@ -38,35 +40,13 @@ class HelpController extends Controller
     public function store(HelpRequest $request)
     {
         try {
-            Help::create($request->all());
+            $help = (new HelpService($request))->store()->help;
         } catch (\Exception $exception) {
             return (new ErrorResource("Client Store {$exception->getMessage()}", 'Try again later'))->response()->setStatusCode(403);
         }
 
-        return response()->json(['message' => 'Created Successfully'], 200);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return response()->json(new HelpResource($help), 200);
     }
 
     /**

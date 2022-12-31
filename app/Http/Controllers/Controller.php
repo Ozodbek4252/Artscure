@@ -19,4 +19,11 @@ class Controller extends BaseController
 
         return $limit;
     }
+
+    public function error(String $message = 'Failure', int $status = 400)
+    {
+        return response()->json([
+            'message'   => $message,
+        ], $status);
+    }
 }

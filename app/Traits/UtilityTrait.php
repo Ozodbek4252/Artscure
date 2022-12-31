@@ -22,6 +22,18 @@ trait UtilityTrait
         }
     }
 
+    public function storeImage($imageRequest, $model)
+    {
+        // $imageName = time() . '.' . $imageRequest->getClientOriginalExtension();
+        // $imageRequest->move(public_path('images/types'), $imageName);
+
+        // $image = new Image();
+        // $image->image = 'images/types/' . $imageName;
+        // $image->imageable_id = $type->id;
+        // $image->imageable_type = 'App\Models\Type';
+        // $image->save();
+    }
+
     public function deleteTools($tools, $model)
     {
         if (count($tools) > 0) {
