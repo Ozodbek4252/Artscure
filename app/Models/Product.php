@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Tool;
 use App\Models\Artist;
 use App\Models\Type;
+use App\Models\Order;
 
 class Product extends Model
 {
@@ -56,5 +57,10 @@ class Product extends Model
     public function artist()
     {
         return $this->belongsTo(Artist::class, 'artist_id');
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
     }
 }

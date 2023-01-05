@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\API\ArtistController;
 use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\CategoryController;
@@ -14,9 +16,10 @@ use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\RequestController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\ToolController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\OrderController;
 
 use App\Http\Controllers\API\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,6 +79,10 @@ Route::post('/requests', [RequestController::class, 'store']);
 
 // Tool
 Route::get('/tools', [ToolController::class, 'index'])->name('tool');
+
+// Order
+Route::get('orders/{slug}', [OrderController::class, 'show']);
+Route::post('orders', [OrderController::class, 'store']);
 
 Route::post('/search', [SearchController::class, 'search'])->name('search');
 Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
@@ -147,6 +154,11 @@ Route::group([
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{slug}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{slug}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    // Order
+    Route::get('orders', [OrderController::class, 'index']);
+    Route::delete('orders/{slug}', [OrderController::class, 'destroy']);
+
 
     //Toolable
     // Route::get('/toolables', [ToolableController::class, 'index'])->name('toolable');

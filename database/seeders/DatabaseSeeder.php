@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ToolSeeder::class,
             ArtistSeeder::class,
             ProductSeeder::class,
+            OrderSeeder::class,
 
             RequestSeeder::class,
         ]);
