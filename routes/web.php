@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\AuthController;
-
+use App\Http\Controllers\Dashboard\CategoryController;
+// DashboardController
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +37,12 @@ Route::middleware([
     'revalidate',
     'isAdmin',
 ])->group(function () {
+
+    // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
+
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/types', [CategoryController::class, 'index'])->name('types.index');
 });

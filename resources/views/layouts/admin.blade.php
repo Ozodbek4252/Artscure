@@ -4,6 +4,7 @@
 
 <head>
     @include('components.style')
+    @livewireStyles
 </head>
 
 <body>
@@ -36,6 +37,7 @@
 
 
     @include('components.script')
+    @livewireScripts
     @stack('scripts')
 </body>
 

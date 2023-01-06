@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{ Route('dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -51,24 +51,26 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <!-- Dashboards -->
-        <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
+        <li class="menu-item
+        @if(\Request::route()->getName() == 'categories.index')
+        active
+        @endif
+        ">
+            <a href="{{ Route('categories.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Categories">Categories</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item active">
-                    <a href="index.html" class="menu-link">
-                        <div data-i18n="Analytics">Analytics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="dashboards-ecommerce.html" class="menu-link">
-                        <div data-i18n="eCommerce">eCommerce</div>
-                    </a>
-                </li>
-            </ul>
+        </li>
+
+        <li class="menu-item
+        @if(\Request::route()->getName() == 'types.index')
+        active
+        @endif
+        ">
+            <a href="{{ Route('types.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Types">Types</div>
+            </a>
         </li>
 
         <!-- Layouts -->
