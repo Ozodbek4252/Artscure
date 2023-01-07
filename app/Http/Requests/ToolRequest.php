@@ -27,6 +27,7 @@ class ToolRequest extends FormRequest
             'name_uz' => 'required|string',
             'name_ru' => 'required|string',
             'name_en' => 'required|string',
+            'type_id' => 'required|exists:types,id',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg'
         ];
     }

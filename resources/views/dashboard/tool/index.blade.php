@@ -46,7 +46,7 @@
                                 <td>
                                     <button
                                         class="form-control btn btn-outline-danger" style="width: 90px">Delete</button>
-                                    <a href="{{ Route('tools.edit', $tool) }}"
+                                    <a href="{{ Route('tools.edit', $tool->id) }}"
                                         class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
                                 </td>
                             </tr>

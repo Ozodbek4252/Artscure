@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Http\Requests\ToolRequest;
 use App\Models\Tool;
+use App\Models\Type;
+use App\Services\ToolService;
 
 class ToolController extends Controller
 {
@@ -16,40 +18,40 @@ class ToolController extends Controller
 
     public function create()
     {
-        $categories = Category::orderBy('updated_at', 'desc')->get();
-        return view('dashboard.tool.create', ['categories'=>$categories]);
+        $types = Type::orderBy('updated_at', 'desc')->get();
+        return view('dashboard.tool.create', ['types'=>$types]);
     }
 
-    // public function store(TypeRequest $request)
-    // {
-    //     try {
-    //         $category = (new TypeService($request))->store();
-    //     } catch (\Exception $exception) {
-    //         return redirect()->back()->withErrors($exception->getMessage());
-    //     }
+    public function store(ToolRequest $request)
+    {
+        try {
+            $category = (new ToolService($request))->store();
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
 
-    //     return redirect()->route('types.index');
-    // }
+        return redirect()->route('tools.index');
+    }
 
-    // public function edit($slug)
-    // {
-    //     $type = Type::where('slug', $slug)->first();
-    //     $categories = Category::orderBy('updated_at', 'desc')->get();
-    //     return view('dashboard.type.edit', [
-    //         'type'=>$type,
-    //         'categories'=>$categories
-    //     ]);
-    // }
+    public function edit($id)
+    {
+        $tool = Tool::find($id);
+        $types = Type::all();
+        return view('dashboard.tool.edit', [
+            'tool'=>$tool,
+            'types'=>$types
+        ]);
+    }
 
-    // public function update(TypeRequest $request, $slug)
-    // {
-    //     try {
-    //         $type = Type::where('slug', $slug)->first();
-    //         (new TypeService($request, $type))->update();
-    //     } catch (\Exception $exception) {
-    //         return redirect()->back()->withErrors($exception->getMessage());
-    //     }
+    public function update(ToolRequest $request, $id)
+    {
+        try {
+            $tool = Tool::find($id);
+            (new ToolService($request, $tool))->update();
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
 
-    //     return redirect()->route('types.index');
-    // }
+        return redirect()->route('tools.index');
+    }
 }
