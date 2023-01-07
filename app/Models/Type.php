@@ -22,6 +22,20 @@ class Type extends Model
         'category_id',
     ];
 
+    protected $casts = [
+        'id' => 'integer',
+        'slug' => 'string',
+        'name_uz' => 'string',
+        'name_ru' => 'string',
+        'name_en' => 'string',
+        'category_id' => 'integer',
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');

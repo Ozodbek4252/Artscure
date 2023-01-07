@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\TypeController;
+use App\Http\Controllers\Dashboard\ToolController;
+
 // DashboardController
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +46,19 @@ Route::middleware([
         return view('dashboard.index');
     })->name('dashboard');
 
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/types', [CategoryController::class, 'index'])->name('types.index');
+    Route::resource('categories', CategoryController::class);
+
+    Route::get('/types', [TypeController::class, 'index'])->name('types.index');
+    Route::get('/types/create', [TypeController::class, 'create'])->name('types.create');
+    Route::post('/types', [TypeController::class, 'store'])->name('types.store');
+    Route::get('/types/{Type:slug}/edit', [TypeController::class, 'edit'])->name('types.edit');
+    Route::put('/types/{Type:slug}', [TypeController::class, 'update'])->name('types.update');
+    Route::delete('/types/{Type:slug}', [TypeController::class, 'destroy'])->name('types.destroy');
+
+    Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
+    Route::get('/tools/create', [ToolController::class, 'create'])->name('tools.create');
+    Route::post('/tools', [ToolController::class, 'store'])->name('tools.store');
+    Route::get('/tools/{Tool}/edit', [ToolController::class, 'edit'])->name('tools.edit');
+    Route::put('/tools/{Tool}', [ToolController::class, 'update'])->name('tools.update');
+    Route::delete('/tools/{Tool}', [ToolController::class, 'destroy'])->name('tools.destroy');
 });

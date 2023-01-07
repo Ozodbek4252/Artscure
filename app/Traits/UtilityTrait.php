@@ -6,6 +6,8 @@ use App\Models\Artist;
 use App\Models\Image;
 use App\Models\Toolable;
 use App\Models\Type;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 trait UtilityTrait
 {
@@ -22,16 +24,20 @@ trait UtilityTrait
         }
     }
 
-    public function storeImage($imageRequest, $model)
+    // Store Image
+    public function storeImage($imageRequest, $model, $modelName, $modelPl)
     {
-        // $imageName = time() . '.' . $imageRequest->getClientOriginalExtension();
-        // $imageRequest->move(public_path('images/types'), $imageName);
+        // ex: modelPl = types, products, ...
+        $path = 'images/' . $modelPl;
+        $filename = time() . '-' . Str::random(5) . '.' . $imageRequest->getClientOriginalExtension();
+        $imageRequest->storeAs($path, $filename, 'real_public');
 
-        // $image = new Image();
-        // $image->image = 'images/types/' . $imageName;
-        // $image->imageable_id = $type->id;
-        // $image->imageable_type = 'App\Models\Type';
-        // $image->save();
+
+        $image = new Image();
+        $image->image = 'images/' . $modelPl . '/' . $filename;
+        $image->imageable_id = $model->id;
+        $image->imageable_type = 'App\Models\\' . $modelName;
+        $image->save();
     }
 
     public function deleteTools($tools, $model)
