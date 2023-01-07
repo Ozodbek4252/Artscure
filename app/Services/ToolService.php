@@ -7,7 +7,6 @@ use App\Exceptions\Tool\ToolUpdateException;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tool;
 use App\Traits\UtilityTrait;
-use Illuminate\Support\Str;
 
 class ToolService
 {
@@ -15,7 +14,6 @@ class ToolService
     public $attributes;
     public $tool;
     public $image;
-    public $old_image;
 
     public function __construct($request, $tool = null)
     {

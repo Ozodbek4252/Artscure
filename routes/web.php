@@ -7,6 +7,8 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\ToolController;
 
+use App\Http\Controllers\Dashboard\BannerController;
+
 // DashboardController
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +21,9 @@ use App\Http\Controllers\Dashboard\ToolController;
 |
 */
 
-// Auth
-// Route::get('/login-page', [AuthController::class, 'index']);
-// Route::post('/register', [AuthController::class, 'register'])->name('register');
-// Route::post('/login', [AuthController::class, 'login'])->name('login_post');
-
-Route::get('/', function(){
-    return view('dashboard');
-});
-
+// Route::get('/', function(){
+//     return view('dashboard');
+// });
 
 Route::get('/login', [AuthController::class, 'index'])->name('login.index');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -55,10 +51,6 @@ Route::middleware([
     Route::put('/types/{Type:slug}', [TypeController::class, 'update'])->name('types.update');
     Route::delete('/types/{Type:slug}', [TypeController::class, 'destroy'])->name('types.destroy');
 
-    Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
-    Route::get('/tools/create', [ToolController::class, 'create'])->name('tools.create');
-    Route::post('/tools', [ToolController::class, 'store'])->name('tools.store');
-    Route::get('/tools/{id}/edit', [ToolController::class, 'edit'])->name('tools.edit');
-    Route::put('/tools/{id}', [ToolController::class, 'update'])->name('tools.update');
-    Route::delete('/tools/{id}', [ToolController::class, 'destroy'])->name('tools.destroy');
+    Route::resource('tools', ToolController::class);
+    Route::resource('banners', BannerController::class);
 });

@@ -14,7 +14,6 @@ class CategoryService
     public $attributes;
     public $category;
     public $image;
-    public $old_image;
 
     public function __construct($request, $category = null)
     {

@@ -15,7 +15,6 @@ class TypeService
     public $attributes;
     public $type;
     public $image;
-    public $old_image;
 
     public function __construct($request, $type = null)
     {
