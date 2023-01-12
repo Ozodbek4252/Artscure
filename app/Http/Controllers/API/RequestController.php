@@ -8,6 +8,7 @@ use App\Http\Requests\RequestRequest;
 use App\Http\Resources\RequestResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RequestController extends Controller
 {
@@ -39,7 +40,7 @@ class RequestController extends Controller
             $requestModel->cover_letter = $request->cover_letter;
 
             if (!empty($request->portfolio)) {
-                $fileName = time() . '.' . $request->portfolio->getClientOriginalName();
+                $fileName = time().'-'.Str::random(5).'.'.$request->portfolio->getClientOriginalExtension();
                 $request->portfolio->move(public_path('files/requests'), $fileName);
                 $request['portfolio'] = 'files/requests/' . $fileName;
                 $requestModel->portfolio = 'files/requests/' . $fileName;

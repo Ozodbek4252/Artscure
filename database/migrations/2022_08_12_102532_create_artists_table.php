@@ -23,19 +23,19 @@ return new class extends Migration
             $table->string('last_name_ru')->nullable();
             $table->string('last_name_en')->nullable();
             $table->string('speciality')->nullable();
-            $table->float('rate')->nullable();
+            $table->integer('rate')->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->references('id')->onDelete('set null');
             $table->text('description_uz')->nullable();
             $table->text('description_ru')->nullable();
             $table->text('description_en')->nullable();
             $table->integer('views')->default(0);
-            $table->string('muzey_uz')->nullable();
-            $table->string('muzey_ru')->nullable();
-            $table->string('muzey_en')->nullable();
-            $table->string('medal_uz')->nullable();
-            $table->string('medal_ru')->nullable();
-            $table->string('medal_en')->nullable();
-            $table->string('label')->nullable();
+            $table->text('muzey_uz')->nullable();
+            $table->text('muzey_ru')->nullable();
+            $table->text('muzey_en')->nullable();
+            $table->text('medal_uz')->nullable();
+            $table->text('medal_ru')->nullable();
+            $table->text('medal_en')->nullable();
+            $table->text('label')->nullable();
             $table->timestamps();
         });
     }

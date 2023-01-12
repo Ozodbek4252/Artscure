@@ -91,7 +91,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('artists.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-group'></i>
                 <div data-i18n="Artists">Artists</div>
             </a>
@@ -124,7 +124,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('helps.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Helps">Helps</div>
             </a>
@@ -135,7 +135,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('requests.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Requests">Requests</div>
             </a>
@@ -146,7 +146,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('contacts.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Contacts">Contacts</div>
             </a>

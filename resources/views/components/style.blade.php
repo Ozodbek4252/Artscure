@@ -37,6 +37,7 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="../../assets/vendor/css/pages/page-auth.css" />
+    {{--  <link rel="stylesheet" href="../../assets/vendor/libs/rateyo/rateyo.css" />  --}}
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
 
@@ -45,11 +46,5 @@
     <script src="../../assets/vendor/js/template-customizer.js"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../assets/js/config.js"></script>
-
-
-
-
-
-
 
 

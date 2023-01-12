@@ -28,7 +28,7 @@ class Artist extends Model
         'description_en' => 'string',
 
         'speciality' => 'string',
-        'rate' => 'float',
+        'rate' => 'integer',
         'category_id' => 'integer',
         'views' => 'integer',
         'muzey_uz' => 'string',

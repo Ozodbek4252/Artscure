@@ -51,7 +51,6 @@ class ArtistController extends Controller
 
         $artist = $request->except(['image']);
 
-        // add slug
         $artist['slug'] = $slug;
 
         $artist = Artist::create($artist);

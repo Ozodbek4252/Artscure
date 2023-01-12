@@ -32,4 +32,6 @@
 
 
 
+{{--  <script src="../../assets/vendor/libs/rateyo/rateyo.js"></script>
 
+<script src="../../assets/js/extended-ui-star-ratings.js"></script>  --}}

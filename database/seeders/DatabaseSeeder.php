@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
 
             RequestSeeder::class,
+            ContactSeeder::class,
+            HelpSeeder::class,
         ]);
     }
 }

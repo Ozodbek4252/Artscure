@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ArtistController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\AuthController;
@@ -8,6 +9,10 @@ use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\ToolController;
 
 use App\Http\Controllers\Dashboard\BannerController;
+use App\Http\Controllers\Dashboard\ContactController;
+use App\Http\Controllers\Dashboard\HelpController;
+use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\RequestController;
 
 // DashboardController
 /*
@@ -53,4 +58,21 @@ Route::middleware([
 
     Route::resource('tools', ToolController::class);
     Route::resource('banners', BannerController::class);
+    Route::resource('contacts', ContactController::class);
+    Route::resource('helps', HelpController::class);
+    Route::resource('requests', RequestController::class);
+
+    Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
+    Route::get('/artists/{artist:slug}', [ArtistController::class, 'show'])->name('artists.show');
+    Route::get('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
+
+    Route::get('/artists/{artist:slug}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
+    Route::delete('/artists/{artist:slug}/destroy', [ArtistController::class, 'destroy'])->name('artists.destroy');
+
+
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/artists/{artist:slug}/products', [ArtistController::class, 'getArtistProducts'])->name('artists.destroy');
+
+
 });

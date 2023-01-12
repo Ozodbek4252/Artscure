@@ -3,50 +3,38 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Categories List
+            <span class="text-muted fw-light">Requests List
         </h4>
 
         <div class="card">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-2 px-2 my-2">
-                        <a href="{{ Route('categories.create') }}" class="form-control btn btn-outline-success">Create</a>
-                    </div>
-                </div>
-            </div>
 
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>
-                            <th>Name Uz</th>
-                            <th>Name Ru</th>
-                            <th>Name En</th>
-                            <th>Photo</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Cover Letter</th>
+                            <th>Portfolio</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($categories as $category)
+                        @foreach ($requests as $request)
                             <tr>
                                 <th scope="row">
-                                    {{ $loop->index + 1 + ($categories->currentPage() - 1) * $categories->perPage() }}</th>
-                                <td>{{ $category->name_uz }}</td>
-                                <td>{{ $category->name_ru }}</td>
-                                <td>{{ $category->name_en }}</td>
-                                <td>
-                                    @if (count($category->images) > 0)<img class="img-fluid rounded my-4"
-                                        src="{{ $category->images[0]->image }} "
-                                        height="110" width="110" alt="User avatar" />
-                                    @endif
-                                </td>
+                                    {{ $loop->index + 1 + ($requests->currentPage() - 1) * $requests->perPage() }}</th>
+                                <td>{{ $request->full_name }}</td>
+                                <td>{{ $request->phone }}</td>
+                                <td>{{ $request->email }}</td>
+                                <td>{{ $request->cover_letter }}</td>
+                                <td>{{ $request->portfolio }}</td>
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal"
                                         style="width: 90px">Delete</button>
-                                    <a href="{{ Route('categories.edit', $category->id) }}"
-                                        class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
                                 </td>
                             </tr>
 
@@ -66,12 +54,12 @@
                                                     <p>Do you really want to delete this data?</p>
                                                 </div>
                                             </div>
-                                            {{$category->id}}
+                                            {{$request->id}}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ Route('categories.destroy', $category->id) }}" method="POST">
+                                                <form action="{{ Route('requests.destroy', $request->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -83,7 +71,7 @@
 
                         @endforeach
                     </tbody>
-                    {{ $categories->links() }}
+                    {{ $requests->links() }}
                 </table>
             </div>
         </div>
