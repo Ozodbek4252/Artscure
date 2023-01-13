@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
+use App\Models\Category;
+use App\Models\Tool;
+use App\Models\Type;
 
 class ArtistController extends Controller
 {
@@ -16,10 +19,20 @@ class ArtistController extends Controller
     public function show($slug)
     {
         $artist = Artist::where('slug', $slug)->first();
-        // $artist_products = $artist->products;
         return view('dashboard.artist.single', [
             'artist'=>$artist,
-            // 'artist_products' => $artist_products
+        ]);
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        $tools = Tool::all();
+        $types = Type::all();
+        return view('dashboard.artist.create', [
+            'categories' => $categories,
+            'tools' => $tools,
+            'types' => $types
         ]);
     }
 

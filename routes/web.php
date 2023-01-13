@@ -63,8 +63,9 @@ Route::middleware([
     Route::resource('requests', RequestController::class);
 
     Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
-    Route::get('/artists/{artist:slug}', [ArtistController::class, 'show'])->name('artists.show');
     Route::get('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
+    Route::get('/artists/{artist:slug}', [ArtistController::class, 'show'])->name('artists.show');
+    Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
 
     Route::get('/artists/{artist:slug}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     Route::delete('/artists/{artist:slug}/destroy', [ArtistController::class, 'destroy'])->name('artists.destroy');

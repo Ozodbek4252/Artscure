@@ -18,7 +18,14 @@
 <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
 <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 <script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="../../assets/vendor/libs/select2/select2.js"></script>
+<script src="../../assets/vendor/libs/tagify/tagify.js"></script>
+<script src="../../assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="../../assets/vendor/libs/bloodhound/bloodhound.js"></script>
 
+<script src="../../assets/js/forms-selects.js"></script>
+<script src="../../assets/js/forms-tagify.js"></script>
+<script src="../../assets/js/forms-typeahead.js"></script>
 <!-- Main JS -->
 <script src="../../assets/js/main.js"></script>
 
@@ -26,12 +33,3 @@
 <script src="../../assets/js/pages-auth.js"></script>
 
 <script src="../../assets/js/dashboards-analytics.js"></script>
-
-
-
-
-
-
-{{--  <script src="../../assets/vendor/libs/rateyo/rateyo.js"></script>
-
-<script src="../../assets/js/extended-ui-star-ratings.js"></script>  --}}
