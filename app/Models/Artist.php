@@ -23,21 +23,22 @@ class Artist extends Model
         'last_name_uz' => 'string',
         'last_name_ru' => 'string',
         'last_name_en' => 'string',
-        'description_uz' => 'string',
-        'description_ru' => 'string',
-        'description_en' => 'string',
 
         'speciality' => 'string',
         'rate' => 'integer',
         'category_id' => 'integer',
         'views' => 'integer',
+        'label' => 'string',
+
+        'description_uz' => 'string',
+        'description_ru' => 'string',
+        'description_en' => 'string',
         'muzey_uz' => 'string',
         'muzey_ru' => 'string',
         'muzey_en' => 'string',
         'medal_uz' => 'string',
         'medal_ru' => 'string',
         'medal_en' => 'string',
-        'label' => 'string',
     ];
 
     public function images()

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Category Create
+            <span class="text-muted fw-light">Artist Create
         </h4>
 
         <div class="card">
@@ -76,14 +76,14 @@
                                         <option value="{{ $category->id }}">{{ $category->name_uz }}</option>
                                     @endforeach
                                 </select>
-                                @error('speciality')
+                                @error('category')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="col-md-8 px-2">
                                 <label class="form-label" for="tools">Tools</label>
-                                <select name="tools" id="tools" class="select2 form-select" placeholder="asdsda" multiple>
+                                <select name="tools[]" id="tools" class="select2 form-select" multiple>
                                     @foreach ($types as $type)
                                         @if (count($type->tools) > 0)
                                             <optgroup label="{{ $type->name_uz }}">
@@ -94,7 +94,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                @error('rate')
+                                @error('tools')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -128,7 +128,7 @@
                         <div class="card-body d-flex">
                             <div class="col-md-4">
                                 <input name="image" type="file" class="form-control" placeholder="Image" />
-                                @error('speciality')
+                                @error('image')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -157,9 +157,57 @@
                             </div>
                         </div>
 
-                        {{--  <div class="col-md-2">
+                        <div class="card-body d-flex">
+                            <div class="col-md-4">
+                                <textarea name="muzey_uz" type="text" class="form-control" placeholder="Muzey Uz"></textarea>
+                                @error('muzey_uz')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 px-2">
+                                <textarea name="muzey_ru" type="number" class="form-control" placeholder="Muzey Ru"></textarea>
+                                @error('muzey_ru')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <textarea name="muzey_en" type="text" class="form-control" placeholder="Muzey En"></textarea>
+                                @error('muzey_en')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex">
+                            <div class="col-md-4">
+                                <textarea name="medal_uz" type="text" class="form-control" placeholder="Medal Uz"></textarea>
+                                @error('medal_uz')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 px-2">
+                                <textarea name="medal_ru" type="number" class="form-control" placeholder="Medal Ru"></textarea>
+                                @error('medal_ru')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <textarea name="medal_en" type="text" class="form-control" placeholder="Medal En"></textarea>
+                                @error('medal_en')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex">
+                            <div class="col-md-2">
                                 <button type="submit" class="form-control btn btn-outline-success">Create</button>
-                            </div>  --}}
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -15,27 +15,32 @@ return new class extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
+
             $table->string('slug');
+
             $table->string('first_name_uz');
             $table->string('first_name_ru');
             $table->string('first_name_en')->nullable();
             $table->string('last_name_uz')->nullable();
             $table->string('last_name_ru')->nullable();
             $table->string('last_name_en')->nullable();
+
             $table->string('speciality')->nullable();
             $table->integer('rate')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->references('id')->onDelete('set null');
+            $table->integer('category_id')->nullable();
+            $table->text('label')->nullable();
+            $table->integer('views')->default(0);
+
             $table->text('description_uz')->nullable();
             $table->text('description_ru')->nullable();
             $table->text('description_en')->nullable();
-            $table->integer('views')->default(0);
             $table->text('muzey_uz')->nullable();
             $table->text('muzey_ru')->nullable();
             $table->text('muzey_en')->nullable();
             $table->text('medal_uz')->nullable();
             $table->text('medal_ru')->nullable();
             $table->text('medal_en')->nullable();
-            $table->text('label')->nullable();
+
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
                         <div class="user-avatar-section">
                             <div class="d-flex align-items-center flex-column">
                                 <img class="img-fluid rounded my-4"
-                                    @if (count($artist->images) > 0) src="{{ $artist->images[0] }}"
+                                    @if (count($artist->images) > 0) src="/{{$artist->images[0]->image}}"
                                     @else src="" @endif
                                     height="110" width="110" alt="User avatar" />
                                 <div class="user-info text-center">
@@ -48,7 +48,7 @@
                             <ul class="list-unstyled">
                                 <li class="mb-3">
                                     <span class="fw-bold me-2">Category:</span>
-                                    <span>{{ $artist->category->name_uz }}</span>
+                                    <span>@if($artist->category != null){{ $artist->category->name_uz }}@endif</span>
                                 </li>
                                 <li class="mb-3">
                                     <span class="fw-bold me-2">Slug:</span>
@@ -205,7 +205,7 @@
                                                     <a href="{{ Route('products.show', $product->slug) }}">{{ $product->slug }}</a>
                                                 </td>
                                                 <td>{{ $product->name_uz }} {{ $product->name_ru }}</td>
-                                                <td>{{ $product->type->name_uz }}</td>
+                                                <td>@if($artist->type != null){{ $product->type->name_uz }}@endif</td>
                                                 <td>{{ $product->views }}</td>
                                                 <td>
                                                     @if (count($product->images) > 0)

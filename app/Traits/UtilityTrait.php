@@ -7,7 +7,6 @@ use App\Models\Image;
 use App\Models\Toolable;
 use App\Models\Type;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 trait UtilityTrait
 {
@@ -32,12 +31,35 @@ trait UtilityTrait
         $filename = time() . '-' . Str::random(5) . '.' . $imageRequest->getClientOriginalExtension();
         $imageRequest->storeAs($path, $filename, 'real_public');
 
-
         $image = new Image();
         $image->image = 'images/' . $modelPl . '/' . $filename;
         $image->imageable_id = $model->id;
         $image->imageable_type = 'App\Models\\' . $modelName;
         $image->save();
+    }
+
+    public function storeTools($tools, $model, $modelName)
+    {
+        if (count($tools) > 0) {
+            foreach ($tools as $key=>$tool) {
+                $new_tool = new Toolable();
+                $new_tool->tool_id = $tool;
+                $new_tool->toolable_id = $model->id;
+                $new_tool->toolable_type = $modelName;
+                $new_tool->save();
+            }
+        }
+    }
+
+    public function deleteToolables($tools, $model)
+    {
+
+        if (count($tools) > 0) {
+            foreach ($tools as $tool) {
+                $this_tool = Toolable::where('toolable_id', $tool->pivot->toolable_id)->where('tool_id', $tool->pivot->tool_id)->where('toolable_type', $model)->first();
+                $this_tool->delete();
+            }
+        }
     }
 
     public function deleteTools($tools, $model)

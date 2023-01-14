@@ -66,14 +66,15 @@ Route::middleware([
     Route::get('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
     Route::get('/artists/{artist:slug}', [ArtistController::class, 'show'])->name('artists.show');
     Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
+    Route::put('/artists/{artist:slug}', [ArtistController::class, 'update'])->name('artists.update');
 
     Route::get('/artists/{artist:slug}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
-    Route::delete('/artists/{artist:slug}/destroy', [ArtistController::class, 'destroy'])->name('artists.destroy');
+    Route::delete('/artists/{artist:slug}', [ArtistController::class, 'destroy'])->name('artists.destroy');
 
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/artists/{artist:slug}/products', [ArtistController::class, 'getArtistProducts'])->name('artists.destroy');
+    // Route::get('/artists/{artist:slug}/products', [ArtistController::class, 'getArtistProducts'])->name('artists.destroy');
 
 
 });
