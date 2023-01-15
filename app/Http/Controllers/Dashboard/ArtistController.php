@@ -93,7 +93,7 @@ class ArtistController extends Controller
             return redirect()->back()->withErrors($exception->getMessage());
         }
 
-        return redirect()->back();
+        return redirect()->route('artists.index');
     }
 
 }
