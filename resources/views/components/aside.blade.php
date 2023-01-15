@@ -102,7 +102,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('products.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-layer'></i>
                 <div data-i18n="Products">Products</div>
             </a>

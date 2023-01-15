@@ -18,7 +18,7 @@ class Product extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'id' => 'string',
+        'id' => 'integer',
         'slug' => 'string',
         'name_uz' => 'string',
         'name_ru' => 'string',
@@ -29,7 +29,7 @@ class Product extends Model
         'description_uz' => 'string',
         'description_ru' => 'string',
         'description_en' => 'string',
-        'year' => 'string',
+        'year' => 'integer',
         'city' => 'string',
         'unique' => 'boolean',
         'signiture' => 'boolean',

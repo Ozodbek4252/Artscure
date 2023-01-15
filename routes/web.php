@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\ToolController;
 use App\Http\Controllers\Dashboard\BannerController;
 use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\HelpController;
+use App\Http\Controllers\Dashboard\ImageController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RequestController;
 
@@ -71,10 +72,9 @@ Route::middleware([
     Route::get('/artists/{artist:slug}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     Route::delete('/artists/{artist:slug}', [ArtistController::class, 'destroy'])->name('artists.destroy');
 
+    Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug', ]);
 
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
-    // Route::get('/artists/{artist:slug}/products', [ArtistController::class, 'getArtistProducts'])->name('artists.destroy');
+    Route::get('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
 
 
 });

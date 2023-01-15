@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -24,32 +25,41 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         if ($this->_method == null) {
-            $image = 'required';
+            $main_image = 'required|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $image = 'nullable';
+            $main_image = 'nullable|mimes:jpeg,png,jpg,gif,svg';
         }
+
+        $current_year = Carbon::now()->format('Y');
+        $year = 'nullable|numeric|between:0,'.$current_year;
 
         return [
             'name_uz' => 'required|string',
             'name_ru' => 'required|string',
             'name_en' => 'required|string',
-            'description_uz' => 'nullable|string',
-            'description_ru' => 'nullable|string',
+            'description_uz' => 'required|string',
+            'description_ru' => 'required|string',
             'description_en' => 'nullable|string',
-            'certificate' => 'boolean',
+
             'artist_id' => 'required|integer',
             'type_id' => 'required|integer',
-            'frame' => 'boolean',
-            'size' => 'nullable|string',
-            'year' => 'nullable|string',
-            'unique' => 'boolean',
-            'city' => 'nullable|string',
-            'price' => 'nullable|numeric',
-            'status' => 'nullable',
-            'images' => $image,
-            'images.*' => 'mimes:jpeg,png,jpg,gif,svg',
             'tools' => 'required',
-            'tools.*' => 'required|integer'
+            'tools.*' => 'required|integer',
+
+            'main_image' => $main_image,
+            'images' => 'nullable',
+            'images.*' => 'mimes:jpeg,png,jpg,gif,svg',
+
+            'price' => 'nullable|numeric',
+            'city' => 'nullable|string',
+            'size' => 'nullable|string',
+            'year' => $year,
+            'status' => 'nullable|string',
+
+            'unique' => 'nullable',
+            'certificate' => 'nullable',
+            'signiture' => 'nullable',
+            'frame' => 'nullable',
         ];
     }
 }

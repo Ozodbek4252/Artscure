@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('imageable_id');
             $table->string('imageable_type');
+            $table->string('type')->default('main');
             $table->timestamps();
         });
     }

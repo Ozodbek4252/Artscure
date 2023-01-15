@@ -24,7 +24,7 @@ trait UtilityTrait
     }
 
     // Store Image
-    public function storeImage($imageRequest, $model, $modelName, $modelPl)
+    public function storeImage($imageRequest, $model, $modelName, $modelPl, $type = null)
     {
         // ex: modelPl = types, products, ...
         $path = 'images/' . $modelPl;
@@ -35,6 +35,9 @@ trait UtilityTrait
         $image->image = 'images/' . $modelPl . '/' . $filename;
         $image->imageable_id = $model->id;
         $image->imageable_type = 'App\Models\\' . $modelName;
+        if ($type) {
+            $image->type = $type;
+        }
         $image->save();
     }
 

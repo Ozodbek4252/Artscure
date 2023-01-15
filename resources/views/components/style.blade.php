@@ -35,6 +35,8 @@
 <link rel="stylesheet" href="../../assets/vendor/libs/select2/select2.css" />
 <link rel="stylesheet" href="../../assets/vendor/libs/tagify/tagify.css" />
 <link rel="stylesheet" href="../../assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="../../assets/vendor/libs/swiper/swiper.css" />
+<link rel="stylesheet" href="../../assets/vendor/css/pages/ui-carousel.css" />
 
 <!-- Page CSS -->
 <!-- Page -->
@@ -48,3 +50,9 @@
 <script src="../../assets/vendor/js/template-customizer.js"></script>
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="../../assets/js/config.js"></script>
+
+
+
+
+
+
