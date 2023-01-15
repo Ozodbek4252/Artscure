@@ -3,55 +3,53 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Categories List
+            <span class="text-muted fw-light">Orders List
         </h4>
 
         <div class="card">
-            <div class="row">
+            {{--  <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 px-2 my-2">
-                        <a href="{{ Route('categories.create') }}" class="form-control btn btn-outline-success">Create</a>
+                        <a href="{{ Route('orders.create') }}" class="form-control btn btn-outline-success">Create</a>
                     </div>
                 </div>
-            </div>
+            </div>  --}}
 
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>
-                            <th>Name Uz</th>
-                            <th>Name Ru</th>
-                            <th>Name En</th>
-                            <th>Photo</th>
+                            <th>Slug</th>
+                            <th>Name</th>
+                            <th>Product</th>
+                            <th>Phone</th>
+                            <th>Address</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($categories as $category)
+                        @foreach ($orders as $order)
                             <tr>
                                 <th scope="row">
-                                    {{ $loop->index + 1 + ($categories->currentPage() - 1) * $categories->perPage() }}</th>
-                                <td>{{ $category->name_uz }}</td>
-                                <td>{{ $category->name_ru }}</td>
-                                <td>{{ $category->name_en }}</td>
-                                <td>
-                                    @if (count($category->images) > 0)<img class="img-fluid rounded my-4"
-                                        src="{{ $category->images[0]->image }} "
-                                        height="110" width="110" alt="User avatar" />
-                                    @endif
-                                </td>
+                                    {{ $loop->index + 1 + ($orders->currentPage() - 1) * $orders->perPage() }}</th>
+                                <td>{{ $order->slug }}</td>
+                                <td>{{ $order->name }}</td>
+                                <td><a href="{{Route('products.show', $order->product->slug)}}">{{ $order->product->name_uz }}</a></td>
+                                <td><a href="tel:{{$order->phone}}">{{ $order->phone }}</a></td>
+                                <td>{{ $order->address }}</td>
+
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
-                                        data-bs-toggle="modal" data-bs-target="#animationModal"
+                                        data-bs-toggle="modal" data-bs-target="#animationModal{{$order->id}}"
                                         style="width: 90px">Delete</button>
-                                    <a href="{{ Route('categories.edit', $category->id) }}"
+                                    <a href="{{ Route('orders.edit', $order->slug) }}"
                                         class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
                                 </td>
                             </tr>
 
                             <!-- Modal -->
-                            <div class="modal fade animate__animated fadeIn" id="animationModal" tabindex="-1"
+                            <div class="modal fade animate__animated fadeIn" id="animationModal{{$order->id}}" tabindex="-1"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -66,12 +64,11 @@
                                                     <p>Do you really want to delete this data?</p>
                                                 </div>
                                             </div>
-                                            {{$category->id}}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ Route('categories.destroy', $category->id) }}" method="POST">
+                                                <form action="{{ Route('orders.destroy', $order->slug) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -83,7 +80,7 @@
 
                         @endforeach
                     </tbody>
-                    {{ $categories->links() }}
+                    {{ $orders->links() }}
                 </table>
             </div>
         </div>

@@ -113,7 +113,7 @@
         active
         @endif
         ">
-            <a href="{{ Route('tools.index') }}" class="menu-link">
+            <a href="{{ Route('orders.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-spreadsheet' ></i>
                 <div data-i18n="Orders">Orders</div>
             </a>

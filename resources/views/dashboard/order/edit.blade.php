@@ -3,56 +3,76 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Category Create
+            <span class="text-muted fw-light">Order Create
         </h4>
 
         <div class="card">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 px-2 my-2">
-                        <a href="{{ Route('categories.index') }}" style="padding: 10px"><i
-                                class='bx bx-arrow-back'></i>Back</a>
+                        <a href="{{ Route('orders.index') }}" style="padding: 10px"><i class='bx bx-arrow-back'></i>Back</a>
                     </div>
 
-                    <form action="{{ Route('categories.update', $category) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('orders.update', $order->slug) }}" method="POST">
                         @csrf
                         @method('PUT')
+
                         <div class="card-body d-flex">
-                            <div class="col-md-2">
-                                <input name="name_uz" value="{{ $category->name_uz }}" type="text" class="form-control"
-                                    placeholder="Name Uz" />
-                                @error('name_uz')
+                            <div class="col-md-4">
+                                <label class="form-label" for="name">Name</label>
+                                <input name="name" value="{{ $order->name }}" type="text" id="name"
+                                    class="form-control" placeholder="Name" />
+                                @error('name')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-2 px-2">
-                                <input name="name_ru" value="{{ $category->name_ru }}" type="text" class="form-control"
-                                    id="defaultFormControlInput" placeholder="Name Ru"
-                                    aria-describedby="defaultFormControlHelp" />
-                                @error('name_ru')
-                                    <span class="error alert-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-md-2">
-                                <input name="name_en" value="{{ $category->name_en }}" type="text" class="form-control"
-                                    id="defaultFormControlInput" placeholder="Name En"
-                                    aria-describedby="defaultFormControlHelp" />
-                                @error('name_en')
+                            <div class="col-md-4 px-2">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input name="phone" value="{{ $order->phone }}" type="text" id="phone"
+                                    class="form-control" placeholder="Phone" />
+                                @error('phone')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-2 px-2">
-                                <input name="image" class="form-control" type="file" />
-                                <img class="img-fluid rounded my-4"
-                                    src="@if (count($category->images) > 0) /{{ $category->images[0]->image }} @endif"
-                                    height="110" width="110" alt="User avatar" />
-                                @error('image')
+                            <div class="col-md-4">
+                                <label class="form-label" for="product">Products</label>
+                                <select name="product_id" id="product" class="select2 form-select"
+                                    data-allow-clear="true">
+                                    <option value="">Select Product</option>
+                                    @foreach ($products as $product)
+                                        <option @if ($order->product_id == $product->id) selected @endif
+                                            value="{{ $product->id }}">{{ $product->name_uz }}</option>
+                                    @endforeach
+                                </select>
+                                @error('product_id')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex">
+                            <div class="col-md-4">
+                                <label class="form-label" for="address">Address</label>
+                                <input name="address" value="{{ $order->address }}" type="text" id="address"
+                                    class="form-control" placeholder="Address" />
+                                @error('address')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
+                            <div class="col-md-4 px-2">
+                                <label class="form-label" for="payment_type">Payment Type</label>
+                                <input name="payment_type" value="{{ $order->payment_type }}" type="text" id="payment_type"
+                                    class="form-control" placeholder="Payment Type" />
+                                @error('payment_type')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex">
                             <div class="col-md-2">
                                 <button type="submit" class="form-control btn btn-outline-success">Update</button>
                             </div>

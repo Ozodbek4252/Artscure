@@ -28,7 +28,7 @@ class OrderRequest extends FormRequest
             'name' => 'required|string',
             'phone' => 'required',
             'payment_type' => 'nullable|string',
-            'address' => 'nullable|required',
+            'address' => 'nullable|string',
         ];
     }
 }

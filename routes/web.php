@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\BannerController;
 use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\HelpController;
 use App\Http\Controllers\Dashboard\ImageController;
+use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RequestController;
 
@@ -49,32 +50,15 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class);
-
-    Route::get('/types', [TypeController::class, 'index'])->name('types.index');
-    Route::get('/types/create', [TypeController::class, 'create'])->name('types.create');
-    Route::post('/types', [TypeController::class, 'store'])->name('types.store');
-    Route::get('/types/{Type:slug}/edit', [TypeController::class, 'edit'])->name('types.edit');
-    Route::put('/types/{Type:slug}', [TypeController::class, 'update'])->name('types.update');
-    Route::delete('/types/{Type:slug}', [TypeController::class, 'destroy'])->name('types.destroy');
-
     Route::resource('tools', ToolController::class);
     Route::resource('banners', BannerController::class);
     Route::resource('contacts', ContactController::class);
     Route::resource('helps', HelpController::class);
     Route::resource('requests', RequestController::class);
-
-    Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
-    Route::get('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
-    Route::get('/artists/{artist:slug}', [ArtistController::class, 'show'])->name('artists.show');
-    Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
-    Route::put('/artists/{artist:slug}', [ArtistController::class, 'update'])->name('artists.update');
-
-    Route::get('/artists/{artist:slug}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
-    Route::delete('/artists/{artist:slug}', [ArtistController::class, 'destroy'])->name('artists.destroy');
-
+    Route::resource('types', TypeController::class)->parameters(['types' => 'type:slug', ]);
+    Route::resource('artists', ArtistController::class)->parameters(['artists' => 'artist:slug', ]);
     Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug', ]);
+    Route::resource('orders', OrderController::class)->parameters(['orders' => 'order:slug', ]);
 
     Route::get('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
-
-
 });
