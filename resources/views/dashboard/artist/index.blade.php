@@ -79,6 +79,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal End -->
 
                         @endforeach
                     </tbody>

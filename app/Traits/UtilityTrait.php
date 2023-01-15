@@ -61,6 +61,16 @@ trait UtilityTrait
             }
         }
     }
+    public function setToolsAsNull($tool)
+    {
+        if ($tool != null) {
+            $toolables = Toolable::where('tool_id', $tool->id)->get();
+            foreach ($toolables as $toolable) {
+                $toolable->tool_id = null;
+                $toolable->save();
+            }
+        }
+    }
 
     public function deleteTools($tools, $model)
     {

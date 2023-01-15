@@ -15,10 +15,12 @@ class ToolService
     public $tool;
     public $image;
 
-    public function __construct($request, $tool = null)
+    public function __construct($request = null, $tool = null)
     {
-        $this->attributes = $request->only(['name_uz', 'name_ru', 'name_en', 'type_id']);
-        $this->image = $request->image;
+        if ($request != null) {
+            $this->attributes = $request->only(['name_uz', 'name_ru', 'name_en', 'type_id']);
+            $this->image = $request->image;
+        }
         $this->tool = $tool;
     }
 
@@ -57,6 +59,25 @@ class ToolService
                 // store image using UtilityTrait
                 $this->storeImage($this->image, $this->tool, 'Tool', 'tools');
             }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw new ToolUpdateException("Cannot update. Error:{$exception->getMessage()}");
+        }
+        DB::commit();
+
+        return $this;
+    }
+
+    public function delete($tool)
+    {
+        DB::beginTransaction();
+        try {
+            // delete image using UtilityTrait
+            $this->deleteImages($tool->images);
+
+            $this->setToolsAsNull($tool);
+
+            $tool->delete();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw new ToolUpdateException("Cannot update. Error:{$exception->getMessage()}");

@@ -54,4 +54,16 @@ class ToolController extends Controller
 
         return redirect()->route('tools.index');
     }
+
+    public function destroy($id)
+    {
+        try {
+            $tool = Tool::findOrFail($id);
+            $tool = (new ToolService())->delete($tool);
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
+
+        return redirect()->back();
+    }
 }

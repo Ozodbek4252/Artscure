@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('toolables', function (Blueprint $table) {
             $table->id();
-            $table->string('tool_id');
+            $table->string('tool_id')->nullable();
             $table->string('toolable_id');
             $table->string('toolable_type');
             $table->timestamps();
