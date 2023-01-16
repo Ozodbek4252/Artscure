@@ -13,5 +13,17 @@ class ContactController extends Controller
         return view('dashboard.contact.index', ['contacts'=>$contacts]);
     }
 
+    public function destroy($id)
+    {
+        try {
+            $contact = Contact::find($id);
+            $contact->delete();
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
+
+        return redirect()->route('contacts.index');
+    }
+
 }
 

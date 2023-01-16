@@ -16,8 +16,6 @@ services:
             - artscure-database
         depends_on:
             - artscure-database
-    npm:
-        image: node:12.18.1
     artscure-nginx:
         image: nginx:alpine
         container_name: artscure-nginx

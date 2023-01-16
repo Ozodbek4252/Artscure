@@ -38,8 +38,8 @@
                                     {{ $loop->index + 1 + ($products->currentPage() - 1) * $products->perPage() }}</th>
                                 <td><a href="{{ Route('products.show', $product->slug) }}">{{ $product->slug }}</a></td>
                                 <td>{{ $product->name_uz }}</td>
-                                <td>{{ $product->type->category->name_uz }}</td>
-                                <td><a href="{{ Route('artists.show', $product->artist->slug) }}">{{ $product->artist->first_name_uz }}</a></td>
+                                <td>@if($product->type){{ $product->type->category->name_uz }}@endif</td>
+                                <td>@if($product->artist)<a href="{{ Route('artists.show', $product->artist->slug) }}">{{ $product->artist->first_name_uz }}</a>@endif</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->views }}</td>
                                 <td>

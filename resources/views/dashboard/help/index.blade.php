@@ -29,13 +29,13 @@
                                 <td>{{ $help->created_at }}</td>
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
-                                        data-bs-toggle="modal" data-bs-target="#animationModal"
+                                        data-bs-toggle="modal" data-bs-target="#animationModal{{$help->id}}"
                                         style="width: 90px">Delete</button>
                                 </td>
                             </tr>
 
                             <!-- Modal -->
-                            <div class="modal fade animate__animated fadeIn" id="animationModal" tabindex="-1"
+                            <div class="modal fade animate__animated fadeIn" id="animationModal{{$help->id}}" tabindex="-1"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -50,7 +50,6 @@
                                                     <p>Do you really want to delete this data?</p>
                                                 </div>
                                             </div>
-                                            {{ $help->id }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-label-secondary"

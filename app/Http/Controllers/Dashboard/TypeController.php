@@ -7,9 +7,12 @@ use App\Http\Requests\TypeRequest;
 use App\Models\Category;
 use App\Models\Type;
 use App\Services\TypeService;
+use App\Traits\UtilityTrait;
 
 class TypeController extends Controller
 {
+    use UtilityTrait;
+
     public function index()
     {
         $types = Type::orderBy('updated_at', 'desc')->paginate(20);
@@ -48,6 +51,19 @@ class TypeController extends Controller
         try {
             $type = Type::where('slug', $slug)->first();
             (new TypeService($request, $type))->update();
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
+
+        return redirect()->route('types.index');
+    }
+
+    public function destroy($slug)
+    {
+        try {
+            $type = Type::where('slug', $slug)->first();
+            $this->deleteImages($type->images);
+            $type->delete();
         } catch (\Exception $exception) {
             return redirect()->back()->withErrors($exception->getMessage());
         }
