@@ -52,7 +52,7 @@
                                 </li>
                                 <li class="mb-3">
                                     <span class="fw-bold me-2">Type:</span>
-                                    <span>{{ $product->type->name_uz }}</span>
+                                    <span>@if($product->type){{ $product->type->name_uz }}@endif</span>
                                 </li>
                                 <li class="mb-3">
                                     <span class="fw-bold me-2">Artist:</span>

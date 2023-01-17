@@ -51,12 +51,43 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button
-                                        class="form-control btn btn-outline-danger" style="width: 90px">Delete</button>
+                                    <button type="button"
+                                        class="form-control btn btn-outline-danger" style="width: 90px"
+                                        data-bs-toggle="modal" data-bs-target="#animationModal{{$banner->id}}">Delete</button>
                                     <a href="{{ Route('banners.edit', $banner->id) }}"
                                         class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
                                 </td>
                             </tr>
+
+                            <!-- Modal -->
+                            <div class="modal fade animate__animated fadeIn" id="animationModal{{$banner->id}}" tabindex="-1"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel5">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col mb-3">
+                                                    <p>Do you really want to delete this data?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-label-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                                <form action="{{ Route('banners.destroy', $banner->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                     {{ $banners->links() }}
