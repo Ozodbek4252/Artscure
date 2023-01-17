@@ -52,10 +52,10 @@
                                 </td>
                                 <td>
                                     <button type="button"
-                                        class="form-control btn btn-outline-danger" style="width: 90px"
+                                        class="form-control btn btn-outline-danger" style="width: auto;"
                                         data-bs-toggle="modal" data-bs-target="#animationModal{{$banner->id}}">Delete</button>
                                     <a href="{{ Route('banners.edit', $banner->id) }}"
-                                        class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
+                                        class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>
                                 </td>
                             </tr>
 

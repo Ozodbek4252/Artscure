@@ -32,7 +32,7 @@
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal{{$contact->id}}"
-                                        style="width: 90px">Delete</button>
+                                        style="width: auto;">Delete</button>
                                 </td>
                             </tr>
 

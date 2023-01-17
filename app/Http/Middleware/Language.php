@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App;
+use Illuminate\Support\Facades\App;
 
 class Language
 {
@@ -20,6 +20,7 @@ class Language
         if (session()->has('lang')) {
             App::setLocale(session()->get('lang'));
         } else {
+            session()->put('lang', config('global.lang'));
             App::setLocale(config('global.lang'));
         }
 

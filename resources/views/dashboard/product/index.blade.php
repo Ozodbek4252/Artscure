@@ -52,9 +52,9 @@
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal{{$product->id}}"
-                                        style="width: 90px">Delete</button>
+                                        style="width: auto;">Delete</button>
                                     <a href="{{ Route('products.edit', $product->slug) }}"
-                                        class="form-control btn btn-outline-warning" style="width: 90px">Edit</a>
+                                        class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>
                                 </td>
                             </tr>
 

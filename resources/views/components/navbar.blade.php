@@ -12,7 +12,7 @@
                 <div class="nav-item navbar-search-wrapper mb-0">
                     <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
                         <i class="bx bx-search-alt bx-sm"></i>
-                        <span class="d-none d-md-inline-block text-muted">{{__('dash-sidebar.Search')}} (Ctrl+/)</span>
+                        <span class="d-none d-md-inline-block text-muted">{{__('navbar.Search')}} (Ctrl+/)</span>
                     </a>
                 </div>
             </div>
@@ -35,20 +35,20 @@
                         <li>
                             <a class="dropdown-item" href="{{ Route('lang.en') }}">
                                 <i class="fi fi-us fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">{{__('dash-sidebar.English')}}</span>
+                                <span class="align-middle">{{__('navbar.English')}}</span>
                             </a>
                         </li>
                         <li>
                             <?php $a = 'a'; ?>
                             <a class="dropdown-item" href="{{ Route('lang.uz') }}" data-language="uz">
                                 <i class="fi fi-uz fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">{{__('dash-sidebar.Uzbek')}}</span>
+                                <span class="align-middle">{{__('navbar.Uzbek')}}</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ Route('lang.ru') }}" data-language="ru">
                                 <i class="fi fi-ru fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">{{__('dash-sidebar.Russian')}}</span>
+                                <span class="align-middle">{{__('navbar.Russian')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -468,8 +468,8 @@
 
         <!-- Search Small Screens -->
         <div class="navbar-search-wrapper search-input-wrapper d-none">
-            <input type="text" class="form-control search-input container-fluid border-0" placeholder="{{__('dash-sidebar.Search')}}..."
-                aria-label="{{__('dash-sidebar.Search')}}..." />
+            <input type="text" class="form-control search-input container-fluid border-0" placeholder="{{__('navbar.Search')}}..."
+                aria-label="{{__('navbar.Search')}}..." />
             <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
         </div>
     </div>

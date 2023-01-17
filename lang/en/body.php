@@ -14,4 +14,32 @@ return [
     */
 
     'Create' => 'Create',
+    'Edit' => 'Edit',
+    'Delete' => 'Delete',
+    'Uz' => 'Uz',
+    'Ru' => 'Ru',
+    'En' => 'En',
+    'Name' => 'Name',
+    'Actions' => 'Actions',
+    'Photo' => 'Photo',
+    'Photos' => 'Photos',
+    'Confirmation' => 'Confirmation',
+    'Do you really want to delete this data?' => 'Do you really want to delete this data?',
+    'Close' => 'Close',
+    'Categories List' => 'Categories List',
+    'Category' => 'Category',
+    'Category Create' => 'Category Create',
+    'Category Update' => 'Category Update',
+    'Back' => 'Back',
+    'Update' => 'Update',
+    'Slug' => 'Slug',
+    'Views' => 'Views',
+    'Types List' => 'Types List',
+    'Types Update' => 'Types Update',
+
+    'Tools List' => 'Tools List',
+    'Type' => 'Type',
+    'Tools Create' => 'Tools Create',
+    'Tools Update' => 'Tools Update',
+
 ];
