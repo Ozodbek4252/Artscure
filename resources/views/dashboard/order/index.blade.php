@@ -10,7 +10,7 @@
             {{--  <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 px-2 my-2">
-                        <a href="{{ Route('orders.create') }}" class="form-control btn btn-outline-success">Create</a>
+                        <a href="{{ Route('orders.create') }}" class="form-control btn btn-outline-success">{{__('body.Create')}}</a>
                     </div>
                 </div>
             </div>  --}}

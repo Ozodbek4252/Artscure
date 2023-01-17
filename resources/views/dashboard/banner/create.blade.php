@@ -56,7 +56,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="form-control btn btn-outline-success">Create</button>
+                                <button type="submit" class="form-control btn btn-outline-success">{{__('body.Create')}}</button>
                             </div>
                         </div>
 
