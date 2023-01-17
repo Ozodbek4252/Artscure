@@ -12,7 +12,7 @@
                 <div class="nav-item navbar-search-wrapper mb-0">
                     <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
                         <i class="bx bx-search-alt bx-sm"></i>
-                        <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
+                        <span class="d-none d-md-inline-block text-muted">{{__('dash-sidebar.Search')}} (Ctrl+/)</span>
                     </a>
                 </div>
             </div>
@@ -22,31 +22,33 @@
                 <!-- Language -->
                 <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                        <i class="fi fi-us fis rounded-circle fs-3 me-1"></i>
+                        @if (session()->get('lang') == 'en')
+                            <i class="fi fi-us fis rounded-circle fs-3 me-1"></i>
+                        @elseif(session()->get('lang') == 'uz')
+                            <i class="fi fi-uz fis rounded-circle fs-3 me-1"></i>
+                        @elseif(session()->get('lang') == 'ru')
+                            <i class="fi fi-ru fis rounded-circle fs-3 me-1"></i>
+                        @endif
                     </a>
+
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);" data-language="en">
+                            <a class="dropdown-item" href="{{ Route('lang.en') }}">
                                 <i class="fi fi-us fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">English</span>
+                                <span class="align-middle">{{__('dash-sidebar.English')}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);" data-language="fr">
-                                <i class="fi fi-fr fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">French</span>
+                            <?php $a = 'a'; ?>
+                            <a class="dropdown-item" href="{{ Route('lang.uz') }}" data-language="uz">
+                                <i class="fi fi-uz fis rounded-circle fs-4 me-1"></i>
+                                <span class="align-middle">{{__('dash-sidebar.Uzbek')}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);" data-language="de">
-                                <i class="fi fi-de fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">German</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="javascript:void(0);" data-language="pt">
-                                <i class="fi fi-pt fis rounded-circle fs-4 me-1"></i>
-                                <span class="align-middle">Portuguese</span>
+                            <a class="dropdown-item" href="{{ Route('lang.ru') }}" data-language="ru">
+                                <i class="fi fi-ru fis rounded-circle fs-4 me-1"></i>
+                                <span class="align-middle">{{__('dash-sidebar.Russian')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -450,11 +452,12 @@
                             </a>
                         </li>  --}}
                         <li>
-                            <form class="dropdown-item" action="{{Route('logout')}}" method="POST">
+                            <form class="dropdown-item" action="{{ Route('logout') }}" method="POST">
                                 @csrf
                                 <i class="bx bx-power-off me-2"></i>
 
-                                <span type="submit" class="align-middle" onclick="event.preventDefault(); this.closest('form').submit();">Log Out</span>
+                                <span type="submit" class="align-middle"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">Log Out</span>
                             </form>
                         </li>
                     </ul>
@@ -465,8 +468,8 @@
 
         <!-- Search Small Screens -->
         <div class="navbar-search-wrapper search-input-wrapper d-none">
-            <input type="text" class="form-control search-input container-fluid border-0" placeholder="Search..."
-                aria-label="Search..." />
+            <input type="text" class="form-control search-input container-fluid border-0" placeholder="{{__('dash-sidebar.Search')}}..."
+                aria-label="{{__('dash-sidebar.Search')}}..." />
             <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
         </div>
     </div>

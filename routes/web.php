@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\BannerController;
 use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\HelpController;
 use App\Http\Controllers\Dashboard\ImageController;
+use App\Http\Controllers\Dashboard\LanguageController;
 use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RequestController;
@@ -42,7 +43,11 @@ Route::middleware([
     'auth',
     'revalidate',
     'isAdmin',
+    'language',
 ])->group(function () {
+    Route::get('/', function(){
+        return redirect()->route('dashboard');
+    });
 
     // Dashboard
     Route::get('/dashboard', function () {
@@ -61,4 +66,8 @@ Route::middleware([
     Route::resource('orders', OrderController::class)->parameters(['orders' => 'order:slug', ]);
 
     Route::get('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
+
+    Route::get('/lang/change/en', [LanguageController::class, 'changeToEn'])->name('lang.en');
+    Route::get('/lang/change/uz', [LanguageController::class, 'changeToUz'])->name('lang.uz');
+    Route::get('/lang/change/ru', [LanguageController::class, 'changeToRu'])->name('lang.ru');
 });

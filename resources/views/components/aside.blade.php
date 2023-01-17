@@ -58,7 +58,7 @@
         ">
             <a href="{{ Route('categories.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Categories">Categories</div>
+                <div>{{__('dash-sidebar.Categories')}}</div>
             </a>
         </li>
 
@@ -69,7 +69,7 @@
         ">
             <a href="{{ Route('types.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Types">Types</div>
+                <div>{{__('dash-sidebar.Types')}}</div>
             </a>
         </li>
 
@@ -80,7 +80,7 @@
         ">
             <a href="{{ Route('tools.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Tools">Tools</div>
+                <div>{{__('dash-sidebar.Tools')}}</div>
             </a>
         </li>
 
@@ -93,7 +93,7 @@
         ">
             <a href="{{ Route('artists.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-group'></i>
-                <div data-i18n="Artists">Artists</div>
+                <div>{{__('dash-sidebar.Artists')}}</div>
             </a>
         </li>
 
@@ -104,7 +104,7 @@
         ">
             <a href="{{ Route('products.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-layer'></i>
-                <div data-i18n="Products">Products</div>
+                <div>{{__('dash-sidebar.Products')}}</div>
             </a>
         </li>
 
@@ -115,7 +115,7 @@
         ">
             <a href="{{ Route('orders.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-spreadsheet' ></i>
-                <div data-i18n="Orders">Orders</div>
+                <div>{{__('dash-sidebar.Orders')}}</div>
             </a>
         </li>
 
@@ -126,7 +126,7 @@
         ">
             <a href="{{ Route('helps.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Helps">Helps</div>
+                <div>{{__('dash-sidebar.Helps')}}</div>
             </a>
         </li>
 
@@ -137,7 +137,7 @@
         ">
             <a href="{{ Route('requests.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Requests">Requests</div>
+                <div>{{__('dash-sidebar.Requests')}}</div>
             </a>
         </li>
 
@@ -148,24 +148,24 @@
         ">
             <a href="{{ Route('contacts.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Contacts">Contacts</div>
+                <div>{{__('dash-sidebar.Contacts')}}</div>
             </a>
         </li>
 
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-food-menu"></i>
-                <div data-i18n="News">News</div>
+                <div>{{__('dash-sidebar.News')}}</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="app-invoice-list.html" class="menu-link">
-                        <div data-i18n="List">List</div>
+                        <div>{{__('dash-sidebar.List')}}</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="app-invoice-add.html" class="menu-link">
-                        <div data-i18n="Add">Add</div>
+                        <div>{{__('dash-sidebar.Add')}}</div>
                     </a>
                 </li>
             </ul>
@@ -179,7 +179,7 @@
             ">
             <a href="{{ Route('banners.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Banners">Banners</div>
+                <div>{{__('dash-sidebar.Banners')}}</div>
             </a>
         </li>
 
