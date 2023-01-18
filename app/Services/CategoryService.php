@@ -7,6 +7,7 @@ use App\Exceptions\Category\CategoryUpdateException;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Traits\UtilityTrait;
+use Illuminate\Support\Str;
 
 class CategoryService
 {
@@ -18,6 +19,8 @@ class CategoryService
     public function __construct($request, $category = null)
     {
         $this->attributes = $request->only(['name_uz', 'name_ru', 'name_en']);
+        $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
+        $this->attributes['slug'] = $slug;
         $this->image = $request->image;
         $this->category = $category;
     }

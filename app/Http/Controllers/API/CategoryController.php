@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::query()->findOrFail($id);
+            $category = Category::query()->where('slug', $id)->first();
         } catch (\Exception $exception) {
             return response()->json([
                 'message' => 'Not Found'

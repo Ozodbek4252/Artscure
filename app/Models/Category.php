@@ -13,6 +13,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
+        'slug',
         'name_uz',
         'name_ru',
         'name_en',

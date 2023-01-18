@@ -45,7 +45,7 @@ Route::middleware([
     'isAdmin',
     'language',
 ])->group(function () {
-    Route::get('/', function(){
+    Route::get('/admin', function(){
         return redirect()->route('dashboard');
     });
 

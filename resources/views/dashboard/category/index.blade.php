@@ -20,6 +20,7 @@
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>
+                            <th>Slug</th>
                             <th>{{__('body.Name')}} {{__('body.Uz')}}</th>
                             <th>{{__('body.Name')}} {{__('body.Ru')}}</th>
                             <th>{{__('body.Name')}} {{__('body.En')}}</th>
@@ -32,6 +33,7 @@
                             <tr>
                                 <th scope="row">
                                     {{ $loop->index + 1 + ($categories->currentPage() - 1) * $categories->perPage() }}</th>
+                                <td>{{ $category->slug }}</td>
                                 <td>{{ $category->name_uz }}</td>
                                 <td>{{ $category->name_ru }}</td>
                                 <td>{{ $category->name_en }}</td>

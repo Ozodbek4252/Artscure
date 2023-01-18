@@ -52,7 +52,7 @@ Route::get('/new/{slug}', [NewsController::class, 'show']);
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
 // Product
 Route::get('/products', [ProductController::class, 'index']);
