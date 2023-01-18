@@ -14,8 +14,14 @@ class ArtistResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (count($this->tools)>0) {
+            $type = $this->tools[0];
+        } else {
+            $type = null;
+        }
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'first_name_uz' => $this->first_name_uz,
             'first_name_ru' => $this->first_name_ru,
             'first_name_en' => $this->first_name_en,
@@ -43,7 +49,8 @@ class ArtistResource extends JsonResource
 
             'label' => $this->label,
 
-            'type' => $this->tools[0]->name_uz,
+            'type' => $type,
+            'product' => ProductResource::collection($this->products)->all(),
 
             'image' => ImageResource::collection($this->images)->all(),
             'tools' => ToolResource::collection($this->tools)->all(),

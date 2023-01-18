@@ -14,6 +14,16 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        if ($this->artist) {
+            $author = [
+                'id' => $this->artist->id,
+                'uz' => $this->artist->first_name_uz,
+                'ru' => $this->artist->first_name_ru,
+                'en' => $this->artist->first_name_en,
+            ];
+        } else {
+            $author = null;
+        }
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -36,7 +46,7 @@ class ProductResource extends JsonResource
             'status' => $this->status,
             'views' => $this->views,
             'type' => new TypeResource($this->type),
-
+            'author' => $author,
             'category' => new CategoryResource($this->category),
 
             'image' => ImageResource::collection($this->images)->all(),
