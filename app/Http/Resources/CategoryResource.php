@@ -24,6 +24,7 @@ class CategoryResource extends JsonResource
             'name_uz' => $this->name_uz,
             'name_ru' => $this->name_ru,
             'name_en' => $this->name_en,
+            'types' => TypeResource::collection($this->types),
             'image' => $image
         ];
     }
