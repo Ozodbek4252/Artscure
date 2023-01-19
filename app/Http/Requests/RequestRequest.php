@@ -27,8 +27,8 @@ class RequestRequest extends FormRequest
             'full_name' => 'required',
             'phone' => 'required',
             'email' => 'nullable|email',
-            'portfolio' => 'nullable|max:10000|mimes:doc,docx,pdf',
-            'cover_letter' => 'required|min:30',
+            'portfolio' => 'required|string',
+            'cover_letter' => 'nullale|string',
         ];
     }
 }
