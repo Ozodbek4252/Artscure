@@ -23,14 +23,14 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            $order = (new OrderService($request));
+            $order = (new OrderService($request))->store()->getOrder();
         } catch (\Exception $exception) {
             return response()->json([
                 'message' => 'Not Found'
             ], 400);
         }
 
-        // return new OrderResource($order);
+        return new OrderResource($order);
     }
 
     public function show($slug)

@@ -11,13 +11,12 @@ class OrderService
 {
     public $request;
     public $order;
-    // public $client;
-    // public $order;
 
     public function __construct($request = null)
     {
         if ($request != null) {
-            $this->request = $request->only(['name', 'phone']);
+            $this->request = $request->only(['name', 'phone', 'product_id', 'payment_type', 'address']);
+            $this->request['slug'] = uniqid();
         } else {
             $this->request = null;
         }
