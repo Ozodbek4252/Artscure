@@ -1,4 +1,4 @@
-1. composer install
-2. 
-3. 
+Just run the following comman (if you have Docker 🙃 ):
+
+1. docker-compose up
 
