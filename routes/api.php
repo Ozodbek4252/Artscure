@@ -59,7 +59,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 
 // Help
-Route::post('/helps', [HelpController::class, 'store']);
+Route::get('/helps/create', [HelpController::class, 'store']);
 
 // Types
 Route::get('/types', [TypeController::class, 'index']); //------------------------------
@@ -70,20 +70,20 @@ Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 
 // Contact
-Route::post('/contacts', [ContactController::class, 'store']);
+Route::get('/contacts/create', [ContactController::class, 'store']);
 
 // Banner
 Route::get('/banners', [BannerController::class, 'index']);
 
 // Request
-Route::post('/requests', [RequestController::class, 'store']);
+Route::get('/requests/create', [RequestController::class, 'store']);
 
 // Tool
 Route::get('/tools', [ToolController::class, 'index']);
 
 // Order
+Route::get('orders/create', [OrderController::class, 'store']);
 Route::get('orders/{slug}', [OrderController::class, 'show']);
-Route::post('orders', [OrderController::class, 'store']);
 
 Route::post('/search', [SearchController::class, 'search']);
 Route::post('/filter', [FilterController::class, 'filter']);

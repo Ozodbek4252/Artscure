@@ -49,7 +49,9 @@ class AuthController extends Controller
             return redirect()->intended('dashboard');
         }
 
-        return back();
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
+            'approve' => 'Wrong password / email or this account not approved yet.',
+        ]);
     }
 
     public function logout()

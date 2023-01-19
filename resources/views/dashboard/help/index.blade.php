@@ -15,7 +15,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Phone</th>
-                            <th>Data</th>
+                            <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
