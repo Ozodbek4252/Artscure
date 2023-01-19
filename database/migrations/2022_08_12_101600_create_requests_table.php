@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->string('portfolio')->nullable();
-            $table->text('cover_letter');
+            $table->string('portfolio');
+            $table->text('cover_letter')->nullable();
             $table->timestamps();
         });
     }

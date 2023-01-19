@@ -22,7 +22,6 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
-        dd($request);
         try {
             $order = (new OrderService($request));
         } catch (\Exception $exception) {
@@ -36,7 +35,6 @@ class OrderController extends Controller
 
     public function show($slug)
     {
-        dd('a');
         try {
             $order = (new OrderService())
             ->setOrderBySlug($slug)

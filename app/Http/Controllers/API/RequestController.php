@@ -38,16 +38,7 @@ class RequestController extends Controller
             $requestModel->email = $request->email;
             $requestModel->phone = $request->phone;
             $requestModel->cover_letter = $request->cover_letter;
-
-            if (!empty($request->portfolio)) {
-                $fileName = time().'-'.Str::random(5).'.'.$request->portfolio->getClientOriginalExtension();
-                $request->portfolio->move(public_path('files/requests'), $fileName);
-                $request['portfolio'] = 'files/requests/' . $fileName;
-                $requestModel->portfolio = 'files/requests/' . $fileName;
-            } else {
-                $requestModel->portfolio = null;
-            }
-
+            $requestModel->portfolio = $request->portfolio;
             $requestModel->save();
         } catch (\Exception $exception) {
             DB::rollBack();
