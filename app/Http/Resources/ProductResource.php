@@ -16,7 +16,7 @@ class ProductResource extends JsonResource
     {
         if ($this->artist) {
             $author = [
-                'id' => $this->artist->id,
+                'slug' => $this->artist->slug,
                 'uz' => $this->artist->first_name_uz,
                 'ru' => $this->artist->first_name_ru,
                 'en' => $this->artist->first_name_en,
