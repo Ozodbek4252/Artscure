@@ -52,6 +52,7 @@ Route::get('/new/{slug}', [NewsController::class, 'show']);
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/popular', [CategoryController::class, 'getPopular']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
 // Product

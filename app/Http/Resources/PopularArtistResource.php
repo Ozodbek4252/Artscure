@@ -20,11 +20,18 @@ class PopularArtistResource extends JsonResource
             $type = null;
         }
 
-        if (count($this->products)>0 && count($this->products[0]->images)>0) {
-            $product_image = $this->products[0]->images[0]->image;
+        if (count($this->products)>0 ) {
+            $product_count = count($this->products);
+            if(count($this->products[0]->images)>0) {
+                $product_image = $this->products[0]->images[0]->image;
+            } else {
+                $product_image = null;
+            }
         } else {
+            $product_count = 0;
             $product_image = null;
         }
+
 
         return [
             'id' => $this->id,
@@ -64,6 +71,7 @@ class PopularArtistResource extends JsonResource
 
             'image' => ImageResource::collection($this->images)->all(),
             'product_image' => $product_image,
+            'product_count' => $product_count
         ];
     }
 }
