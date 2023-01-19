@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 use App\Http\Requests\ArtistRequest;
 use App\Http\Resources\ArtistResource;
-
+use App\Http\Resources\PopularArtistResource;
 use App\Models\Artist;
 use App\Models\Image;
 use App\Models\Toolable;
@@ -19,11 +19,7 @@ use App\Traits\UtilityTrait;
 class ArtistController extends Controller
 {
     use UtilityTrait;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $categoris = Artist::paginate($this->getLimit($request->limit));
@@ -39,12 +35,6 @@ class ArtistController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ArtistRequest $request)
     {
         $slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
@@ -83,12 +73,6 @@ class ArtistController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         try {
@@ -104,11 +88,18 @@ class ArtistController extends Controller
         return new ArtistResource($artist);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getPopular(Request $request)
+    {
+        if (!$request->limit) {
+            $limit = 6;
+        } else {
+            $limit = (int)$request->limit;
+        }
+        $artists = Artist::orderBy('rate', 'desc')->take($limit)->get();
+
+        return PopularArtistResource::collection($artists);
+    }
+
     public function update(ArtistRequest $request, $slug)
     {
         $new_slug = str_replace(' ', '_', strtolower($request->first_name_uz) . '-' . strtolower($request->last_name_uz)) . '-' . Str::random(5);
@@ -159,12 +150,6 @@ class ArtistController extends Controller
         }
     }
 
-    /**speciality
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($slug)
     {
         $artist = Artist::where('slug', $slug)->first();

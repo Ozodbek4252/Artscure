@@ -67,6 +67,7 @@ Route::get('/types/{slug}', [TypeController::class, 'show']); //----------------
 
 // Artist
 Route::get('/artists', [ArtistController::class, 'index']);
+Route::get('/artists/popular', [ArtistController::class, 'getPopular']);
 Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 
 // Contact
