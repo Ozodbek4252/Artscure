@@ -35,16 +35,6 @@ class SearchController extends Controller
             ->orWhere('description_en', "Like", "%" . $request->search . "%")
             ->get();
 
-
-        $result['news'] = News::where("title_uz", "Like", "%" . $request->search . "%")
-            ->orWhere('title_ru', "Like", "%" . $request->search . "%")
-            ->orWhere('title_en', "Like", "%" . $request->search . "%")
-            ->orWhere('body_uz', "Like", "%" . $request->search . "%")
-            ->orWhere('body_ru', "Like", "%" . $request->search . "%")
-            ->orWhere('body_en', "Like", "%" . $request->search . "%")
-            ->get();
-
-
         return $result;
     }
 }

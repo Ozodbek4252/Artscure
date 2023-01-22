@@ -89,8 +89,8 @@ Route::get('/tools', [ToolController::class, 'index']);
 Route::get('orders/create', [OrderController::class, 'store']);
 Route::get('orders/{slug}', [OrderController::class, 'show']);
 
-Route::post('/search', [SearchController::class, 'search']);
-Route::post('/filter', [FilterController::class, 'filter']);
+Route::get('/search', [SearchController::class, 'search']);
+Route::get('/filter', [FilterController::class, 'filter']);
 
 
 // ------------- Protected Routes -------------
