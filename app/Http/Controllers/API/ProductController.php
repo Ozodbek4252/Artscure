@@ -15,23 +15,40 @@ use App\Http\Resources\ProductResource;
 class ProductController extends Controller
 {
     use UtilityTrait;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $products = Product::paginate($this->getLimit($request->limit));
         return ProductResource::collection($products);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function filterProduct(Request $request)
+    {
+        $products = Product::orWhereHas('type', function ($query) use ($request) {
+            $query->whereHas('category', function ($query) use ($request) {
+                $query->when(!is_null($request->categories), function ($query) use ($request) {
+                    $query->whereIn('id', $request->categories);
+                }, function ($query) {
+                    $query->where('id', '=', 0);
+                });
+            });
+        })->orWhereHas('type', function ($query) use ($request) {
+            $query->when(!is_null($request->types), function ($query) use ($request) {
+                $query->whereIn('id', $request->types);
+            }, function ($query) {
+                $query->where('id', '=', 0);
+            });
+        })->orWhereHas('tools', function ($query) use ($request) {
+            $query->when(!is_null($request->tools), function ($query) use ($request) {
+                $query->whereIn('tools.id', $request->tools);
+            }, function ($query) {
+                $query->where('tools.id', '=', 0);
+            });
+        })->get();
+
+        return ProductResource::collection($products);
+    }
+
     public function store(ProductRequest $request)
     {
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
@@ -41,10 +58,10 @@ class ProductController extends Controller
         $product = Product::create($attributes);
 
         foreach ($request->image as $photo) {
-            $imageName = Str::random(5).'-'.time().'.'.$photo->getClientOriginalExtension();
+            $imageName = Str::random(5) . '-' . time() . '.' . $photo->getClientOriginalExtension();
             $photo->move(public_path('images/products'), $imageName);
             $img = new Image();
-            $img->image = 'images/products/'.$imageName;
+            $img->image = 'images/products/' . $imageName;
             $img->imageable_id = $product->id;
             $img->imageable_type = 'App\Models\Product';
             $img->save();
@@ -69,12 +86,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         try {
@@ -90,13 +101,6 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ProductRequest $request, $slug)
     {
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
@@ -111,11 +115,11 @@ class ProductController extends Controller
             $this->deleteImages($product->images);
 
             foreach ($request->images as $photo) {
-                $imageName = Str::random(5).'_'.time().'.'.$photo->getClientOriginalExtension();
+                $imageName = Str::random(5) . '_' . time() . '.' . $photo->getClientOriginalExtension();
                 $photo->move(public_path('images/products'), $imageName);
 
                 $img = new Image();
-                $img->image = 'images/products/'.$imageName;
+                $img->image = 'images/products/' . $imageName;
                 $img->imageable_id = $product->id;
                 $img->imageable_type = 'App\Models\Product';
                 $img->save();
@@ -123,9 +127,9 @@ class ProductController extends Controller
         }
 
         if ($request->tools) {
-            foreach($product->tools as $tool){
+            foreach ($product->tools as $tool) {
                 $toolable = Toolable::where('tool_id', $tool->id)
-                ->where('toolable_type', 'App\Models\Product')->first();
+                    ->where('toolable_type', 'App\Models\Product')->first();
                 $toolable->delete();
             }
             foreach ($request->tools as $tool) {
@@ -146,12 +150,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($slug)
     {
         $product = Product::where('slug', $slug)->first();

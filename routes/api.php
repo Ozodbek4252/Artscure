@@ -57,6 +57,7 @@ Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
 // Product
 Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/filter', [ProductController::class, 'filterProduct']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 
 // Help
@@ -68,6 +69,7 @@ Route::get('/types/{slug}', [TypeController::class, 'show']); //----------------
 
 // Artist
 Route::get('/artists', [ArtistController::class, 'index']);
+Route::get('/artists/filter', [ArtistController::class, 'getArtist']);
 Route::get('/artists/popular', [ArtistController::class, 'getPopular']);
 Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 

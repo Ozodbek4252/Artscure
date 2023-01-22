@@ -24,6 +24,11 @@ class Category extends Model
         return $this->hasMany(Type::class);
     }
 
+    public function products()
+    {
+        return $this->hasManyThrough(Product::class, Type::class);  
+    }
+
     public function artists()
     {
         return $this->hasMany(Artist::class);

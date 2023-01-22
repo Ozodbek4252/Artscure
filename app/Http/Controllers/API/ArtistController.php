@@ -26,6 +26,29 @@ class ArtistController extends Controller
         return ArtistResource::collection($categoris);
     }
 
+    public function getArtist(Request $request)
+    {
+        $artists = Artist::when('rate', function ($query) use ($request) {
+                $query->whereIn('rate', $request->rates);
+            }, function ($query) {
+                $query->where('id', '=', 0);
+            })->orWhereHas('category', function ($query) use ($request) {
+                $query->when(!is_null($request->categories), function ($query) use ($request) {
+                    $query->whereIn('id', $request->categories);
+                }, function ($query) {
+                    $query->where('id', '=', 0);
+                });
+            })->orWhereHas('tools', function ($query) use ($request) {
+                $query->when(!is_null($request->tools), function ($query) use ($request) {
+                    $query->whereIn('tools.id', $request->tools);
+                }, function ($query) {
+                    $query->where('tools.id', '=', 0);
+                });
+            })->get();
+
+        return ArtistResource::collection($artists);
+    }
+
     public function paginate($num = null)
     {
         if ($num) {
@@ -116,20 +139,20 @@ class ArtistController extends Controller
         if ($request->image) {
             $this->deleteImages($artist->images);
 
-            $imageName = Str::random(5).'_'.time().'.'.$request->image->getClientOriginalExtension();
+            $imageName = Str::random(5) . '_' . time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images/artists'), $imageName);
 
             $image = new Image();
-            $image->image = 'images/artists/' .$imageName;
+            $image->image = 'images/artists/' . $imageName;
             $image->imageable_id = $artist->id;
             $image->imageable_type = 'App\Models\Artist';
             $image->save();
         }
 
         if ($request->tools) {
-            foreach($artist->tools as $tool){
+            foreach ($artist->tools as $tool) {
                 $toolable = Toolable::where('tool_id', $tool->id)
-                        ->where('toolable_type', 'App\Models\Artist')->first();
+                    ->where('toolable_type', 'App\Models\Artist')->first();
                 $toolable->delete();
             }
             foreach ($request->tools as $tool) {
