@@ -22,7 +22,11 @@ class ToolController extends Controller
      */
     public function index(Request $request)
     {
-        return Tool::paginate($this->getLimit($request->limit));
+        if ($request->limit) {
+            return ToolResource::collection(Tool::paginate($this->getLimit($request->limit)));
+        } else {
+            return ToolResource::collection(Tool::all());
+        }
     }
 
     /**

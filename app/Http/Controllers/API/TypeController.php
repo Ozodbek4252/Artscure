@@ -13,23 +13,17 @@ use Illuminate\Http\Request;
 class TypeController extends Controller
 {
     use UtilityTrait;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
-        $types = Type::paginate($this->getLimit($request->limit));
+        if ($request->limit) {
+            $types = Type::paginate($request->limit);
+        } else {
+            $types = Type::all();
+        }
         return TypeResource::collection($types);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TypeRequest $request)
     {
         $slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
@@ -57,12 +51,6 @@ class TypeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         try {
@@ -78,13 +66,6 @@ class TypeController extends Controller
         return new TypeResource($type);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(TypeRequest $request, $slug)
     {
         $new_slug = str_replace(' ', '_', strtolower($request->name_uz)) . '-' . Str::random(5);
@@ -119,12 +100,6 @@ class TypeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($slug)
     {
         $type = Type::where('slug', $slug)->first();
