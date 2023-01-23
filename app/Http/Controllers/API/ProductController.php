@@ -24,25 +24,19 @@ class ProductController extends Controller
 
     public function filterProduct(Request $request)
     {
-        $products = Product::whereHas('type', function ($query) use ($request) {
-            $query->whereHas('category', function ($query) use ($request) {
-                $query->when(!is_null($request->categories), function ($query) use ($request) {
+        $products = Product::when(!is_null($request->categories), function ($query) use ($request) {
+            $query->whereHas('type', function ($query) use ($request) {
+                $query->whereHas('category', function ($query) use ($request) {
                     $query->whereIn('id', $request->categories);
-                }, function ($query) {
-                    $query->where('id', '=', 0);
                 });
             });
-        })->whereHas('type', function ($query) use ($request) {
-            $query->when(!is_null($request->types), function ($query) use ($request) {
-                $query->whereIn('id', $request->types);
-            }, function ($query) {
-                $query->where('id', '=', 0);
+        })->when(!is_null($request->types), function ($query) use ($request) {
+            $query->whereHas('type', function ($query) use ($request) {
+                    $query->whereIn('id', $request->types);
             });
-        })->whereHas('tools', function ($query) use ($request) {
-            $query->when(!is_null($request->tools), function ($query) use ($request) {
-                $query->whereIn('tools.id', $request->tools);
-            }, function ($query) {
-                $query->where('tools.id', '=', 0);
+        })->when(!is_null($request->tools), function ($query) use ($request) {
+            $query->whereHas('tools', function ($query) use ($request) {
+                    $query->whereIn('tools.id', $request->tools);
             });
         })->get();
 

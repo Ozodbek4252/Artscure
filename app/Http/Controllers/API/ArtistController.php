@@ -30,19 +30,13 @@ class ArtistController extends Controller
     {
         $artists = Artist::when('rate', function ($query) use ($request) {
                 $query->whereIn('rate', $request->rates);
-            }, function ($query) {
-                $query->where('id', '=', 0);
-            })->whereHas('category', function ($query) use ($request) {
-                $query->when(!is_null($request->categories), function ($query) use ($request) {
+            })->when(!is_null($request->categories), function ($query) use ($request) {
+                $query->whereHas('category', function ($query) use ($request) {
                     $query->whereIn('id', $request->categories);
-                }, function ($query) {
-                    $query->where('id', '=', 0);
                 });
-            })->whereHas('tools', function ($query) use ($request) {
-                $query->when(!is_null($request->tools), function ($query) use ($request) {
+            })->when(!is_null($request->tools), function ($query) use ($request) {
+                $query->whereHas('tools', function ($query) use ($request) {
                     $query->whereIn('tools.id', $request->tools);
-                }, function ($query) {
-                    $query->where('tools.id', '=', 0);
                 });
             })->get();
 
