@@ -52,6 +52,17 @@
 
     <ul class="menu-inner py-1">
         <li class="menu-item
+        @if(explode(".", \Request::route()->getName())[0] == 'currencies')
+        active
+        @endif
+        ">
+            <a href="{{ Route('currencies.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>{{__('dash-sidebar.Currency')}}</div>
+            </a>
+        </li>
+
+        <li class="menu-item
         @if(explode(".", \Request::route()->getName())[0] == 'categories')
         active
         @endif

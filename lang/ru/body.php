@@ -36,6 +36,8 @@ return [
     'Views' => 'Просмотры',
     'Types List' => 'Список типов',
     'Types Update' => 'Обновить тип',
+    'Currency List' => 'Список валют',
+    'Value' => 'Значение',
 
     'Tools List' => 'Список инструментов',
     'Type' => 'Тип',

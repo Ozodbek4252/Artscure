@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
+    'Currency' => 'Currency',
     'Categories' => 'Categories',
     'Types' => 'Types',
     'Tools' => 'Tools',

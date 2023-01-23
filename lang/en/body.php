@@ -36,6 +36,8 @@ return [
     'Views' => 'Views',
     'Types List' => 'Types List',
     'Types Update' => 'Types Update',
+    'Currency List' => 'Currency List',
+    'Value' => 'Value',
 
     'Tools List' => 'Tools List',
     'Type' => 'Type',

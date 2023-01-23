@@ -36,6 +36,8 @@ return [
     'Views' => 'Ko\'rishlar',
     'Types List' => 'Turlar ro\'yxati',
     'Types Update' => 'Tur tahrirlash',
+    'Currency List' => 'Valyutalar ro\'yxati',
+    'Value' => 'Qiymati',
 
     'Tools List' => 'Asboblar ro\'yxati',
     'Type' => 'Tur',

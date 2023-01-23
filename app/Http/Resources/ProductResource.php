@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Currency;
 
 class ProductResource extends JsonResource
 {
@@ -14,6 +15,9 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $usd = Currency::where('name', 'USD')->first();
+        $USD_price = $usd ? ($this->price  * $usd->value) : 0;
+
         if ($this->artist) {
             $author = [
                 'slug' => $this->artist->slug,
@@ -43,6 +47,7 @@ class ProductResource extends JsonResource
             'unique' => $this->unique,
             'signiture' => $this->sig,
             'price' => $this->price,
+            'USD_price' => $USD_price,
             'status' => $this->status,
             'views' => $this->views,
             'type' => new TypeResource($this->type),

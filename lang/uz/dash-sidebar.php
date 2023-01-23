@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'Currency' => 'Kurs',
     'Categories' => 'Kategoriyalar',
     'Types' => 'Turlar',
     'Tools' => 'Asboblar',

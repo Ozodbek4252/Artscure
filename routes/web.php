@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\ToolController;
 
 use App\Http\Controllers\Dashboard\BannerController;
 use App\Http\Controllers\Dashboard\ContactController;
+use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\HelpController;
 use App\Http\Controllers\Dashboard\ImageController;
 use App\Http\Controllers\Dashboard\LanguageController;
@@ -53,6 +54,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
+
+    Route::resource('currencies', CurrencyController::class);
 
     Route::resource('categories', CategoryController::class);
     Route::resource('tools', ToolController::class);
