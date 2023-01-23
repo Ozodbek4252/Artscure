@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Services\OrderService;
-use Database\Seeders\OrderSeeder;
 
 class OrderController extends Controller
 {

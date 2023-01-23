@@ -59,8 +59,8 @@ class Product extends Model
         return $this->belongsTo(Artist::class, 'artist_id');
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->hasOne(Order::class);
+        return $this->belongsToMany(Orders::class, 'order_products', 'product_id', 'order_id');
     }
 }

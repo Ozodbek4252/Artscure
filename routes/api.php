@@ -69,7 +69,7 @@ Route::get('/types/{slug}', [TypeController::class, 'show']); //----------------
 
 // Artist
 Route::get('/artists', [ArtistController::class, 'index']);
-Route::get('/artists/filter', [ArtistController::class, 'getArtist']);
+Route::get('/artists/filter', [ArtistController::class, 'filterArtist']);
 Route::get('/artists/popular', [ArtistController::class, 'getPopular']);
 Route::get('/artists/{slug}', [ArtistController::class, 'show']);
 
@@ -86,8 +86,8 @@ Route::get('/requests/create', [RequestController::class, 'store']);
 Route::get('/tools', [ToolController::class, 'index']);
 
 // Order
-Route::get('orders/create', [OrderController::class, 'store']);
-Route::get('orders/{slug}', [OrderController::class, 'show']);
+Route::get('/orders/create', [OrderController::class, 'store']);
+Route::get('/orders/{slug}', [OrderController::class, 'show']);
 
 Route::get('/search', [SearchController::class, 'search']);
 Route::get('/filter', [FilterController::class, 'filter']);

@@ -24,7 +24,7 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => 'required|integer',
+            'products' => 'required|array',
             'name' => 'required|string',
             'phone' => 'required',
             'payment_type' => 'nullable|string',

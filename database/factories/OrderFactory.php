@@ -21,11 +21,11 @@ class OrderFactory extends Factory
     {
         return [
             'slug' => Str::random(10),
-            'product_id' => Product::inRandomOrder()->first()->id,
             'name' => fake()->name(),
             'phone' => fake()->phoneNumber(),
             'payment_type' => array_rand(['Click', 'Payme', 'Naqd', 'Visa', 'Apelsin']),
             'address' => fake()->address(),
+            'total_price' => fake()->randomNumber(5),
         ];
     }
 }

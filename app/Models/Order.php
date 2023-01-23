@@ -16,16 +16,17 @@ class Order extends Model
     protected $casts = [
         'id' => 'integer',
         'slug' => 'string',
-        'product_id' => 'integer',
         'name' => 'string',
         'phone' => 'string',
         'payment_type' => 'string',
-        'address' => 'string'
+        'address' => 'string',
+        'status' => 'string',
+        'total_price' => 'string',
     ];
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id');
     }
 
 }

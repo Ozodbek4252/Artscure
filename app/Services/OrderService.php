@@ -6,19 +6,28 @@ use App\Exceptions\Order\OrderNotFoundException;
 use App\Exceptions\Order\OrderStoreException;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
 
 class OrderService
 {
-    public $request;
+    public $attributes;
     public $order;
+    public $products;
 
     public function __construct($request = null)
     {
         if ($request != null) {
-            $this->request = $request->only(['name', 'phone', 'product_id', 'payment_type', 'address']);
-            $this->request['slug'] = uniqid();
+            $this->attributes = $request->only(['name', 'phone', 'payment_type', 'address']);
+            $this->attributes['slug'] = uniqid();
+            $this->products = $request->products;
+            $this->attributes['total_price'] = 0;
+            $this->attributes['status'] = 'pending';
+            foreach ($this->products as $product_id) {
+                $this->attributes['total_price'] += Product::find($product_id)['price'];
+            }
         } else {
-            $this->request = null;
+            $this->attributes = null;
         }
     }
 
@@ -43,13 +52,22 @@ class OrderService
     public function store()
     {
         DB::beginTransaction();
+
         try {
-            $this->order = Order::create($this->request);
+            $this->order = Order::create($this->attributes);
+            foreach ($this->products as $product) {
+                $order_product = new OrderProduct();
+                $order_product->order_id = $this->order->id;
+                $order_product->product_id = Product::find($product)->id;
+                $order_product->save();
+            }
         } catch (\Exception $exception) {
             DB::rollBack();
             throw new OrderStoreException("Cannot store. Error:{$exception->getMessage()}");
         }
+
         DB::commit();
+
         return $this;
     }
 }

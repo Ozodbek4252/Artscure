@@ -25,6 +25,8 @@
                             <th>Product</th>
                             <th>Phone</th>
                             <th>Address</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,13 +37,21 @@
                                     {{ $loop->index + 1 + ($orders->currentPage() - 1) * $orders->perPage() }}</th>
                                 <td>{{ $order->slug }}</td>
                                 <td>{{ $order->name }}</td>
-                                <td><a href="{{Route('products.show', $order->product->slug)}}">{{ $order->product->name_uz }}</a></td>
-                                <td><a href="tel:{{$order->phone}}">{{ $order->phone }}</a></td>
+                                <td>
+                                    @foreach ($order->products as $product)
+                                        <li style="list-style: none;"><a
+                                                href="{{ Route('products.show', $product->slug) }}">{{ $product->name_uz }}</a>
+                                        </li>
+                                    @endforeach
+                                </td>
+                                <td><a href="tel:{{ $order->phone }}">{{ $order->phone }}</a></td>
                                 <td>{{ $order->address }}</td>
+                                <td>{{ $order->total_price }}</td>
+                                <td>{{ $order->status }}</td>
 
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
-                                        data-bs-toggle="modal" data-bs-target="#animationModal{{$order->id}}"
+                                        data-bs-toggle="modal" data-bs-target="#animationModal{{ $order->id }}"
                                         style="width: auto;">Delete</button>
                                     <a href="{{ Route('orders.edit', $order->slug) }}"
                                         class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>
@@ -49,8 +59,8 @@
                             </tr>
 
                             <!-- Modal -->
-                            <div class="modal fade animate__animated fadeIn" id="animationModal{{$order->id}}" tabindex="-1"
-                                aria-hidden="true">
+                            <div class="modal fade animate__animated fadeIn" id="animationModal{{ $order->id }}"
+                                tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -68,16 +78,15 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ Route('orders.destroy', $order->slug) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
+                                            <form action="{{ Route('orders.destroy', $order->slug) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         @endforeach
                     </tbody>
                     {{ $orders->links() }}
