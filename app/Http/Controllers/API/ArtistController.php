@@ -28,7 +28,7 @@ class ArtistController extends Controller
 
     public function filterArtist(Request $request)
     {
-        $artists = Artist::when('rate', function ($query) use ($request) {
+        $artists = Artist::when(!is_null($request->rates), function ($query) use ($request) {
                 $query->whereIn('rate', $request->rates);
             })->when(!is_null($request->categories), function ($query) use ($request) {
                 $query->whereHas('category', function ($query) use ($request) {

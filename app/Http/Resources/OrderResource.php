@@ -22,7 +22,7 @@ class OrderResource extends JsonResource
             'phone' => $this->phone,
             'payment_type' => $this->payment_type,
             'address' => $this->address,
-            'product' => new ProductResource($this->product),
+            'products' => ProductResource::collection($this->products),
         ];
     }
 }

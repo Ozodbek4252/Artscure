@@ -25,6 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'products' => 'required|array',
+            'products.*' => 'required|exists:products,id',
             'name' => 'required|string',
             'phone' => 'required',
             'payment_type' => 'nullable|string',
