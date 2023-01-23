@@ -26,19 +26,19 @@ class ArtistController extends Controller
         return ArtistResource::collection($categoris);
     }
 
-    public function getArtist(Request $request)
+    public function filterArtist(Request $request)
     {
         $artists = Artist::when('rate', function ($query) use ($request) {
                 $query->whereIn('rate', $request->rates);
             }, function ($query) {
                 $query->where('id', '=', 0);
-            })->orWhereHas('category', function ($query) use ($request) {
+            })->whereHas('category', function ($query) use ($request) {
                 $query->when(!is_null($request->categories), function ($query) use ($request) {
                     $query->whereIn('id', $request->categories);
                 }, function ($query) {
                     $query->where('id', '=', 0);
                 });
-            })->orWhereHas('tools', function ($query) use ($request) {
+            })->whereHas('tools', function ($query) use ($request) {
                 $query->when(!is_null($request->tools), function ($query) use ($request) {
                     $query->whereIn('tools.id', $request->tools);
                 }, function ($query) {

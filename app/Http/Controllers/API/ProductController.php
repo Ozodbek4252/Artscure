@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function filterProduct(Request $request)
     {
-        $products = Product::orWhereHas('type', function ($query) use ($request) {
+        $products = Product::whereHas('type', function ($query) use ($request) {
             $query->whereHas('category', function ($query) use ($request) {
                 $query->when(!is_null($request->categories), function ($query) use ($request) {
                     $query->whereIn('id', $request->categories);
@@ -32,13 +32,13 @@ class ProductController extends Controller
                     $query->where('id', '=', 0);
                 });
             });
-        })->orWhereHas('type', function ($query) use ($request) {
+        })->whereHas('type', function ($query) use ($request) {
             $query->when(!is_null($request->types), function ($query) use ($request) {
                 $query->whereIn('id', $request->types);
             }, function ($query) {
                 $query->where('id', '=', 0);
             });
-        })->orWhereHas('tools', function ($query) use ($request) {
+        })->whereHas('tools', function ($query) use ($request) {
             $query->when(!is_null($request->tools), function ($query) use ($request) {
                 $query->whereIn('tools.id', $request->tools);
             }, function ($query) {

@@ -11,6 +11,7 @@ use App\Traits\UtilityTrait;
 class CategoryController extends Controller
 {
     use UtilityTrait;
+
     public function index()
     {
         $categories = Category::orderBy('updated_at', 'desc')->paginate(20);
