@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArtistResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Artist;
 use App\Models\News;
 use App\Models\Product;
@@ -35,6 +37,11 @@ class SearchController extends Controller
             ->orWhere('description_en', "Like", "%" . $request->search . "%")
             ->get();
 
-        return $result;
+        $artists = ArtistResource::collection($result['artists']);
+        $products = ProductResource::collection($result['products']);
+        return response()->json([
+            'artists' => $artists,
+            'products' => $products
+        ]);
     }
 }
