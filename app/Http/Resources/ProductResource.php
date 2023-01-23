@@ -47,6 +47,7 @@ class ProductResource extends JsonResource
             'views' => $this->views,
             'type' => new TypeResource($this->type),
             'author' => $author,
+            'is_sold' => $this->is_sold,
             'category' => new CategoryResource($this->category),
 
             'image' => ImageResource::collection($this->images)->all(),
