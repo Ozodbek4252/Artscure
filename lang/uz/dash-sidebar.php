@@ -27,6 +27,7 @@ return [
     'Banners' => 'Bannerlar',
     'List' => 'Ro\'yxat',
     'Add' => 'Qo\'shish',
+    'Category' => 'Kategoriya',
 
     'Search' => 'Qidirish',
     'Uzbek' => 'O\'zbek',

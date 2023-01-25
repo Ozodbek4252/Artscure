@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    
+
     'Currency' => 'Валюта',
     'Categories' => 'Категории',
     'Types' => 'Типы',
@@ -27,6 +27,7 @@ return [
     'Banners' => 'Баннеры',
     'List' => 'Список',
     'Add' => 'Добавить',
+    'Category' => 'Категория',
 
     'Search' => 'Поиск',
     'Uzbek' => 'Узбекский',

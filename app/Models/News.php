@@ -13,6 +13,22 @@ class News extends Model
 
     protected $table = 'news';
 
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'id' => 'integer',
+        'slug' => 'string',
+        'title_uz' => 'string',
+        'title_ru' => 'string',
+        'title_en' => 'string',
+        'body_uz' => 'string',
+        'body_ru' => 'string',
+        'body_en' => 'string',
+        'category_id' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public function category()
     {
         return $this->belongsTo(NewsCategory::class);

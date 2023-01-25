@@ -16,6 +16,7 @@
                     <form action="{{ Route('artists.update', $artist->slug) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                        
                         <div class="card-body d-flex">
                             <div class="col-md-4">
                                 <input name="first_name_uz" value="{{$artist->first_name_uz}}" type="text" class="form-control"

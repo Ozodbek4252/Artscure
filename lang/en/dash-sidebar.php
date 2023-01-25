@@ -26,6 +26,7 @@ return [
     'Banners' => 'Banners',
     'List' => 'List',
     'Add' => 'Add',
+    'Category' => 'Category',
 
     'Search' => 'Search',
     'Uzbek' => 'Uzbek',

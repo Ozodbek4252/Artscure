@@ -22,10 +22,8 @@ return new class extends Migration
             $table->text('body_uz');
             $table->text('body_ru');
             $table->text('body_en');
-            $table->foreignId('category_id')->constrained('news_categories')->references('id')->onDelete('cascade');
+            $table->integer('category_id');
             $table->timestamps();
-
-            // hashtag
         });
     }
 

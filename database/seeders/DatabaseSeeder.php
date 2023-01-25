@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             HelpSeeder::class,
             ToolableSeeder::class,
             CurrencySeeder::class,
+            NewsCategorySeeder::class,
         ]);
     }
 }

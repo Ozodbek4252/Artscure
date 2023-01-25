@@ -52,131 +52,120 @@
 
     <ul class="menu-inner py-1">
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'currencies')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'currencies') active @endif
         ">
             <a href="{{ Route('currencies.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Currency')}}</div>
+                <div>{{ __('dash-sidebar.Currency') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'categories')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'categories') active @endif
         ">
             <a href="{{ Route('categories.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Categories')}}</div>
+                <div>{{ __('dash-sidebar.Categories') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'types')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'types') active @endif
         ">
             <a href="{{ Route('types.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Types')}}</div>
+                <div>{{ __('dash-sidebar.Types') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'tools')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'tools') active @endif
         ">
             <a href="{{ Route('tools.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Tools')}}</div>
+                <div>{{ __('dash-sidebar.Tools') }}</div>
             </a>
         </li>
 
 
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'artists')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'artists') active @endif
         ">
             <a href="{{ Route('artists.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-group'></i>
-                <div>{{__('dash-sidebar.Artists')}}</div>
+                <div>{{ __('dash-sidebar.Artists') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'products')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'products') active @endif
         ">
             <a href="{{ Route('products.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-layer'></i>
-                <div>{{__('dash-sidebar.Products')}}</div>
+                <div>{{ __('dash-sidebar.Products') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'orders')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'orders') active @endif
         ">
             <a href="{{ Route('orders.index') }}" class="menu-link">
-                <i class='menu-icon tf-icons bx bx-spreadsheet' ></i>
-                <div>{{__('dash-sidebar.Orders')}}</div>
+                <i class='menu-icon tf-icons bx bx-spreadsheet'></i>
+                <div>{{ __('dash-sidebar.Orders') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'helps')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'helps') active @endif
         ">
             <a href="{{ Route('helps.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Helps')}}</div>
+                <div>{{ __('dash-sidebar.Helps') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'requests')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'requests') active @endif
         ">
             <a href="{{ Route('requests.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Requests')}}</div>
+                <div>{{ __('dash-sidebar.Requests') }}</div>
             </a>
         </li>
 
         <li class="menu-item
-        @if(explode(".", \Request::route()->getName())[0] == 'contacts')
-        active
-        @endif
+        @if (explode('.', \Request::route()->getName())[0] == 'contacts') active @endif
         ">
             <a href="{{ Route('contacts.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Contacts')}}</div>
+                <div>{{ __('dash-sidebar.Contacts') }}</div>
             </a>
         </li>
 
-        <li class="menu-item">
+        <li class="menu-item
+            @if (explode('.', \Request::route()->getName())[0] == 'news' ||
+                    explode('.', \Request::route()->getName())[0] == 'newsCategory') active @endif
+            ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-food-menu"></i>
-                <div>{{__('dash-sidebar.News')}}</div>
+                <div>{{ __('dash-sidebar.News') }}</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-invoice-list.html" class="menu-link">
-                        <div>{{__('dash-sidebar.List')}}</div>
+                <li
+                    class="menu-item
+                    @if (explode('.', \Request::route()->getName())[0] == 'newsCategory') active @endif
+                ">
+                    <a href="{{ Route('newsCategory.index') }}" class="menu-link">
+                        <div>{{ __('dash-sidebar.Categories') }}</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="app-invoice-add.html" class="menu-link">
-                        <div>{{__('dash-sidebar.Add')}}</div>
+                <li
+                    class="menu-item
+                    @if (explode('.', \Request::route()->getName())[0] == 'news') active @endif
+                ">
+                    <a href="{{ Route('news.index') }}" class="menu-link">
+                        <div>{{ __('dash-sidebar.News') }}</div>
                     </a>
                 </li>
             </ul>
@@ -184,13 +173,11 @@
 
 
         <li class="menu-item
-            @if(explode(".", \Request::route()->getName())[0] == 'banners')
-            active
-            @endif
+            @if (explode('.', \Request::route()->getName())[0] == 'banners') active @endif
             ">
             <a href="{{ Route('banners.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{__('dash-sidebar.Banners')}}</div>
+                <div>{{ __('dash-sidebar.Banners') }}</div>
             </a>
         </li>
 

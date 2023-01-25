@@ -38,8 +38,6 @@
 <script src="../../assets/js/dashboards-analytics.js"></script>
 
 
-
-
-
-
-
+<script src="../../assets/vendor/libs/quill/katex.js"></script>
+<script src="../../assets/vendor/libs/quill/quill.js"></script>
+<script src="../../assets/js/forms-editors.js"></script>
