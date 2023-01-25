@@ -16,7 +16,7 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         $usd = Currency::where('name', 'USD')->first();
-        $USD_price = $usd ? ($this->price  * $usd->value) : 0;
+        $USD_price = $usd ? round(($this->price / $usd->value), 2) : 0;
 
         if ($this->artist) {
             $author = [
