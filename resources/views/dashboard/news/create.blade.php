@@ -51,7 +51,7 @@
                             <div class="col-md-12">
                                 <label class="form-label" for="body_uz">{{ __('body.Body') }} {{ __('body.Uz') }}</label>
 
-                                <textarea name="body_ru" id="body_ru" type="number" class="form-control"
+                                <textarea name="body_uz" id="body_uz" type="number" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}"></textarea>
 
                                 @error('body_uz')
@@ -77,7 +77,7 @@
                             <div class="col-md-12">
                                 <label class="form-label" for="body_en">{{ __('body.Body') }} {{ __('body.En') }}</label>
 
-                                <textarea name="body_ru" id="body_ru" type="number" class="form-control"
+                                <textarea name="body_en" id="body_en" type="number" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}"></textarea>
 
                                 @error('body_en')
@@ -122,4 +122,25 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#body_uz'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#body_ru'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#body_en'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

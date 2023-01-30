@@ -41,3 +41,5 @@
 <script src="../../assets/vendor/libs/quill/katex.js"></script>
 <script src="../../assets/vendor/libs/quill/quill.js"></script>
 <script src="../../assets/js/forms-editors.js"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>

@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="card-body d-flex">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <label class="form-label" for="body_uz">{{ __('body.Body') }} {{ __('body.Uz') }}</label>
                                 <textarea name="body_uz" id="body_uz" type="text" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.Uz') }}">
@@ -60,8 +60,10 @@
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <div class="col-md-4 px-2">
+                        <div class="card-body d-flex">
+                            <div class="col-md-12">
                                 <label class="form-label" for="body_ru">{{ __('body.Body') }} {{ __('body.Ru') }}</label>
                                 <textarea name="body_ru" id="body_ru" type="number" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}">
@@ -71,8 +73,10 @@
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="card-body d-flex">
+                            <div class="col-md-12">
                                 <label class="form-label" for="body_en">{{ __('body.Body') }} {{ __('body.En') }}</label>
                                 <textarea name="body_en" id="body_en" type="text" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.En') }}">
@@ -128,4 +132,24 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#body_uz'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#body_ru'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#body_en'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

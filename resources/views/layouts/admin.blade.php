@@ -37,6 +37,7 @@
 
 
     @include('components.script')
+    @yield('scripts')
     @livewireScripts
     @stack('scripts')
 </body>

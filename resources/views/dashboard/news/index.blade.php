@@ -47,9 +47,9 @@
                                 <td>{{ $new->title_uz }}</td>
                                 <td>{{ $new->title_ru }}</td>
                                 <td>{{ $new->title_en }}</td>
-                                <td>{{ $new->body_uz }}</td>
-                                <td>{{ $new->body_ru }}</td>
-                                <td>{{ $new->body_en }}</td>
+                                <td>{!! $new->body_uz !!}</td>
+                                <td>{!! $new->body_ru !!}</td>
+                                <td>{!! $new->body_en !!}</td>
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal"
@@ -60,7 +60,7 @@
                                 </td>
                             </tr>
 
-                            <!-- Modal -->
+                            {{--  Model Beginning  --}}
                             <div class="modal fade animate__animated fadeIn" id="animationModal" tabindex="-1"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -91,6 +91,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--  Model Ending  --}}
                         @endforeach
                     </tbody>
                     {{ $news->links() }}
@@ -98,4 +99,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

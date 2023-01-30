@@ -23,10 +23,10 @@ class ProductController extends Controller
             'limit' => 'integer|min:1|max:100',
             'is_sold' => 'boolean'
         ]);
-        
+
         $products = Product::when(!is_null($request->is_sold), function($query) use ($request) {
             $query->where('is_sold', $request->is_sold);
-        })->paginate($this->getLimit($request->limit));
+        })->orderBy('created_at', 'desc')->paginate($this->getLimit($request->limit));
 
         return ProductResource::collection($products);
     }

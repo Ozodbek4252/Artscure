@@ -55,7 +55,7 @@
         @if (explode('.', \Request::route()->getName())[0] == 'currencies') active @endif
         ">
             <a href="{{ Route('currencies.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <i class="menu-icon fa-regular fa-dollar-sign"></i>
                 <div>{{ __('dash-sidebar.Currency') }}</div>
             </a>
         </li>
@@ -176,7 +176,7 @@
             @if (explode('.', \Request::route()->getName())[0] == 'banners') active @endif
             ">
             <a href="{{ Route('banners.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <i class="menu-icon fa-regular fa-image"></i>
                 <div>{{ __('dash-sidebar.Banners') }}</div>
             </a>
         </li>

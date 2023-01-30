@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NewsResource;
 use App\Models\Image;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -10,35 +11,18 @@ use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($count = null)
+    public function index(Request $request)
     {
-        if ($count) {
-            return News::orderBy('updated_at')->take($count)->get();
-        } else {
-            return News::all();
-        }
+        $news = News::when(!is_null($request->category), function ($query) use ($request) {
+            $query->where('category_id', $request->category);
+        })->when(!is_null($request->year), function ($query) use ($request) {
+            $query->whereYear('created_at', $request->year);
+        })->orderBy('updated_at', 'desc')->paginate($request->limit);
+
+        return NewsResource::collection($news);
+
     }
 
-    public function paginate($num = null)
-    {
-        if ($num) {
-            return News::paginate($num);
-        } else {
-            return News::all();
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -71,7 +55,7 @@ class NewsController extends Controller
         $request->image->move(public_path('images/news'), $imageName);
 
         $image = new Image();
-        $image->image = 'images/news/'.$imageName;
+        $image->image = 'images/news/' . $imageName;
         $image->imageable_id = $news->id;
         $image->imageable_type = 'App\Models\News';
         $image->save();
@@ -87,12 +71,6 @@ class NewsController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         $news = News::where('slug', $slug)->first();
@@ -105,13 +83,6 @@ class NewsController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $slug)
     {
         $request->validate([
@@ -157,12 +128,6 @@ class NewsController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($slug)
     {
         $result = News::where('slug', $slug)->delete();
