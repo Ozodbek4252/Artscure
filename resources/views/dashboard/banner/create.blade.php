@@ -48,6 +48,28 @@
                             </div>
                         </div>
 
+                        <div class="row my-4">
+                            <div class="col-md-4">
+                                <label class="form-label" for="link">For Link</label>
+                                <select name="link" id="link" class="select2 form-select" data-allow-clear="true">
+                                    <option value=""></option>
+                                    <optgroup label="Artists">
+                                        @foreach ($artists as $artist)
+                                            <option value="{{ $artist->id }}.artist">{{ $artist->first_name_uz }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Products">
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}.product">{{ $product->name_uz }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                @error('link')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-2">
                                 <input name="image" class="form-control" type="file" />
@@ -56,7 +78,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="form-control btn btn-outline-success">{{__('body.Create')}}</button>
+                                <button type="submit"
+                                    class="form-control btn btn-outline-success">{{ __('body.Create') }}</button>
                             </div>
                         </div>
 

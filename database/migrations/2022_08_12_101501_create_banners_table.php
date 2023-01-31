@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('title_uz');
             $table->string('title_ru');
             $table->string('title_en');
-            $table->text('body_uz');
-            $table->text('body_ru');
-            $table->text('body_en');
+            $table->text('body_uz')->nullable();
+            $table->text('body_ru')->nullable();
+            $table->text('body_en')->nullable();
+            $table->string('link')->nullable();
+            $table->enum('link_type', ['product', 'artist'])->nullable();
             $table->timestamps();
         });
     }

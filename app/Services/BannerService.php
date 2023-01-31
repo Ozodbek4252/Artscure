@@ -7,7 +7,9 @@ use App\Exceptions\Banner\BannerUpdateException;
 use Illuminate\Support\Facades\DB;
 use App\Models\Banner;
 use App\Traits\UtilityTrait;
-use Illuminate\Support\Str;
+
+use App\Models\Artist;
+use App\Models\Product;
 
 class BannerService
 {
@@ -19,6 +21,17 @@ class BannerService
     public function __construct($request, $banner = null)
     {
         $this->attributes = $request->only(['title_uz', 'title_ru', 'title_en', 'type', 'body_uz', 'body_ru', 'body_en']);
+
+        $link = explode('.', $request->link)[0];
+        $link_type = explode('.', $request->link)[1];
+
+        $model = ucfirst($link_type);
+        $model = "App\\Models\\$model";
+        $model = $model::find($link);
+
+        $this->attributes['link'] = $model->slug;
+        $this->attributes['link_type'] = ucfirst($link_type);
+
         $this->image = $request->image;
         $this->banner = $banner;
     }

@@ -50,18 +50,44 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input name="image" class="form-control" type="file" />
+                        <div class="row my-4">
+                            <div class="col-md-4">
+                                <label class="form-label" for="link">For Link</label>
+                                <select name="link" id="link" class="select2 form-select" data-allow-clear="true">
+                                    <option value=""></option>
+                                    <optgroup label="Artists">
+                                        @foreach ($artists as $artist)
+                                            <option value="{{ $artist->id }}.artist" @if ($banner->link == $artist->slug) selected @endif
+                                                >{{ $artist->first_name_uz }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Products">
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}.product"  @if ($banner->link == $product->slug) selected @endif
+                                                >{{ $product->name_uz }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                @error('link')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label" for="image">Image</label>
+                                <input name="image" id="image" class="form-control" type="file" />
                                 @error('image')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <img class="img-fluid rounded"
                                     src="@if (count($banner->images) > 0) /{{ $banner->images[0]->image }} @endif"
                                     height="110" width="110" alt="User avatar" />
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-2">
                                 <button type="submit" class="form-control btn btn-outline-success">Update</button>
                             </div>

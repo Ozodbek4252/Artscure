@@ -33,9 +33,9 @@ class BannerRequest extends FormRequest
             'title_uz' => 'required|max:100',
             'title_ru' => 'required|max:100',
             'title_en' => 'required|max:100',
-            'body_uz' => 'required',
-            'body_ru' => 'required',
-            'body_en' => 'required',
+            'body_uz' => 'nullable',
+            'body_ru' => 'nullable',
+            'body_en' => 'nullable',
             'image' => $image,
         ];
     }

@@ -21,6 +21,8 @@ class Banner extends Model
         'body_uz' => 'string',
         'body_ru' => 'string',
         'body_en' => 'string',
+        'link' => 'string',
+        'link_type' => 'string',
     ];
 
     public function images()

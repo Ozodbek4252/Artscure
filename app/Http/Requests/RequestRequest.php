@@ -28,7 +28,7 @@ class RequestRequest extends FormRequest
             'phone' => 'required',
             'email' => 'nullable|email',
             'portfolio' => 'required|string',
-            'cover_letter' => 'nullale|string',
+            'cover_letter' => 'nullable|string',
         ];
     }
 }

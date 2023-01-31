@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BannerRequest;
+use App\Models\Artist;
 use App\Models\Banner;
+use App\Models\Product;
 use App\Services\BannerService;
 use App\Traits\UtilityTrait;
 
@@ -19,7 +21,9 @@ class BannerController extends Controller
 
     public function create()
     {
-        return view('dashboard.banner.create');
+        $products = Product::all();
+        $artists = Artist::all();
+        return view('dashboard.banner.create', compact('artists', 'products'));
     }
 
     public function store(BannerRequest $request)
@@ -35,7 +39,9 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        return view('dashboard.banner.edit', ['banner'=>$banner]);
+        $products = Product::all();
+        $artists = Artist::all();
+        return view('dashboard.banner.edit', compact('banner', 'artists', 'products'));
     }
 
     public function update(BannerRequest $request, Banner $banner)

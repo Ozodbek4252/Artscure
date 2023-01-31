@@ -10,7 +10,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-2 px-2 my-2">
-                        <a href="{{ Route('banners.create') }}" class="form-control btn btn-outline-success">{{__('body.Create')}}</a>
+                        <a href="{{ Route('banners.create') }}"
+                            class="form-control btn btn-outline-success">{{ __('body.Create') }}</a>
                     </div>
                 </div>
             </div>
@@ -28,6 +29,8 @@
                             <th style="width: 600px !important">Body Ru</th>
                             <th style="width: 600px !important">Body En</th>
                             <th>Image</th>
+                            <th>Link</th>
+                            <th>Link Type</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -45,23 +48,24 @@
                                 <td style="width: 600px">{{ $banner->body_en }}</td>
                                 <td>
                                     @if (count($banner->images) > 0)
-                                        <img class="img-fluid rounded my-4"
-                                            src="{{ $banner->images[0]->image }} "
+                                        <img class="img-fluid rounded my-4" src="{{ $banner->images[0]->image }} "
                                             height="110" width="110" alt="User avatar" />
                                     @endif
                                 </td>
+                                <td>{{ $banner->link }}</td>
+                                <td>{{ $banner->link_type }}</td>
                                 <td>
-                                    <button type="button"
-                                        class="form-control btn btn-outline-danger" style="width: auto;"
-                                        data-bs-toggle="modal" data-bs-target="#animationModal{{$banner->id}}">Delete</button>
+                                    <button type="button" class="form-control btn btn-outline-danger" style="width: auto;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#animationModal{{ $banner->id }}">Delete</button>
                                     <a href="{{ Route('banners.edit', $banner->id) }}"
                                         class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>
                                 </td>
                             </tr>
 
                             <!-- Modal -->
-                            <div class="modal fade animate__animated fadeIn" id="animationModal{{$banner->id}}" tabindex="-1"
-                                aria-hidden="true">
+                            <div class="modal fade animate__animated fadeIn" id="animationModal{{ $banner->id }}"
+                                tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -79,11 +83,11 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ Route('banners.destroy', $banner->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
+                                            <form action="{{ Route('banners.destroy', $banner->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
