@@ -27,6 +27,7 @@
                             <th>Address</th>
                             <th>Total Price</th>
                             <th>Status</th>
+                            <th>Email</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -48,6 +49,7 @@
                                 <td>{{ $order->address }}</td>
                                 <td>{{ $order->total_price }}</td>
                                 <td>{{ $order->status }}</td>
+                                <td>{{ $order->email }}</td>
 
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"

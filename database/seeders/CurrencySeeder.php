@@ -21,12 +21,12 @@ class CurrencySeeder extends Seeder
 
         Currency::create([
             'name' => 'USD',
-            'value' => 0,
+            'value' => 1,
         ]);
 
         Currency::create([
             'name' => 'EUR',
-            'value' => 0,
+            'value' => 1,
         ]);
     }
 }

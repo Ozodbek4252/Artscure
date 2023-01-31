@@ -30,6 +30,7 @@ class OrderRequest extends FormRequest
             'phone' => 'required',
             'payment_type' => 'nullable|string',
             'address' => 'nullable|string',
+            'email' => 'nullable|email',
         ];
     }
 }

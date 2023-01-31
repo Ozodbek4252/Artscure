@@ -22,6 +22,7 @@ class Order extends Model
         'address' => 'string',
         'status' => 'string',
         'total_price' => 'string',
+        'email' => 'string',
     ];
 
     public function products()

@@ -18,7 +18,7 @@ class OrderService
     public function __construct($request = null)
     {
         if ($request != null) {
-            $this->attributes = $request->only(['name', 'phone', 'payment_type', 'address']);
+            $this->attributes = $request->only(['name', 'phone', 'payment_type', 'address', 'email']);
             $this->attributes['slug'] = uniqid();
             $this->products = $request->products;
             $this->attributes['total_price'] = 0;
