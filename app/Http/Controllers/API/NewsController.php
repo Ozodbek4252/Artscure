@@ -76,7 +76,7 @@ class NewsController extends Controller
         if ($news) {
             $news->views = $news->views + 1;
             $news->save();
-            return $news;
+            return new NewsResource($news);
         } else {
             return response()->json([
                 'message' => 'Error'
