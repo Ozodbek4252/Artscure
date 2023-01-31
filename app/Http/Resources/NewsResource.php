@@ -25,6 +25,7 @@ class NewsResource extends JsonResource
             'body_en' => $this->body_en,
             'category_id' => $this->category_id,
             'image' => $this->images[0]->image,
+            'created_at' => $this->created_at,
         ];
     }
 }
