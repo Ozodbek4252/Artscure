@@ -28,6 +28,7 @@ return [
     'List' => 'Ro\'yxat',
     'Add' => 'Qo\'shish',
     'Category' => 'Kategoriya',
+    'Payment Types' => 'To\'lov turlari',
 
     'Search' => 'Qidirish',
     'Uzbek' => 'O\'zbek',

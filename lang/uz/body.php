@@ -48,6 +48,9 @@ return [
     'Image' => 'Rasm',
     'News Update' => 'Yangilik tahrirlash',
     'Video' => 'Video',
+    'Payment Types List' => 'To\'lov turlari ro\'yxati',
+    'Payment Types Create' => 'To\'lov turini qo\'shish',
+    'Payment Types Update' => 'To\'lov turini tahrirlash',
 
     'Tools List' => 'Asboblar ro\'yxati',
     'Type' => 'Tur',

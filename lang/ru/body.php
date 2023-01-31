@@ -48,6 +48,9 @@ return [
     'Image' => 'Изображение',
     'News Update' => 'Обновить новость',
     'Video' => 'Видео',
+    'Payment Types List' => 'Список типов оплаты',
+    'Payment Types Create' => 'Создать тип оплаты',
+    'Payment Types Update' => 'Обновить тип оплаты',
 
     'Tools List' => 'Список инструментов',
     'Type' => 'Тип',

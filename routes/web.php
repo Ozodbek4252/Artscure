@@ -17,6 +17,7 @@ use App\Http\Controllers\Dashboard\LanguageController;
 use App\Http\Controllers\Dashboard\NewsCategoryController;
 use App\Http\Controllers\Dashboard\NewsController;
 use App\Http\Controllers\Dashboard\OrderController;
+use App\Http\Controllers\Dashboard\PaymentTypeController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RequestController;
 
@@ -69,6 +70,7 @@ Route::middleware([
     Route::resource('artists', ArtistController::class)->parameters(['artists' => 'artist:slug', ]);
     Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug', ]);
     Route::resource('orders', OrderController::class)->parameters(['orders' => 'order:slug', ]);
+    Route::resource('paymentTypes', PaymentTypeController::class);
 
     Route::resource('newsCategory', NewsCategoryController::class);
     Route::resource('news', NewsController::class)->parameters(['news' => 'news:slug', ]);;

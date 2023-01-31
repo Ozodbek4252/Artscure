@@ -48,6 +48,9 @@ return [
     'Image' => 'Image',
     'News Update' => 'News Update',
     'Video' => 'Video',
+    'Payment Types List' => 'Payment Types List',
+    'Payment Types Create' => 'Payment Types Create',
+    'Payment Types Update' => 'Payment Types Update',
 
     'Tools List' => 'Tools List',
     'Type' => 'Type',

@@ -61,6 +61,15 @@
         </li>
 
         <li class="menu-item
+        @if (explode('.', \Request::route()->getName())[0] == 'paymentTypes') active @endif
+        ">
+            <a href="{{ Route('paymentTypes.index') }}" class="menu-link">
+                <i class="menu-icon fa-regular fa-dollar-sign"></i>
+                <div>{{ __('dash-sidebar.Payment Types') }}</div>
+            </a>
+        </li>
+
+        <li class="menu-item
         @if (explode('.', \Request::route()->getName())[0] == 'categories') active @endif
         ">
             <a href="{{ Route('categories.index') }}" class="menu-link">

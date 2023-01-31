@@ -19,7 +19,7 @@ use App\Http\Controllers\API\ToolController;
 use App\Http\Controllers\API\OrderController;
 
 use App\Http\Controllers\API\AuthController;
-
+use App\Http\Controllers\API\PaymentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +39,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 
-// Search
-// Route::get("search",[SearchController::class, 'search']);
+Route::get('payment_types', [PaymentTypeController::class, 'index']);
+Route::get('payment_types/{id}', [PaymentTypeController::class, 'show']);
 
 // News Category
 Route::get('/newsCategories', [NewsCategoryController::class, 'index']);

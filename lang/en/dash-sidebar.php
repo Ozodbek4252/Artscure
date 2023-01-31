@@ -27,6 +27,7 @@ return [
     'List' => 'List',
     'Add' => 'Add',
     'Category' => 'Category',
+    'Payment Types' => 'Payment Types',
 
     'Search' => 'Search',
     'Uzbek' => 'Uzbek',
