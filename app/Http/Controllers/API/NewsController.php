@@ -20,7 +20,6 @@ class NewsController extends Controller
         })->orderBy('updated_at', 'desc')->paginate($request->limit);
 
         return NewsResource::collection($news);
-
     }
 
     public function store(Request $request)
@@ -75,6 +74,8 @@ class NewsController extends Controller
     {
         $news = News::where('slug', $slug)->first();
         if ($news) {
+            $news->views = $news->views + 1;
+            $news->save();
             return $news;
         } else {
             return response()->json([

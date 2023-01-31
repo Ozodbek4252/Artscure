@@ -47,8 +47,7 @@ Route::get('/newsCategories', [NewsCategoryController::class, 'index']);
 
 // News
 Route::get('/news', [NewsController::class, 'index']);
-Route::get('/news/{num}', [NewsController::class, 'paginate']);
-Route::get('/new/{slug}', [NewsController::class, 'show']);
+Route::get('/news/{slug}', [NewsController::class, 'show']);
 
 // Category
 Route::get('/categories', [CategoryController::class, 'index']);
