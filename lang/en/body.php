@@ -47,6 +47,7 @@ return [
     'News Create' => 'News Create',
     'Image' => 'Image',
     'News Update' => 'News Update',
+    'Video' => 'Video',
 
     'Tools List' => 'Tools List',
     'Type' => 'Type',

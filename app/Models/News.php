@@ -25,6 +25,8 @@ class News extends Model
         'body_ru' => 'string',
         'body_en' => 'string',
         'category_id' => 'integer',
+        'video_link' => 'string',
+        'views' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

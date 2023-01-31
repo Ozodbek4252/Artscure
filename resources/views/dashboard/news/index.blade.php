@@ -29,6 +29,8 @@
                             <th>{{ __('body.Body') }} {{ __('body.Uz') }}</th>
                             <th>{{ __('body.Body') }} {{ __('body.Ru') }}</th>
                             <th>{{ __('body.Body') }} {{ __('body.En') }}</th>
+                            <th>{{ __('body.Views') }}</th>
+                            <th>{{ __('body.Video') }}</th>
                             <th>{{ __('body.Actions') }}</th>
                         </tr>
                     </thead>
@@ -50,6 +52,8 @@
                                 <td>{!! $new->body_uz !!}</td>
                                 <td>{!! $new->body_ru !!}</td>
                                 <td>{!! $new->body_en !!}</td>
+                                <td>{{ $new->views }}</td>
+                                <td>{{ $new->video_link }}</td>
                                 <td>
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal"

@@ -121,6 +121,17 @@
                         </div>
 
                         <div class="card-body d-flex">
+                            <div class="col-md-4">
+                                <label class="form-label" for="video_link">{{ __('body.Video') }}</label>
+                                <input name="video_link" id="video_link" value="{{$news->video_link}}" type="text" class="form-control"
+                                    placeholder="{{ __('body.Video') }}" />
+                                @error('video_link')
+                                    <span class="error alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex">
                             <div class="col-md-2">
                                 <button type="submit"
                                     class="form-control btn btn-outline-success">{{ __('body.Update') }}</button>

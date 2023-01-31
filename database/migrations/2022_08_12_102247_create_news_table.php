@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('body_ru');
             $table->text('body_en');
             $table->integer('category_id');
+            $table->string('video_link')->nullable();
             $table->integer('views')->default(0);
             $table->timestamps();
         });

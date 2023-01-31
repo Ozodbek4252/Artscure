@@ -47,6 +47,7 @@ return [
     'News Create' => 'Yangilik qo\'shish',
     'Image' => 'Rasm',
     'News Update' => 'Yangilik tahrirlash',
+    'Video' => 'Video',
 
     'Tools List' => 'Asboblar ro\'yxati',
     'Type' => 'Tur',
