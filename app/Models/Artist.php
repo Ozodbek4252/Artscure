@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
+
 use App\Models\Image;
 use App\Models\Tool;
 use App\Models\Category;
@@ -41,6 +43,21 @@ class Artist extends Model
         'medal_en' => 'string',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->slug = str_replace(' ', '_', strtolower($model->first_name_uz)) . '-' . Str::random(8);
+        });
+
+        self::updating(function ($model) {
+            if ($model->isDirty('first_name_uz')) {
+                $model->slug = str_replace(' ', '_', strtolower($model->first_name_uz)) . '-' . Str::random(8);
+            }
+        });
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -60,5 +77,4 @@ class Artist extends Model
     {
         return $this->hasMany(Product::class);
     }
-
 }

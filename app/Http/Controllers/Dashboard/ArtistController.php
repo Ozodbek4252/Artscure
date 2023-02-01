@@ -68,7 +68,7 @@ class ArtistController extends Controller
             'categories' => $categories,
             'tools' => $tools,
             'types' => $types,
-            'toolables' => $toolables
+            'toolables' => $toolables,
         ]);
     }
 

@@ -130,7 +130,7 @@
         ">
             <a href="{{ Route('helps.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{ __('dash-sidebar.Helps') }}</div>
+                <div>{{ __('dash-sidebar.Call backs') }}</div>
             </a>
         </li>
 
@@ -139,7 +139,7 @@
         ">
             <a href="{{ Route('requests.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{ __('dash-sidebar.Requests') }}</div>
+                <div>{{ __('dash-sidebar.Sellers') }}</div>
             </a>
         </li>
 
@@ -148,7 +148,7 @@
         ">
             <a href="{{ Route('contacts.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div>{{ __('dash-sidebar.Contacts') }}</div>
+                <div>{{ __('dash-sidebar.Services') }}</div>
             </a>
         </li>
 

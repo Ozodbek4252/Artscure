@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Orders List
+            <span class="text-muted fw-light">{{ __('body.Orders List') }}</span>
         </h4>
 
         <div class="card">
@@ -20,15 +20,15 @@
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>
-                            <th>Slug</th>
-                            <th>Name</th>
-                            <th>Product</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Email</th>
-                            <th>Actions</th>
+                            <th>{{ __('body.Slug') }}</th>
+                            <th>{{ __('body.Name') }}</th>
+                            <th>{{ __('body.Product') }}</th>
+                            <th>{{ __('body.Phone') }}</th>
+                            <th>{{ __('body.Address') }}</th>
+                            <th>{{ __('body.Total Price') }}</th>
+                            <th>{{ __('body.Status') }}</th>
+                            <th>{{ __('body.Email') }}</th>
+                            <th>{{ __('body.Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -55,8 +55,8 @@
                                     <button type="button" class="form-control btn btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#animationModal{{ $order->id }}"
                                         style="width: auto;">Delete</button>
-                                    <a href="{{ Route('orders.edit', $order->slug) }}"
-                                        class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>
+                                    {{--  <a href="{{ Route('orders.edit', $order->slug) }}"
+                                        class="form-control btn btn-outline-warning" style="width: auto;">Edit</a>  --}}
                                 </td>
                             </tr>
 

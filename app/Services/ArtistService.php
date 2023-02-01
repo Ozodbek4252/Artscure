@@ -7,7 +7,6 @@ use App\Exceptions\Artist\ArtistStoreException;
 use App\Exceptions\Artist\ArtistUpdateException;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 use App\Traits\UtilityTrait;
 
@@ -26,7 +25,6 @@ class ArtistService
     {
         if ($request != null) {
             $this->attributes = $request->except(['_token', '_method', 'image', 'tools']);
-            $this->attributes['slug'] = str_replace(' ', '_', strtolower($this->attributes['first_name_uz'])) . '-' . Str::random(8);
             $this->image = $request->image;
             $this->tools = $request->tools;
         }
@@ -40,7 +38,6 @@ class ArtistService
     {
         DB::beginTransaction();
         try {
-
             $this->artist = Artist::create($this->attributes);
 
             // store image using UtilityTrait
@@ -48,7 +45,6 @@ class ArtistService
 
             // store tools using UtilityTrait
             $this->storeTools($this->tools, $this->artist, 'App\Models\Artist');
-
         } catch (\Exception $exception) {
             DB::rollBack();
             throw new ArtistStoreException("Cannot store. Error:{$exception->getMessage()}");
@@ -91,12 +87,12 @@ class ArtistService
         DB::beginTransaction();
         try {
             // delete images using UtilityTrait
-            if (count($artist->images)>0) {
+            if (count($artist->images) > 0) {
                 $this->deleteImages($artist->images);
             }
 
             // delete artist's tools using UtilityTrait
-            if (count($artist->tools)>0) {
+            if (count($artist->tools) > 0) {
                 $this->deleteToolables($artist->tools, 'App\Models\Artist');
             }
 
@@ -109,5 +105,4 @@ class ArtistService
 
         return $this;
     }
-
 }

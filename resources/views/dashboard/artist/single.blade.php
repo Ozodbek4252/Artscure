@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">Artist / View </span>
+            <span class="text-muted fw-light">{{ __('body.Artist') }} / {{ __('body.View') }} </span>
         </h4>
         <div class="row gy-4">
             <!-- User Sidebar -->
@@ -34,7 +34,10 @@
                             <div class="d-flex align-items-start mt-3 gap-3" style="align-items: center !important">
                                 <span class="badge bg-label-primary p-2 rounded"><i class="fa-solid fa-star"></i></span>
                                 <div>
-                                    @php $rate = $artist->rate; @endphp
+                                    @php
+                                        $rate = $artist->rate;
+                                        $name = 'name_' . app()->getLocale();
+                                    @endphp
                                     <h5 class="mb-0">
                                         @for ($i = 0; $i < $rate; $i++)
                                             <i class="fa-sharp fa-solid fa-star"></i>
@@ -43,41 +46,42 @@
                                 </div>
                             </div>
                         </div>
-                        <h5 class="pb-2 border-bottom mb-4">Details</h5>
+                        <h5 class="pb-2 border-bottom mb-4">{{ __('body.Details') }}</h5>
                         <div class="info-container">
                             <ul class="list-unstyled">
                                 <li class="mb-3">
-                                    <span class="fw-bold me-2">Category:</span>
+                                    <span class="fw-bold me-2">{{ __('body.Category') }}:</span>
                                     <span>
                                         @if ($artist->category != null)
-                                            {{ $artist->category->name_uz }}
+                                            {{ $artist->category->$name }}
                                         @endif
                                     </span>
                                 </li>
                                 <li class="mb-3">
-                                    <span class="fw-bold me-2">Slug:</span>
+                                    <span class="fw-bold me-2">{{ __('body.Slug') }}:</span>
                                     <span>{{ $artist->slug }}</span>
                                 </li>
                                 <li class="mb-3">
-                                    <span class="fw-bold me-2">Status:</span>
+                                    <span class="fw-bold me-2">{{ __('body.Status') }}:</span>
                                     <span class="badge bg-label-success">Active</span>
                                 </li>
                                 <li class="mb-3">
-                                    <span class="fw-bold me-2">Label:</span>
+                                    <span class="fw-bold me-2">{{ __('body.Label') }}:</span>
                                     <span>{{ $artist->label }}</span>
                                 </li>
                             </ul>
                             <div class="card-body demo-inline-spacing">
                                 @foreach ($artist->tools as $tool)
                                     <button type="button" class="btn btn-secondary text-nowrap">
-                                        {{ $tool->name_uz }}
+                                        {{ $tool->$name }}
                                     </button>
                                 @endforeach
                             </div>
                             <div class="d-flex justify-content-center pt-3">
                                 <a href="{{ Route('artists.edit', $artist->slug) }}"
-                                    class="btn btn-label-warning me-3">Edit</a>
-                                <button type="button" class="btn btn-label-danger suspend-user" data-bs-toggle="modal" data-bs-target="#animationModal{{ $artist->id }}">Delete</button>
+                                    class="btn btn-label-warning me-3">{{ __('body.Edit') }}</a>
+                                <button type="button" class="btn btn-label-danger suspend-user" data-bs-toggle="modal"
+                                    data-bs-target="#animationModal{{ $artist->id }}">{{ __('body.Delete') }}</button>
                             </div>
                         </div>
                     </div>
@@ -92,14 +96,14 @@
                             <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-justified-home" aria-controls="navs-justified-home"
                                 aria-selected="true">
-                                More
+                                {{ __('body.More') }}
                             </button>
                         </li>
                         <li class="nav-item">
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-justified-profile" aria-controls="navs-justified-profile"
                                 aria-selected="false">
-                                Products
+                                {{ __('body.Products') }}
                             </button>
                         </li>
                     </ul>
@@ -107,16 +111,16 @@
                         <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
                             <!-- Description Beginning -->
                             <div class="card mb-4">
-                                <h5 class="card-header">Description</h5>
+                                <h5 class="card-header">{{ __('body.Description') }}</h5>
                                 <div class="card-body table-responsive mb-3">
                                     <div class="demo-inline-spacing mt-3">
                                         <div class="list-group list-group-horizontal-md text-md-center">
                                             <a class="list-group-item list-group-item-action active" id="home-list-item"
-                                                data-bs-toggle="list" href="#description_uz">Uz</a>
+                                                data-bs-toggle="list" href="#description_uz">{{ __('body.Uz') }}</a>
                                             <a class="list-group-item list-group-item-action" id="profile-list-item"
-                                                data-bs-toggle="list" href="#description_ru">Ru</a>
+                                                data-bs-toggle="list" href="#description_ru">{{ __('body.Ru') }}</a>
                                             <a class="list-group-item list-group-item-action" id="messages-list-item"
-                                                data-bs-toggle="list" href="#description_en">En</a>
+                                                data-bs-toggle="list" href="#description_en">{{ __('body.En') }}</a>
                                         </div>
                                         <div class="tab-content px-0 mt-0">
                                             <div class="tab-pane fade show active" id="description_uz">
@@ -136,16 +140,16 @@
 
                             <!-- Muzey Beginning -->
                             <div class="card mb-4">
-                                <h5 class="card-header">Muzey</h5>
+                                <h5 class="card-header">{{ __('body.Muzey') }}</h5>
                                 <div class="card-body table-responsive mb-3">
                                     <div class="demo-inline-spacing mt-3">
                                         <div class="list-group list-group-horizontal-md text-md-center">
                                             <a class="list-group-item list-group-item-action active" id="home-list-item"
-                                                data-bs-toggle="list" href="#muzey_uz">Uz</a>
+                                                data-bs-toggle="list" href="#muzey_uz">{{ __('body.Uz') }}</a>
                                             <a class="list-group-item list-group-item-action" id="profile-list-item"
-                                                data-bs-toggle="list" href="#muzey_ru">Ru</a>
+                                                data-bs-toggle="list" href="#muzey_ru">{{ __('body.Ru') }}</a>
                                             <a class="list-group-item list-group-item-action" id="messages-list-item"
-                                                data-bs-toggle="list" href="#muzey_en">En</a>
+                                                data-bs-toggle="list" href="#muzey_en">{{ __('body.En') }}</a>
                                         </div>
                                         <div class="tab-content px-0 mt-0">
                                             <div class="tab-pane fade show active" id="muzey_uz">
@@ -165,16 +169,16 @@
 
                             <!-- Medal Beginning -->
                             <div class="card mb-4">
-                                <h5 class="card-header">Medal</h5>
+                                <h5 class="card-header">{{ __('body.Medal') }}</h5>
                                 <div class="card-body table-responsive mb-3">
                                     <div class="demo-inline-spacing mt-3">
                                         <div class="list-group list-group-horizontal-md text-md-center">
                                             <a class="list-group-item list-group-item-action active" id="home-list-item"
-                                                data-bs-toggle="list" href="#medal_uz">Uz</a>
+                                                data-bs-toggle="list" href="#medal_uz">{{ __('body.Uz') }}</a>
                                             <a class="list-group-item list-group-item-action" id="profile-list-item"
-                                                data-bs-toggle="list" href="#medal_ru">Ru</a>
+                                                data-bs-toggle="list" href="#medal_ru">{{ __('body.Ru') }}</a>
                                             <a class="list-group-item list-group-item-action" id="messages-list-item"
-                                                data-bs-toggle="list" href="#medal_en">En</a>
+                                                data-bs-toggle="list" href="#medal_en">{{ __('body.En') }}</a>
                                         </div>
                                         <div class="tab-content px-0 mt-0">
                                             <div class="tab-pane fade show active" id="medal_uz">
@@ -198,11 +202,11 @@
                                     <thead>
                                         <tr class="text-nowrap">
                                             <th>#</th>
-                                            <th>Slug</th>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                            <th>Views</th>
-                                            <th>Photo</th>
+                                            <th>{{ __('body.Slug') }}</th>
+                                            <th>{{ __('body.Name') }}</th>
+                                            <th>{{ __('body.Type') }}</th>
+                                            <th>{{ __('body.Views') }}</th>
+                                            <th>{{ __('body.Photo') }}</th>
                                         </tr>
                                     </thead>
                                     <?php $n = 0; ?>
@@ -216,17 +220,15 @@
                                                     <a
                                                         href="{{ Route('products.show', $product->slug) }}">{{ $product->slug }}</a>
                                                 </td>
-                                                <td>{{ $product->name_uz }} {{ $product->name_ru }}</td>
+                                                <td>{{ $product->$name }}</td>
                                                 <td>
-                                                    @if ($artist->type != null)
-                                                        {{ $product->type->name_uz }}
-                                                    @endif
+                                                    {{ $product->type->$name }}
                                                 </td>
                                                 <td>{{ $product->views }}</td>
                                                 <td>
                                                     @if (count($product->images) > 0)
                                                         <img class="img-fluid rounded my-4"
-                                                            src="{{ $product->images[0]->image }} " height="110"
+                                                            src="/{{ $product->images[0]->image }} " height="110"
                                                             width="110" alt="User avatar" />
                                                     @endif
                                                 </td>
