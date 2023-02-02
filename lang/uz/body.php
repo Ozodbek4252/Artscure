@@ -18,7 +18,7 @@ return [
     'Delete' => 'O\'chirish',
     'Uz' => 'O\'z',
     'Ru' => 'Ru',
-    'En' => 'In',
+    'En' => 'Ing',
     'Name' => 'Nomi',
     'Actions' => 'Amallar',
     'Photo' => 'Rasm',
