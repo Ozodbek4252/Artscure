@@ -121,6 +121,7 @@ return [
     'Orders List' => 'Buyurtmalar ro\'yxati',
     'Total Price' => 'Umumiy narxi',
     'Address' => 'Manzil',
+    'Currency Create' => 'Valyuta qo\'shish',
 
     'Tools List' => 'Asboblar ro\'yxati',
     'Type' => 'Tur',

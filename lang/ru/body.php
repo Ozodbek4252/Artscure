@@ -124,6 +124,7 @@ return [
     'Orders List' => 'Список заказов',
     'Total Price' => 'Общая цена',
     'Address' => 'Адрес',
+    'Currency Create' => 'Создать валюту',
 
 
 

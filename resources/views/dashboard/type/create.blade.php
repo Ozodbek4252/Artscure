@@ -33,12 +33,13 @@
                                 id="defaultFormControlInput" placeholder="{{ __('body.Name') }} {{ __('body.En') }}"
                                 aria-describedby="defaultFormControlHelp" />
                         </div>
+                        <?php $name = 'name_' . app()->getLocale(); ?>
                         <div class="col-md-2 px-2">
                             <label class="form-label" for="category">{{ __('body.Category') }}</label>
                             <select name="category_id" id="category" class="select2 form-select" data-allow-clear="true">
                                 <option value=""></option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name_uz }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->$name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -28,13 +28,17 @@
                             <th>{{ __('body.Actions') }}</th>
                         </tr>
                     </thead>
+                    <?php
+                    $first_name = 'first_name_' . app()->getLocale();
+                    $last_name = 'last_name_' . app()->getLocale();
+                    ?>
                     <tbody class="table-border-bottom-0">
                         @foreach ($artists as $artist)
                             <tr>
                                 <th scope="row">
                                     {{ $loop->index + 1 + ($artists->currentPage() - 1) * $artists->perPage() }}</th>
                                 <td><a href="{{ Route('artists.show', $artist->slug) }}">{{ $artist->slug }}</a></td>
-                                <td>{{ $artist->first_name_uz }} {{ $artist->last_name_uz }}</td>
+                                <td>{{ $artist->$first_name }} {{ $artist->$last_name }}</td>
                                 <td>{{ $artist->speciality }}</td>
                                 <td>
                                     @if (count($artist->images) > 0)

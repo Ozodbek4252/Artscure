@@ -30,6 +30,7 @@
                             <input name="name_en" id="name_en" value="{{$tool->name_en}}" type="text" class="form-control" id="defaultFormControlInput"
                                 placeholder="Name En" aria-describedby="defaultFormControlHelp" />
                         </div>
+                        <?php $name = 'name_' . app()->getLocale(); ?>
                         <div class="col-md-2 px-2">
                             <label class="form-label" for="type">{{__('body.Type')}}</label>
                             <select name="type_id" id="type" class="select2 form-select" data-allow-clear="true">
@@ -39,7 +40,7 @@
                                     @if($type->id == $tool->type_id)
                                     selected
                                     @endif
-                                    value="{{ $type->id }}">{{ $type->name_uz }}</option>
+                                    value="{{ $type->id }}">{{ $type->$name }}</option>
                                 @endforeach
                             </select>
                         </div>

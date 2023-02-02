@@ -48,7 +48,7 @@ class PaymentTypeController extends Controller
             return redirect()->back()->withErrors($exception->getMessage());
         }
 
-        return redirect()->route('paymentTypes.index');
+        return view('dashboard.payment_type.edit', compact('payment_type'));
     }
 
     public function update(Request $request, $id)

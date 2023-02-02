@@ -29,12 +29,13 @@
                             <input name="name_en" type="text" id="name_en" class="form-control" id="defaultFormControlInput"
                                 placeholder="Name En" aria-describedby="defaultFormControlHelp" />
                         </div>
+                        <?php $name = 'name_' . app()->getLocale(); ?>
                         <div class="col-md-2 px-2">
                             <label class="form-label" for="type">{{__('body.Type')}}</label>
                             <select name="type_id" id="type" class="select2 form-select" data-allow-clear="true">
                                 <option value="">Select Type</option>
                                 @foreach ($types as $type)
-                                    <option value="{{ $type->id }}">{{ $type->name_uz }}</option>
+                                    <option value="{{ $type->id }}">{{ $type->$name }}</option>
                                 @endforeach
                             </select>
                         </div>

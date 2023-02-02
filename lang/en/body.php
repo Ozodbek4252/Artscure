@@ -124,6 +124,7 @@ return [
     'Orders List' => 'Orders List',
     'Total Price' => 'Total Price',
     'Address' => 'Address',
+    'Currency Create' => 'Currency Create',
 
 
     'Tools List' => 'Tools List',
