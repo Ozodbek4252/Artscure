@@ -30,9 +30,9 @@ class NewsRequest extends FormRequest
         }
 
         return [
-            'title_uz' => 'required|max:50',
-            'title_ru' => 'required|max:50',
-            'title_en' => 'required|max:50',
+            'title_uz' => 'required',
+            'title_ru' => 'required',
+            'title_en' => 'required',
             'body_uz' => 'required',
             'body_ru' => 'required',
             'body_en' => 'required',

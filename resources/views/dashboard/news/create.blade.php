@@ -52,8 +52,7 @@
                                 <label class="form-label" for="body_uz">{{ __('body.Body') }} {{ __('body.Uz') }}</label>
 
                                 <textarea name="body_uz" id="body_uz" type="number" class="form-control"
-                                    placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}"></textarea>
-
+                                    placeholder="{{ __('body.Body') }} {{ __('body.Uz') }}"></textarea>
                                 @error('body_uz')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
@@ -66,7 +65,6 @@
 
                                 <textarea name="body_ru" id="body_ru" type="number" class="form-control"
                                     placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}"></textarea>
-
                                 @error('body_ru')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
@@ -78,8 +76,7 @@
                                 <label class="form-label" for="body_en">{{ __('body.Body') }} {{ __('body.En') }}</label>
 
                                 <textarea name="body_en" id="body_en" type="number" class="form-control"
-                                    placeholder="{{ __('body.Body') }} {{ __('body.Ru') }}"></textarea>
-
+                                    placeholder="{{ __('body.Body') }} {{ __('body.En') }}"></textarea>
                                 @error('body_en')
                                     <span class="error alert-danger">{{ $message }}</span>
                                 @enderror
