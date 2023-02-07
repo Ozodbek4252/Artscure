@@ -7,7 +7,9 @@
 <meta name="description" content="" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="../../assets/img/logo/ArtsCure.png" />
+<link rel="icon" type="image/x-icon" href="../../assets/img/logo/ArtScure.png" />
+// image with asset
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/ArtScure.png') }}" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
