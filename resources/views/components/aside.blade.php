@@ -1,7 +1,10 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="{{ Route('dashboard') }}" class="app-brand-link">
-            <span class="app-brand-logo demo">
+            {{--  <img src="../../assets/img/avatars/1.png" alt
+                                                    class="w-px-40 h-auto rounded-circle" />  --}}
+            <img src="../../assets/img/logo/ArtsCure.png" alt="Frest" class="app-brand-logo demo">
+            {{--  <span class="app-brand-logo demo">
                 <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
                     <title>icon</title>
@@ -37,7 +40,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bold ms-2">Frest</span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">Frest</span>  --}}
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
