@@ -21,7 +21,7 @@
 
                         <div class="card-body d-flex">
                             <div class="col-md-4">
-                                <label class="form-label" for="first_name_uz">{{ __('body.First Name En') }}</label>
+                                <label class="form-label" for="first_name_uz">{{ __('body.First Name Uz') }}</label>
                                 <input name="first_name_uz" id="first_name_uz" value="{{ $artist->first_name_uz }}"
                                     type="text" class="form-control" placeholder="{{ __('body.First Name Uz') }}" />
                                 @error('first_name_uz')
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="col-md-4 px-2">
-                                <label class="form-label" for="first_name_ru">{{ __('body.First Name En') }}</label>
+                                <label class="form-label" for="first_name_ru">{{ __('body.First Name Ru') }}</label>
                                 <input name="first_name_ru" id="first_name_ru" value="{{ $artist->first_name_ru }}"
                                     type="text" class="form-control" placeholder="{{ __('body.First Name Ru') }}"
                                     aria-describedby="defaultFormControlHelp" />

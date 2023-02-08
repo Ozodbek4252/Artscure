@@ -17,8 +17,12 @@
                                     @if (count($artist->images) > 0) src="/{{ $artist->images[0]->image }}"
                                     @else src="" @endif
                                     height="110" width="110" alt="User avatar" />
+                                <?php
+                                $first_name = 'first_name_' . app()->getLocale();
+                                $last_name = 'last_name_' . app()->getLocale();
+                                ?>
                                 <div class="user-info text-center">
-                                    <h5 class="mb-2">{{ $artist->first_name_ru }} {{ $artist->last_name_ru }}</h5>
+                                    <h5 class="mb-2">{{ $artist->$first_name }} {{ $artist->$last_name }}</h5>
                                     <span class="badge bg-label-secondary">{{ $artist->speciality }}</span>
                                 </div>
                             </div>
@@ -65,10 +69,12 @@
                                     <span class="fw-bold me-2">{{ __('body.Status') }}:</span>
                                     <span class="badge bg-label-success">Active</span>
                                 </li>
+                                @if ($artist->label != null)
                                 <li class="mb-3">
                                     <span class="fw-bold me-2">{{ __('body.Label') }}:</span>
                                     <span>{{ $artist->label }}</span>
                                 </li>
+                                @endif
                             </ul>
                             <div class="card-body demo-inline-spacing">
                                 @foreach ($artist->tools as $tool)
