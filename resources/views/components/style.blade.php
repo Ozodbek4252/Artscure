@@ -8,7 +8,6 @@
 
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="../../assets/img/logo/ArtScure.png" />
-// image with asset
 <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/ArtScure.png') }}" />
 
 <!-- Fonts -->
