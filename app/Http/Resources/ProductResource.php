@@ -18,6 +18,8 @@ class ProductResource extends JsonResource
         $usd = Currency::where('name', 'USD')->first();
         $USD_price = $usd ? round(($this->price / $usd->value), 2) : 0;
 
+        $resell = $this->resell ? $this->resell : null;
+
         if ($this->artist) {
             $author = [
                 'slug' => $this->artist->slug,
@@ -53,6 +55,7 @@ class ProductResource extends JsonResource
             'type' => new TypeResource($this->type),
             'author' => $author,
             'is_sold' => $this->is_sold,
+            'resell' => $resell,
             'category' => new CategoryResource($this->category),
 
             'image' => ImageResource::collection($this->images)->all(),
