@@ -193,6 +193,47 @@
                                 </div>
                             </div>
                             <!-- Description End -->
+
+                            <!-- Resell Beginning -->
+                            @if ($product->resell)
+                                <div class="card mb-4">
+                                    <h5 class="card-header">{{ __('body.Resell') }}</h5>
+                                    <div class="card-body table-responsive mb-3">
+                                        <div class="demo-inline-spacing mt-3">
+                                            <div class="list-group list-group-horizontal-md text-md-center">
+                                                <a class="list-group-item list-group-item-action active"
+                                                    id="home-list-item" data-bs-toggle="list"
+                                                    href="#resell_body_uz">{{ __('body.Uz') }}</a>
+                                                <a class="list-group-item list-group-item-action" id="profile-list-item"
+                                                    data-bs-toggle="list" href="#resell_body_ru">{{ __('body.Ru') }}</a>
+                                                <a class="list-group-item list-group-item-action" id="messages-list-item"
+                                                    data-bs-toggle="list" href="#resell_body_en">{{ __('body.En') }}</a>
+                                            </div>
+                                            @php
+                                                $resell = json_decode($product->resell, true);
+                                            @endphp
+                                            <div class="tab-content px-0 mt-0">
+                                                <div class="tab-pane fade show active" id="resell_body_uz">
+                                                    {{ __('body.Name') }}: {{ $resell['resell_name_uz'] }}
+                                                    <br>
+                                                    {{ __('body.Body') }}: {{ $resell['resell_body_uz'] }}
+                                                </div>
+                                                <div class="tab-pane fade" id="resell_body_ru">
+                                                    {{ __('body.Name') }}: {{ $resell['resell_name_ru'] }}
+                                                    <br>
+                                                    {{ __('body.Body') }}: {{ $resell['resell_body_ru'] }}
+                                                </div>
+                                                <div class="tab-pane fade" id="resell_body_en">
+                                                    {{ __('body.Name') }}: {{ $resell['resell_name_en'] }}
+                                                    <br>
+                                                    {{ __('body.Body') }}: {{ $resell['resell_body_en'] }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- Resell End -->
                         </div>
                     </div>
                 </div>

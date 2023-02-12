@@ -46,10 +46,6 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        /**
-         * TODO: must change Request to ProductRequest
-         */
-
         try {
             $product = (new ProductService($request))->store();
         } catch (\Exception $exception) {

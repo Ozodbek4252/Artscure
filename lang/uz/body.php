@@ -122,6 +122,14 @@ return [
     'Total Price' => 'Umumiy narxi',
     'Address' => 'Manzil',
     'Currency Create' => 'Valyuta qo\'shish',
+    'Resell' => 'Qayta sotish',
+    'Resell Name Uz' => 'Qayta sotish nomi O\'z',
+    'Resell Name Ru' => 'Qayta sotish nomi Ru',
+    'Resell Name En' => 'Qayta sotish nomi En',
+    'Resell Body Uz' => 'Qayta sotish matni O\'z',
+    'Resell Body Ru' => 'Qayta sotish matni Ru',
+    'Resell Body En' => 'Qayta sotish matni En',
+
 
     'Tools List' => 'Asboblar ro\'yxati',
     'Type' => 'Tur',

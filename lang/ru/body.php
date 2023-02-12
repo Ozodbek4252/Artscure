@@ -125,6 +125,13 @@ return [
     'Total Price' => 'Общая цена',
     'Address' => 'Адрес',
     'Currency Create' => 'Создать валюту',
+    'Resell' => 'Перепродажа',
+    'Resell Name Uz' => 'Название перепродажи на уз',
+    'Resell Name Ru' => 'Название перепродажи на ру',
+    'Resell Name En' => 'Название перепродажи на анг',
+    'Resell Body Uz' => 'Текст перепродажи на уз',
+    'Resell Body Ru' => 'Текст перепродажи на ру',
+    'Resell Body En' => 'Текст перепродажи на анг',
 
 
 

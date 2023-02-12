@@ -37,6 +37,7 @@ class Product extends Model
         'type_id' => 'integer',
         'artist_id' => 'integer',
         'status' => 'string',
+        'resell' => 'array',
     ];
 
     public function images()

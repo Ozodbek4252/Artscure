@@ -125,6 +125,13 @@ return [
     'Total Price' => 'Total Price',
     'Address' => 'Address',
     'Currency Create' => 'Currency Create',
+    'Resell' => 'Resell',
+    'Resell Name Uz' => 'Resell Name Uz',
+    'Resell Name Ru' => 'Resell Name Ru',
+    'Resell Name En' => 'Resell Name En',
+    'Resell Body Uz' => 'Resell Body Uz',
+    'Resell Body Ru' => 'Resell Body Ru',
+    'Resell Body En' => 'Resell Body En',
 
 
     'Tools List' => 'Tools List',

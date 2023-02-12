@@ -61,6 +61,16 @@ class ProductService
             } else {
                 $this->attributes['status'] = 0;
             };
+
+            $resell = [
+                'resell_name_uz' => $request->resell_name_uz,
+                'resell_name_ru' => $request->resell_name_ru,
+                'resell_name_en' => $request->resell_name_en,
+                'resell_body_uz' => $request->resell_body_uz,
+                'resell_body_ru' => $request->resell_body_ru,
+                'resell_body_en' => $request->resell_body_en,
+            ];
+            $this->attributes['resell'] = json_encode($resell);
         }
         $this->product = $product;
     }

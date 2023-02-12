@@ -35,6 +35,8 @@ return new class extends Migration
             $table->boolean('signiture')->default(false);
             $table->integer('price')->nullable();
             $table->boolean('is_sold')->default(false);
+
+            $table->jsonb('resell')->nullable();
             $table->timestamps();
         });
     }
