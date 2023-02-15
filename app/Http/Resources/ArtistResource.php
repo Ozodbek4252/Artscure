@@ -40,8 +40,8 @@ class ArtistResource extends JsonResource
             'views' => $this->views,
 
             'muzey_uz' => $this->muzey_uz,
-            'muzey_ru' => $this->rmey_ru,
-            'muzey_en' => $this->enzey_en,
+            'muzey_ru' => $this->muzey_ru,
+            'muzey_en' => $this->muzey_en,
 
             'medal_uz' => $this->medal_uz,
             'medal_ru' => $this->medal_ru,
