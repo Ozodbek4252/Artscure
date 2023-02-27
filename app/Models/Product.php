@@ -9,7 +9,6 @@ use App\Models\Image;
 use App\Models\Tool;
 use App\Models\Artist;
 use App\Models\Type;
-use App\Models\Order;
 
 class Product extends Model
 {
@@ -20,6 +19,7 @@ class Product extends Model
     protected $casts = [
         'id' => 'integer',
         'slug' => 'string',
+        'sku' => 'string',
         'name_uz' => 'string',
         'name_ru' => 'string',
         'name_en' => 'string',
@@ -39,6 +39,28 @@ class Product extends Model
         'status' => 'string',
         'resell' => 'array',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            do {
+                function random_str($num)
+                {
+                    $chars = 'abcdefghijklmnopqrstuvwxyz';
+                    $size = strlen($chars);
+                    $str = '';
+                    for ($i = 0; $i < $num; $i++) {
+                        $str = $str . '' . $chars[rand(0, $size - 1)];
+                    }
+                    return $str;
+                }
+                $str = random_str(5) . rand(10000, 99999);
+            } while (self::where('sku', $str)->exists());
+
+            $model->sku = $str;
+        });
+    }
 
     public function images()
     {

@@ -129,6 +129,7 @@ return [
     'Resell Body Uz' => 'Qayta sotish matni O\'z',
     'Resell Body Ru' => 'Qayta sotish matni Ru',
     'Resell Body En' => 'Qayta sotish matni En',
+    'SKU' => 'SKU',
 
 
     'Tools List' => 'Asboblar ro\'yxati',

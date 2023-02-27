@@ -23,6 +23,7 @@
                             <th>#</th>
                             <th>{{ __('body.Slug') }}</th>
                             <th>{{ __('body.Name') }}</th>
+                            <th>{{ __('body.SKU') }}</th>
                             <th>{{ __('body.Category') }}</th>
                             <th>{{ __('body.Artist') }}</th>
                             <th>{{ __('body.Price') }}</th>
@@ -40,6 +41,7 @@
                                     {{ $loop->index + 1 + ($products->currentPage() - 1) * $products->perPage() }}</th>
                                 <td><a href="{{ Route('products.show', $product->slug) }}">{{ $product->slug }}</a></td>
                                 <td>{{ $product->$name }}</td>
+                                <td>{{ $product->sku }}</td>
                                 <td>
                                     @if ($product->type)
                                         {{ $product->type->category->$name }}

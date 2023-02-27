@@ -23,6 +23,7 @@ class ProductFactory extends Factory
         $name = Str::random(5);
         return [
             'slug' => Str::random(10),
+            'sku' => rand(1000, 9999).Str::random(4),
             'name_uz' => $name.' uz',
             'name_ru' => $name.' ru',
             'name_en' => $name.' en',

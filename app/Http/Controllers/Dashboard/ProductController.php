@@ -47,7 +47,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         try {
-            $product = (new ProductService($request))->store();
+            (new ProductService($request))->store();
         } catch (\Exception $exception) {
             return redirect()->back()->withErrors($exception->getMessage());
         }

@@ -23,9 +23,9 @@ class ProductResource extends JsonResource
         if ($this->artist) {
             $author = [
                 'slug' => $this->artist->slug,
-                'uz' => $this->artist->first_name_uz . $this->artist->last_name_uz,
-                'ru' => $this->artist->first_name_ru . $this->artist->last_name_ru,
-                'en' => $this->artist->first_name_en . $this->artist->last_name_en,
+                'uz' => $this->artist->first_name_uz .' '. $this->artist->last_name_uz,
+                'ru' => $this->artist->first_name_ru .' '. $this->artist->last_name_ru,
+                'en' => $this->artist->first_name_en .' '. $this->artist->last_name_en,
             ];
         } else {
             $author = null;

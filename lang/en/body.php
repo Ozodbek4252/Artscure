@@ -132,6 +132,7 @@ return [
     'Resell Body Uz' => 'Resell Body Uz',
     'Resell Body Ru' => 'Resell Body Ru',
     'Resell Body En' => 'Resell Body En',
+    'SKU' => 'SKU',
 
 
     'Tools List' => 'Tools List',

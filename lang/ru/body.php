@@ -132,6 +132,7 @@ return [
     'Resell Body Uz' => 'Текст перепродажи на уз',
     'Resell Body Ru' => 'Текст перепродажи на ру',
     'Resell Body En' => 'Текст перепродажи на анг',
+    'SKU' => 'SKU',
 
 
 
